@@ -38,7 +38,8 @@
         "show_vendor": true,
         "show_button": false,
         "button_label": "Ver más",
-        "button_link": ""
+        "button_link": "",
+        "text_color": ""
       }
     },
     "gallery_slideshow_EeWXfP": {
@@ -169,7 +170,8 @@
         "full_height_value": 70,
         "padding_top": 15,
         "padding_bottom": 15,
-        "background_color": "#690f17"
+        "background_color": "#690f17",
+        "text_color": ""
       }
     },
     "shop_the_look_Gt3etK": {
@@ -215,7 +217,8 @@
         "full_width": true,
         "text_content": "<h2><strong>It´s about to bloom</strong></h2><p></p><p>Un homenaje a lo eterno, a lo que florece sin miedo a romperse</p>",
         "button_label": "Más de esta colección",
-        "button_link": "shopify://collections/family-rose"
+        "button_link": "shopify://collections/family-rose",
+        "text_color": ""
       }
     },
     "multicolumn_TK4aff": {
@@ -262,7 +265,8 @@
         "full_height": false,
         "section_height": 65,
         "text_alignment": "center",
-        "background_color": "#ffffff"
+        "background_color": "#ffffff",
+        "text_color": ""
       }
     },
     "featured_product_PjjFwN": {
@@ -298,7 +302,8 @@
         "show_description": true,
         "description_words": 40,
         "custom_text": "",
-        "button_label": "Ver producto"
+        "button_label": "Ver producto",
+        "text_color": ""
       }
     },
     "featured-collection": {
@@ -505,7 +510,8 @@
         "gap": 16,
         "border_radius": 0,
         "full_width": true,
-        "background_color": "#690f17"
+        "background_color": "#690f17",
+        "text_color": ""
       }
     },
     "shop_the_look_zAA7z8": {
@@ -542,7 +548,8 @@
         "full_width": false,
         "text_content": "",
         "button_label": "",
-        "button_link": ""
+        "button_link": "",
+        "text_color": ""
       }
     },
     "shop_the_look_RJptKF": {
@@ -556,7 +563,8 @@
         "full_width": false,
         "text_content": "",
         "button_label": "",
-        "button_link": ""
+        "button_link": "",
+        "text_color": ""
       }
     },
     "product_carousel_c98Px8": {
@@ -572,7 +580,8 @@
         "show_vendor": true,
         "show_button": true,
         "button_label": "Comprar todos los más vendidos",
-        "button_link": ""
+        "button_link": "",
+        "text_color": ""
       }
     },
     "gallery_FJ6cDb": {
@@ -654,7 +663,198 @@
         "full_height_value": 80,
         "padding_top": 40,
         "padding_bottom": 40,
-        "background_color": "#1a1a1a"
+        "background_color": "#1a1a1a",
+        "text_color": ""
+      }
+    },
+    "scroll_reveal_WByax6": {
+      "type": "scroll-reveal",
+      "blocks": {
+        "block_4tz77k": {
+          "type": "block",
+          "settings": {
+            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
+            "image_height": "auto",
+            "heading": "Diseño artesanal",
+            "text": "<p>Describe algo increíble sobre tu marca o producto.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "block_rNxUUM": {
+          "type": "block",
+          "settings": {
+            "image_height": "auto",
+            "heading": "Hecho con amor",
+            "text": "<p>Describe algo increíble sobre tu marca o producto.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "block_ykFznb": {
+          "type": "block",
+          "settings": {
+            "image_height": "auto",
+            "heading": "Para ti",
+            "text": "<p>Describe algo increíble sobre tu marca o producto.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "block_4tz77k",
+        "block_rNxUUM",
+        "block_ykFznb"
+      ],
+      "name": "Scroll Reveal",
+      "settings": {
+        "subheading": "",
+        "heading": "",
+        "animation_style": "alternating",
+        "animation_duration": 1200,
+        "gap": 40,
+        "block_spacing": 60,
+        "border_radius": 0,
+        "full_width": false,
+        "background_color": "",
+        "text_color": ""
+      }
+    },
+    "image_crossfade_7XqPER": {
+      "type": "image-crossfade",
+      "name": "Image Crossfade",
+      "settings": {
+        "image_before": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
+        "image_after": "shopify://shop_images/F2A35745-B405-4A96-A0BE-AD51D4C20F37.jpg",
+        "show_labels": true,
+        "label_before": "Antes",
+        "label_after": "Después",
+        "heading": "",
+        "subheading": "",
+        "text_position": "center",
+        "button_label": "",
+        "button_link": "",
+        "scroll_distance": 3,
+        "overlay_opacity": 0.2,
+        "show_progress": true,
+        "background_color": ""
+      }
+    },
+    "parallax_section_gYcHGF": {
+      "type": "parallax-section",
+      "name": "Parallax",
+      "settings": {
+        "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
+        "video_url": "",
+        "focal_point": "center center",
+        "subheading": "",
+        "heading": "NUEVA COLECCIÓN",
+        "text": "",
+        "text_align": "center",
+        "button_label": "",
+        "button_link": "",
+        "parallax_speed": 0.9,
+        "section_height": 80,
+        "overlay_style": "vignette",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.3,
+        "text_color": "#ffffff"
+      }
+    },
+    "staggered_gallery_tGR9Ux": {
+      "type": "staggered-gallery",
+      "blocks": {
+        "image_dVF9Pr": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/ABAFBDCE-D643-4AF5-9738-7E3720326317.jpg",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "span_wide": false,
+            "span_tall": false
+          }
+        },
+        "image_nt6nGB": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/493A211F-58C1-401C-9F8D-282C60A76BFB.png",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "span_wide": false,
+            "span_tall": false
+          }
+        },
+        "image_Hdke9T": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/0CE252E3-1702-43B4-A5B0-933348F6064D.jpg",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "span_wide": false,
+            "span_tall": false
+          }
+        },
+        "image_TK68A8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "span_wide": false,
+            "span_tall": false
+          }
+        },
+        "image_eVi6Ef": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/E7833128-7405-4F6C-A48F-96FFA2C76486.jpg",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "span_wide": false,
+            "span_tall": false
+          }
+        },
+        "image_rXbTmR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "span_wide": false,
+            "span_tall": false
+          }
+        }
+      },
+      "block_order": [
+        "image_dVF9Pr",
+        "image_nt6nGB",
+        "image_Hdke9T",
+        "image_TK68A8",
+        "image_eVi6Ef",
+        "image_rXbTmR"
+      ],
+      "name": "Galería animada",
+      "settings": {
+        "subheading": "",
+        "heading": "",
+        "columns": 3,
+        "gap": 8,
+        "image_ratio": "3/4",
+        "border_radius": 0,
+        "full_width": false,
+        "animation_duration": 700,
+        "stagger_delay": 100,
+        "slide_distance": 50,
+        "caption_style": "hover",
+        "background_color": "",
+        "text_color": ""
       }
     }
   },
@@ -675,6 +875,10 @@
     "shop_the_look_zAA7z8",
     "shop_the_look_RJptKF",
     "product_carousel_c98Px8",
-    "gallery_FJ6cDb"
+    "gallery_FJ6cDb",
+    "scroll_reveal_WByax6",
+    "image_crossfade_7XqPER",
+    "parallax_section_gYcHGF",
+    "staggered_gallery_tGR9Ux"
   ]
 }
