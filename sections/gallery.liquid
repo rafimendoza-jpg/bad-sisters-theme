@@ -11,13 +11,25 @@
 {%- assign row_height = section.settings.row_height -%}
 
 <style>
-  #GAL-{{ section.id }} {
-    background-color: {{ section.settings.bg_color }};
+  .main-content > .shopify-section:has(#GAL-{{ section.id }}) {
+    background-color: {{ section.settings.bg_color }} !important;
   }
+  #GAL-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }} !important;
+  }
+  {%- if section.settings.full_height -%}
+    #GAL-{{ section.id }} .gal__grid {
+      min-height: {{ section.settings.full_height_value }}vh;
+      grid-auto-rows: 1fr;
+    }
+    #GAL-{{ section.id }} .gal__item { min-height: 0; }
+    #GAL-{{ section.id }} .gal__link { min-height: 0; }
+    #GAL-{{ section.id }} .gal__img { min-height: 100%; }
+  {%- endif -%}
 </style>
 
 <section id="GAL-{{ section.id }}" class="gal section-padding" data-section-id="{{ section.id }}"
-  style="background-color: {{ section.settings.bg_color }};">
+  style="background-color: {{ section.settings.bg_color }} !important;">
 
   <div class="{% if section.settings.full_width %}gal--full{% else %}page-width{% endif %}">
 
