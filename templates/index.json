@@ -13,16 +13,29 @@
       "type": "hero-banner",
       "settings": {
         "image": "shopify://shop_images/C6B690B1-AA7F-49D6-90FD-DD20B54C23E8.png",
-        "height": "large",
+        "height": "medium",
         "overlay_opacity": 30,
-        "subheading": "Nueva colección",
-        "heading": "Bad Sisters Design",
-        "text": "Diseño con actitud. Descubre nuestra nueva colección.",
+        "subheading": "family rose edition",
+        "heading": "Summer basics",
+        "text": "PIEZAS ÚNICAS, MIL LOOKS",
         "text_alignment": "text-center",
-        "button_label_1": "Comprar ahora",
-        "button_link_1": "",
-        "button_label_2": "Ver colecciones",
-        "button_link_2": ""
+        "button_label_1": "shop verano",
+        "button_link_1": "shopify://collections/summer-basics",
+        "button_label_2": "family rose",
+        "button_link_2": "shopify://collections/family-rose"
+      }
+    },
+    "product_carousel_37FEFD": {
+      "type": "product-carousel",
+      "name": "Carrusel de Productos",
+      "settings": {
+        "heading": "Todo lo nuevo para este verano",
+        "subheading": "No te quedes sin el tuyo",
+        "collection": "summer-basics",
+        "products_to_show": 8,
+        "scroll_count": 3,
+        "show_vendor": true,
+        "button_label": "Ver más"
       }
     },
     "featured-collection": {
@@ -37,6 +50,56 @@
         "show_vendor": false,
         "show_view_all": true,
         "view_all_text": "Ver todos"
+      }
+    },
+    "gallery_slideshow_w6zFXM": {
+      "type": "gallery-slideshow",
+      "blocks": {
+        "slide_twcF8F": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "slide_KGj8MM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/EC9AA589-3C44-40BC-B690-17002A2A323F.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "slide_JQxMHU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/0CE252E3-1702-43B4-A5B0-933348F6064D.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_twcF8F",
+        "slide_KGj8MM",
+        "slide_JQxMHU"
+      ],
+      "name": "Galería slideshow",
+      "settings": {
+        "height": "small",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_counter": true
       }
     },
     "image-with-text": {
@@ -386,7 +449,9 @@
   },
   "order": [
     "hero",
+    "product_carousel_37FEFD",
     "featured-collection",
+    "gallery_slideshow_w6zFXM",
     "image-with-text",
     "collection-list",
     "multicolumn_TK4aff",

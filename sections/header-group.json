@@ -23,6 +23,32 @@
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "mega_image_h8QxXf": {
+          "type": "mega_image",
+          "settings": {
+            "mega_menu_parent": "Shop",
+            "image": "shopify://shop_images/IMG_1978_a59e985f-d056-4eb9-91e0-468e36b0c1d9.jpg",
+            "heading": "Family Rose",
+            "text": "",
+            "link": "shopify://collections/family-rose"
+          }
+        },
+        "mega_image_nnFd6A": {
+          "type": "mega_image",
+          "settings": {
+            "mega_menu_parent": "Shop",
+            "image": "shopify://shop_images/EC9AA589-3C44-40BC-B690-17002A2A323F.jpg",
+            "heading": "Summer Basics",
+            "text": "",
+            "link": "shopify://collections/summer-basics"
+          }
+        }
+      },
+      "block_order": [
+        "mega_image_h8QxXf",
+        "mega_image_nnFd6A"
+      ],
       "settings": {
         "logo": "shopify://shop_images/badsisters_logo_horizontal_edb3ea13-5bd2-4ac5-b338-990be121623e.png",
         "logo_width": 150,
