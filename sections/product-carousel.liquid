@@ -113,7 +113,7 @@
       </div>
     </div>
 
-    {%- if section.settings.button_label != blank -%}
+    {%- if section.settings.show_button and section.settings.button_label != blank -%}
       <div class="pc__footer">
         <a href="{{ section.settings.button_link | default: '#' }}" class="pc__cta">{{ section.settings.button_label }}</a>
       </div>
@@ -216,6 +216,12 @@
     {
       "type": "header",
       "content": "Botón CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Mostrar botón",
+      "default": true
     },
     {
       "type": "text",
