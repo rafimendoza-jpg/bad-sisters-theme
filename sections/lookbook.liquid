@@ -66,9 +66,9 @@
   <div class="{% if section.settings.full_width %}lbk--full{% else %}page-width{% endif %}">
 
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="lbk__header">
+      <div class="lbk__header"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>
         {%- if section.settings.subheading != blank -%}
-          <p class="lbk__sub">{{ section.settings.subheading }}</p>
+          <p class="lbk__sub"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>{{ section.settings.subheading }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
           <h2 class="lbk__title">{{ section.settings.heading }}</h2>
@@ -279,6 +279,11 @@
       "id": "background_color",
       "label": "Color de fondo",
       "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto"
     }
   ],
   "blocks": [

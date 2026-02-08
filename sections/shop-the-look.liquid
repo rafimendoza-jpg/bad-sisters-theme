@@ -12,12 +12,12 @@
   <div class="{% if section.settings.full_width %}stl--full{% else %}page-width{% endif %}">
 
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="stl__header">
+      <div class="stl__header"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>
         {%- if section.settings.heading != blank -%}
           <h2 class="stl__heading">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
-          <p class="stl__subheading">{{ section.settings.subheading }}</p>
+          <p class="stl__subheading"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>{{ section.settings.subheading }}</p>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -249,6 +249,11 @@
       "type": "url",
       "id": "button_link",
       "label": "Enlace del botón"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto"
     }
   ],
   "blocks": [

@@ -9,10 +9,10 @@
   <div class="{% if section.settings.full_width %}fp--full{% else %}page-width{% endif %}">
 
     {%- if section.settings.heading != blank -%}
-      <div class="fp__header">
+      <div class="fp__header"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>
         <h2 class="fp__heading">{{ section.settings.heading }}</h2>
         {%- if section.settings.subheading != blank -%}
-          <p class="fp__subheading">{{ section.settings.subheading }}</p>
+          <p class="fp__subheading"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>{{ section.settings.subheading }}</p>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -248,6 +248,11 @@
       "id": "button_label",
       "label": "Texto del botón",
       "default": "Ver producto"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto"
     }
   ],
   "blocks": [

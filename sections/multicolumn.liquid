@@ -51,9 +51,9 @@
   <div class="{% if section.settings.full_width %}mc--full{% else %}page-width{% endif %}">
 
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="mc__header">
+      <div class="mc__header"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>
         {%- if section.settings.subheading != blank -%}
-          <p class="mc__sub">{{ section.settings.subheading }}</p>
+          <p class="mc__sub"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>{{ section.settings.subheading }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
           <h2 class="mc__title">{{ section.settings.heading }}</h2>
@@ -91,13 +91,13 @@
             <div class="mc__icon">{{ block.settings.icon }}</div>
           {%- endif -%}
 
-          <div class="mc__content">
+          <div class="mc__content"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>
             {%- if block.settings.heading != blank -%}
               <h3 class="mc__heading">{{ block.settings.heading }}</h3>
             {%- endif -%}
 
             {%- if block.settings.text != blank -%}
-              <div class="mc__text rte">{{ block.settings.text }}</div>
+              <div class="mc__text rte"{% if section.settings.text_color != blank %} style="color: {{ section.settings.text_color }};"{% endif %}>{{ block.settings.text }}</div>
             {%- endif -%}
 
             {%- if block.settings.button_label != blank -%}
@@ -248,6 +248,11 @@
       "type": "color",
       "id": "background_color",
       "label": "Color de fondo"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto"
     }
   ],
   "blocks": [
