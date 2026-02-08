@@ -510,6 +510,58 @@
         "button_label": "Comprar todos los más vendidos",
         "button_link": ""
       }
+    },
+    "gallery_FJ6cDb": {
+      "type": "gallery",
+      "blocks": {
+        "image_RQ3ptW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/9C4EA887-1E37-4C2E-ABD3-C76C2291C738.jpg",
+            "size": "large",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "image_F4rPRN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/7E5D7443-45F1-4472-A6FA-1D6C9F932D21.jpg",
+            "size": "small",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "image_ipRq6e": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/BE3DBF68-9F7F-4E2D-A558-029FC0F65D8A.jpg",
+            "size": "small",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_RQ3ptW",
+        "image_F4rPRN",
+        "image_ipRq6e"
+      ],
+      "name": "Galería de fotos",
+      "settings": {
+        "subheading": "",
+        "heading": "Galería",
+        "layout": "filmstrip",
+        "gap": 4,
+        "full_width": false,
+        "background_color": "#1a1a1a"
+      }
     }
   },
   "order": [
@@ -528,6 +580,7 @@
     "lookbook_BYqcJD",
     "shop_the_look_zAA7z8",
     "shop_the_look_RJptKF",
-    "product_carousel_c98Px8"
+    "product_carousel_c98Px8",
+    "gallery_FJ6cDb"
   ]
 }
