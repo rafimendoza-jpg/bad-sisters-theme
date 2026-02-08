@@ -24,13 +24,13 @@
         "type": "color",
         "id": "color_secondary",
         "label": "Color secundario",
-        "default": "#f5f0eb"
+        "default": "#f5f5f5"
       },
       {
         "type": "color",
         "id": "color_accent",
         "label": "Color de acento",
-        "default": "#c9a87c"
+        "default": "#1a1a1a"
       },
       {
         "type": "color",
@@ -48,13 +48,13 @@
         "type": "color",
         "id": "color_text_light",
         "label": "Color de texto claro",
-        "default": "#6b6b6b"
+        "default": "#999999"
       },
       {
         "type": "color",
         "id": "color_border",
         "label": "Color de bordes",
-        "default": "#e0e0e0"
+        "default": "#e8e8e8"
       },
       {
         "type": "color",
@@ -71,13 +71,13 @@
         "type": "font_picker",
         "id": "type_header_font",
         "label": "Fuente de encabezados",
-        "default": "playfair_display_n4"
+        "default": "helvetica_n3"
       },
       {
         "type": "font_picker",
         "id": "type_body_font",
         "label": "Fuente del cuerpo",
-        "default": "assistant_n4"
+        "default": "helvetica_n3"
       }
     ]
   },
@@ -92,7 +92,7 @@
         "step": 100,
         "unit": "px",
         "label": "Ancho máximo de página",
-        "default": 1200
+        "default": 1400
       },
       {
         "type": "range",
@@ -102,7 +102,7 @@
         "step": 1,
         "unit": "px",
         "label": "Bordes redondeados general",
-        "default": 4
+        "default": 0
       },
       {
         "type": "range",
@@ -112,7 +112,7 @@
         "step": 1,
         "unit": "px",
         "label": "Bordes redondeados de botones",
-        "default": 4
+        "default": 0
       }
     ]
   },

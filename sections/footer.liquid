@@ -54,7 +54,7 @@
                 <h4 class="footer__col-title">{{ block.settings.heading }}</h4>
               {%- endif -%}
               {%- if block.settings.text != blank -%}
-                <p style="opacity: 0.75; font-size: 0.9rem; margin-bottom: 0.75rem;">{{ block.settings.text }}</p>
+                <p class="footer__newsletter-text">{{ block.settings.text }}</p>
               {%- endif -%}
               {%- form 'customer', class: 'footer__newsletter-form' -%}
                 <input type="hidden" name="contact[tags]" value="newsletter">
@@ -65,7 +65,7 @@
                   required
                   autocomplete="email"
                 >
-                <button type="submit" class="btn btn--accent">
+                <button type="submit" class="btn btn--primary">
                   {{ block.settings.button_text | default: 'Suscribir' }}
                 </button>
               {%- endform -%}

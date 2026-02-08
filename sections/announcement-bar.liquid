@@ -1,7 +1,7 @@
 {%- comment -%} Section: Announcement Bar {%- endcomment -%}
 
 {%- if section.settings.show_announcement -%}
-  <div class="announcement-bar" style="background-color: {{ section.settings.bar_color }}; color: {{ section.settings.text_color }};">
+  <div class="announcement-bar">
     <div class="page-width">
       {%- if section.settings.link != blank -%}
         <a href="{{ section.settings.link }}">{{ section.settings.text }}</a>

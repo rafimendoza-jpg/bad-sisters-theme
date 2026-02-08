@@ -25,7 +25,7 @@
 
   <div class="hero-banner__content {{ section.settings.text_alignment }}">
     {%- if section.settings.subheading != blank -%}
-      <p class="hero-banner__subheading" style="order: -1; margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">
+      <p class="hero-banner__subheading" style="order: -1; margin-bottom: 0.75rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 400;">
         {{ section.settings.subheading }}
       </p>
     {%- endif -%}
@@ -40,12 +40,12 @@
 
     <div class="hero-banner__buttons">
       {%- if section.settings.button_label_1 != blank -%}
-        <a href="{{ section.settings.button_link_1 }}" class="btn btn--primary" style="background-color: #fff; color: #1a1a1a; border-color: #fff;">
+        <a href="{{ section.settings.button_link_1 }}" class="btn btn--secondary" style="border-color: rgba(255,255,255,0.6); color: #fff; font-size: 0.6rem; letter-spacing: 0.25em; padding: 0.9rem 2.5rem;">
           {{ section.settings.button_label_1 }}
         </a>
       {%- endif -%}
       {%- if section.settings.button_label_2 != blank -%}
-        <a href="{{ section.settings.button_link_2 }}" class="btn btn--secondary" style="border-color: #fff; color: #fff;">
+        <a href="{{ section.settings.button_link_2 }}" class="btn" style="border-color: transparent; color: rgba(255,255,255,0.75); font-size: 0.6rem; letter-spacing: 0.2em; text-decoration: underline; text-underline-offset: 4px; padding: 0.9rem 1.5rem;">
           {{ section.settings.button_label_2 }}
         </a>
       {%- endif -%}
