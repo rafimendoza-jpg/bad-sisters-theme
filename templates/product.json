@@ -10,6 +10,14 @@
         "show_size_guide": true
       }
     },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "COMPLETA TU LOOK",
+        "max_products": 4,
+        "show_vendor": false
+      }
+    },
     "reviews": {
       "type": "product-reviews",
       "settings": {
@@ -17,15 +25,8 @@
         "show_native_reviews": true,
         "show_write_review": true
       }
-    },
-    "related": {
-      "type": "featured-collection",
-      "settings": {
-        "heading": "También te puede gustar",
-        "products_to_show": 4,
-        "columns": "4"
-      }
     }
   },
-  "order": ["main", "reviews", "related"]
+  "order": ["main", "recommendations", "reviews"]
+}
 }

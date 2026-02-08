@@ -1,4 +1,8 @@
-{%- comment -%} Section: Main Cart {%- endcomment -%}
+{%- comment -%}
+  Section: Main Cart — con sistema de upsell por producto
+  Bloques: Shop the Look, Productos sugeridos, Promoción
+  Cada bloque tiene un "producto gatillo" que activa la sugerencia
+{%- endcomment -%}
 
 <section class="cart-page" data-section-id="{{ section.id }}">
   <div class="page-width">
@@ -8,85 +12,280 @@
 
     {%- if cart.item_count > 0 -%}
       <form action="/cart" method="post">
-        <table class="cart__table">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Cantidad</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {%- for item in cart.items -%}
-              <tr>
-                <td>
-                  <div class="cart__item">
-                    <div class="cart__item-image">
-                      <a href="{{ item.url }}">
-                        {%- if item.image -%}
-                          <img src="{{ item.image | image_url: width: 160 }}" srcset="{{ item.image | image_url: width: 80 }} 80w, {{ item.image | image_url: width: 160 }} 160w" sizes="80px" alt="{{ item.title }}" loading="lazy" decoding="async" width="{{ item.image.width }}" height="{{ item.image.height }}">
-                        {%- endif -%}
-                      </a>
-                    </div>
-                    <div>
-                      <p class="cart__item-title">
-                        <a href="{{ item.url }}">{{ item.product.title }}</a>
-                      </p>
-                      {%- unless item.product.has_only_default_variant -%}
-                        <p class="cart__item-variant">{{ item.variant.title }}</p>
-                      {%- endunless -%}
-                      <button type="button" class="cart__item-remove" data-line="{{ forloop.index }}">
-                        Eliminar
-                      </button>
-                    </div>
-                  </div>
-                </td>
-                <td>{{ item.price | money }}</td>
-                <td>
-                  <div class="product__quantity" style="justify-content: flex-start;">
-                    <button type="button" class="product__quantity-btn" data-action="decrease" aria-label="Menos">−</button>
-                    <input
-                      type="number"
-                      class="cart__quantity-input"
-                      name="updates[]"
-                      value="{{ item.quantity }}"
-                      min="0"
-                      data-line="{{ forloop.index }}"
-                      aria-label="Cantidad"
-                    >
-                    <button type="button" class="product__quantity-btn" data-action="increase" aria-label="Más">+</button>
-                  </div>
-                </td>
-                <td>
-                  <strong>{{ item.line_price | money }}</strong>
-                </td>
-              </tr>
-            {%- endfor -%}
-          </tbody>
-        </table>
+        <div class="cart__layout">
+          <div class="cart__main">
+            <table class="cart__table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for item in cart.items -%}
+                  <tr>
+                    <td>
+                      <div class="cart__item">
+                        <div class="cart__item-image">
+                          <a href="{{ item.url }}">
+                            {%- if item.image -%}
+                              <img src="{{ item.image | image_url: width: 160 }}" srcset="{{ item.image | image_url: width: 80 }} 80w, {{ item.image | image_url: width: 160 }} 160w" sizes="80px" alt="{{ item.title }}" loading="lazy" decoding="async" width="{{ item.image.width }}" height="{{ item.image.height }}">
+                            {%- endif -%}
+                          </a>
+                        </div>
+                        <div>
+                          <p class="cart__item-title">
+                            <a href="{{ item.url }}">{{ item.product.title }}</a>
+                          </p>
+                          {%- unless item.product.has_only_default_variant -%}
+                            <p class="cart__item-variant">{{ item.variant.title }}</p>
+                          {%- endunless -%}
+                          <button type="button" class="cart__item-remove" data-line="{{ forloop.index }}">
+                            Eliminar
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{ item.price | money }}</td>
+                    <td>
+                      <div class="product__quantity" style="justify-content: flex-start;">
+                        <button type="button" class="product__quantity-btn" data-action="decrease" aria-label="Menos">−</button>
+                        <input
+                          type="number"
+                          class="cart__quantity-input"
+                          name="updates[]"
+                          value="{{ item.quantity }}"
+                          min="0"
+                          data-line="{{ forloop.index }}"
+                          aria-label="Cantidad"
+                        >
+                        <button type="button" class="product__quantity-btn" data-action="increase" aria-label="Más">+</button>
+                      </div>
+                    </td>
+                    <td>
+                      <strong>{{ item.line_price | money }}</strong>
+                    </td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
 
-        <div class="cart__footer">
-          <div class="cart__summary">
-            <div class="cart__subtotal">
-              <span>Subtotal</span>
-              <span>{{ cart.total_price | money }}</span>
-            </div>
-            <p class="cart__note">Impuestos y envío calculados al finalizar la compra.</p>
+            {%- comment -%} ===== CART UPSELL SYSTEM — per product ===== {%- endcomment -%}
+            {%- if section.blocks.size > 0 -%}
+              {%- for item in cart.items -%}
+                {%- assign item_handle = item.product.handle -%}
 
-            {%- if section.settings.show_cart_note -%}
-              <div style="margin-bottom: 1rem;">
-                <label for="CartNote" style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.5rem;">Nota del pedido</label>
-                <textarea id="CartNote" name="note" rows="3" placeholder="Instrucciones especiales...">{{ cart.note }}</textarea>
-              </div>
+                {%- comment -%} --- Check for Shop the Look block --- {%- endcomment -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'cart_look' and block.settings.trigger_product != blank -%}
+                    {%- if block.settings.trigger_product.handle == item_handle -%}
+                      <div class="cart-upsell cart-upsell--look" {{ block.shopify_attributes }}>
+                        <div class="cart-upsell__header">
+                          <span class="cart-upsell__tag">SHOP THE LOOK</span>
+                          <h3 class="cart-upsell__title">{{ block.settings.heading | default: "Completa el look" }}</h3>
+                        </div>
+                        <div class="cart-upsell__look-layout">
+                          {%- if block.settings.look_image != blank -%}
+                            <div class="cart-upsell__look-image">
+                              <img
+                                src="{{ block.settings.look_image | image_url: width: 600 }}"
+                                srcset="{{ block.settings.look_image | image_url: width: 300 }} 300w, {{ block.settings.look_image | image_url: width: 600 }} 600w"
+                                sizes="(max-width: 767px) 100vw, 320px"
+                                alt="{{ block.settings.heading | default: 'Shop the Look' }}"
+                                loading="lazy" decoding="async"
+                                width="{{ block.settings.look_image.width }}"
+                                height="{{ block.settings.look_image.height }}"
+                              >
+                            </div>
+                          {%- endif -%}
+                          <div class="cart-upsell__look-products">
+                            {%- assign look_products = '' | split: '' -%}
+                            {%- if block.settings.look_product_1 != blank -%}{%- assign look_products = look_products | concat: block.settings.look_product_1 | split: '|||NEVER|||' -%}{%- endif -%}
+                            {%- if block.settings.look_product_2 != blank -%}{%- assign look_products = look_products | concat: block.settings.look_product_2 | split: '|||NEVER|||' -%}{%- endif -%}
+                            {%- if block.settings.look_product_3 != blank -%}{%- assign look_products = look_products | concat: block.settings.look_product_3 | split: '|||NEVER|||' -%}{%- endif -%}
+
+                            {%- comment -%} Render each look product individually {%- endcomment -%}
+                            {%- if block.settings.look_product_1 != blank -%}
+                              {%- assign lp = block.settings.look_product_1 -%}
+                              <a href="{{ lp.url }}" class="cart-upsell__mini-card">
+                                {%- if lp.featured_image != blank -%}
+                                  <img src="{{ lp.featured_image | image_url: width: 200 }}" alt="{{ lp.title }}" loading="lazy" decoding="async" width="{{ lp.featured_image.width }}" height="{{ lp.featured_image.height }}">
+                                {%- endif -%}
+                                <div class="cart-upsell__mini-info">
+                                  <span class="cart-upsell__mini-title">{{ lp.title }}</span>
+                                  <span class="cart-upsell__mini-price">{{ lp.price | money }}</span>
+                                </div>
+                              </a>
+                            {%- endif -%}
+                            {%- if block.settings.look_product_2 != blank -%}
+                              {%- assign lp = block.settings.look_product_2 -%}
+                              <a href="{{ lp.url }}" class="cart-upsell__mini-card">
+                                {%- if lp.featured_image != blank -%}
+                                  <img src="{{ lp.featured_image | image_url: width: 200 }}" alt="{{ lp.title }}" loading="lazy" decoding="async" width="{{ lp.featured_image.width }}" height="{{ lp.featured_image.height }}">
+                                {%- endif -%}
+                                <div class="cart-upsell__mini-info">
+                                  <span class="cart-upsell__mini-title">{{ lp.title }}</span>
+                                  <span class="cart-upsell__mini-price">{{ lp.price | money }}</span>
+                                </div>
+                              </a>
+                            {%- endif -%}
+                            {%- if block.settings.look_product_3 != blank -%}
+                              {%- assign lp = block.settings.look_product_3 -%}
+                              <a href="{{ lp.url }}" class="cart-upsell__mini-card">
+                                {%- if lp.featured_image != blank -%}
+                                  <img src="{{ lp.featured_image | image_url: width: 200 }}" alt="{{ lp.title }}" loading="lazy" decoding="async" width="{{ lp.featured_image.width }}" height="{{ lp.featured_image.height }}">
+                                {%- endif -%}
+                                <div class="cart-upsell__mini-info">
+                                  <span class="cart-upsell__mini-title">{{ lp.title }}</span>
+                                  <span class="cart-upsell__mini-price">{{ lp.price | money }}</span>
+                                </div>
+                              </a>
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- comment -%} --- Check for Suggested Products block --- {%- endcomment -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'cart_products' and block.settings.trigger_product != blank -%}
+                    {%- if block.settings.trigger_product.handle == item_handle -%}
+                      <div class="cart-upsell cart-upsell--products" {{ block.shopify_attributes }}>
+                        <div class="cart-upsell__header">
+                          <h3 class="cart-upsell__title">{{ block.settings.heading | default: "También te podría gustar" }}</h3>
+                        </div>
+                        <div class="cart-upsell__products-grid">
+                          {%- if block.settings.product_1 != blank -%}
+                            {%- assign sp = block.settings.product_1 -%}
+                            <a href="{{ sp.url }}" class="cart-upsell__product-card">
+                              <div class="cart-upsell__product-media">
+                                {%- if sp.featured_image != blank -%}
+                                  <img src="{{ sp.featured_image | image_url: width: 300 }}" srcset="{{ sp.featured_image | image_url: width: 150 }} 150w, {{ sp.featured_image | image_url: width: 300 }} 300w" sizes="140px" alt="{{ sp.title }}" loading="lazy" decoding="async" width="{{ sp.featured_image.width }}" height="{{ sp.featured_image.height }}">
+                                {%- else -%}
+                                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                {%- endif -%}
+                              </div>
+                              <span class="cart-upsell__product-title">{{ sp.title }}</span>
+                              <span class="cart-upsell__product-price">{{ sp.price | money }}</span>
+                            </a>
+                          {%- endif -%}
+                          {%- if block.settings.product_2 != blank -%}
+                            {%- assign sp = block.settings.product_2 -%}
+                            <a href="{{ sp.url }}" class="cart-upsell__product-card">
+                              <div class="cart-upsell__product-media">
+                                {%- if sp.featured_image != blank -%}
+                                  <img src="{{ sp.featured_image | image_url: width: 300 }}" srcset="{{ sp.featured_image | image_url: width: 150 }} 150w, {{ sp.featured_image | image_url: width: 300 }} 300w" sizes="140px" alt="{{ sp.title }}" loading="lazy" decoding="async" width="{{ sp.featured_image.width }}" height="{{ sp.featured_image.height }}">
+                                {%- else -%}
+                                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                {%- endif -%}
+                              </div>
+                              <span class="cart-upsell__product-title">{{ sp.title }}</span>
+                              <span class="cart-upsell__product-price">{{ sp.price | money }}</span>
+                            </a>
+                          {%- endif -%}
+                          {%- if block.settings.product_3 != blank -%}
+                            {%- assign sp = block.settings.product_3 -%}
+                            <a href="{{ sp.url }}" class="cart-upsell__product-card">
+                              <div class="cart-upsell__product-media">
+                                {%- if sp.featured_image != blank -%}
+                                  <img src="{{ sp.featured_image | image_url: width: 300 }}" srcset="{{ sp.featured_image | image_url: width: 150 }} 150w, {{ sp.featured_image | image_url: width: 300 }} 300w" sizes="140px" alt="{{ sp.title }}" loading="lazy" decoding="async" width="{{ sp.featured_image.width }}" height="{{ sp.featured_image.height }}">
+                                {%- else -%}
+                                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                {%- endif -%}
+                              </div>
+                              <span class="cart-upsell__product-title">{{ sp.title }}</span>
+                              <span class="cart-upsell__product-price">{{ sp.price | money }}</span>
+                            </a>
+                          {%- endif -%}
+                          {%- if block.settings.product_4 != blank -%}
+                            {%- assign sp = block.settings.product_4 -%}
+                            <a href="{{ sp.url }}" class="cart-upsell__product-card">
+                              <div class="cart-upsell__product-media">
+                                {%- if sp.featured_image != blank -%}
+                                  <img src="{{ sp.featured_image | image_url: width: 300 }}" srcset="{{ sp.featured_image | image_url: width: 150 }} 150w, {{ sp.featured_image | image_url: width: 300 }} 300w" sizes="140px" alt="{{ sp.title }}" loading="lazy" decoding="async" width="{{ sp.featured_image.width }}" height="{{ sp.featured_image.height }}">
+                                {%- else -%}
+                                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                {%- endif -%}
+                              </div>
+                              <span class="cart-upsell__product-title">{{ sp.title }}</span>
+                              <span class="cart-upsell__product-price">{{ sp.price | money }}</span>
+                            </a>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- comment -%} --- Check for Promotion block --- {%- endcomment -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'cart_promo' and block.settings.trigger_product != blank -%}
+                    {%- if block.settings.trigger_product.handle == item_handle -%}
+                      <div class="cart-upsell cart-upsell--promo" {{ block.shopify_attributes }}>
+                        <div class="cart-upsell__promo-layout">
+                          {%- if block.settings.promo_image != blank -%}
+                            <div class="cart-upsell__promo-image">
+                              <img
+                                src="{{ block.settings.promo_image | image_url: width: 400 }}"
+                                alt="{{ block.settings.promo_title }}"
+                                loading="lazy" decoding="async"
+                                width="{{ block.settings.promo_image.width }}"
+                                height="{{ block.settings.promo_image.height }}"
+                              >
+                            </div>
+                          {%- endif -%}
+                          <div class="cart-upsell__promo-content">
+                            {%- if block.settings.promo_tag != blank -%}
+                              <span class="cart-upsell__promo-tag">{{ block.settings.promo_tag }}</span>
+                            {%- endif -%}
+                            {%- if block.settings.promo_title != blank -%}
+                              <h3 class="cart-upsell__promo-title">{{ block.settings.promo_title }}</h3>
+                            {%- endif -%}
+                            {%- if block.settings.promo_text != blank -%}
+                              <p class="cart-upsell__promo-text">{{ block.settings.promo_text }}</p>
+                            {%- endif -%}
+                            {%- if block.settings.promo_link != blank -%}
+                              <a href="{{ block.settings.promo_link }}" class="cart-upsell__promo-btn">
+                                {{ block.settings.promo_button_text | default: "Ver oferta" }}
+                              </a>
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+              {%- endfor -%}
             {%- endif -%}
+          </div>
 
-            <a href="/checkout" class="btn btn--primary btn--full">
-              Proceder al pago
-            </a>
-            <a href="/collections/all" style="display: block; text-align: center; margin-top: 1rem; font-size: 0.85rem; color: var(--color-text-light);">
-              Seguir comprando
-            </a>
+          <div class="cart__sidebar">
+            <div class="cart__summary">
+              <div class="cart__subtotal">
+                <span>Subtotal</span>
+                <span>{{ cart.total_price | money }}</span>
+              </div>
+              <p class="cart__note">Impuestos y envío calculados al finalizar la compra.</p>
+
+              {%- if section.settings.show_cart_note -%}
+                <div style="margin-bottom: 1rem;">
+                  <label for="CartNote" style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.5rem;">Nota del pedido</label>
+                  <textarea id="CartNote" name="note" rows="3" placeholder="Instrucciones especiales...">{{ cart.note }}</textarea>
+                </div>
+              {%- endif -%}
+
+              <a href="/checkout" class="btn btn--primary btn--full">
+                Proceder al pago
+              </a>
+              <a href="/collections/all" style="display: block; text-align: center; margin-top: 1rem; font-size: 0.85rem; color: var(--color-text-light);">
+                Seguir comprando
+              </a>
+            </div>
           </div>
         </div>
       </form>
@@ -108,6 +307,129 @@
       "id": "show_cart_note",
       "label": "Mostrar nota del carrito",
       "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cart_look",
+      "name": "Shop the Look",
+      "settings": [
+        {
+          "type": "product",
+          "id": "trigger_product",
+          "label": "Producto en carrito (gatillo)",
+          "info": "Cuando este producto esté en el carrito, se mostrará el look"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Completa el look"
+        },
+        {
+          "type": "image_picker",
+          "id": "look_image",
+          "label": "Imagen del look",
+          "info": "Foto del outfit completo"
+        },
+        {
+          "type": "product",
+          "id": "look_product_1",
+          "label": "Producto del look 1"
+        },
+        {
+          "type": "product",
+          "id": "look_product_2",
+          "label": "Producto del look 2"
+        },
+        {
+          "type": "product",
+          "id": "look_product_3",
+          "label": "Producto del look 3"
+        }
+      ]
+    },
+    {
+      "type": "cart_products",
+      "name": "Productos sugeridos",
+      "settings": [
+        {
+          "type": "product",
+          "id": "trigger_product",
+          "label": "Producto en carrito (gatillo)",
+          "info": "Cuando este producto esté en el carrito, se mostrarán las sugerencias"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "También te podría gustar"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Producto sugerido 1"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Producto sugerido 2"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Producto sugerido 3"
+        },
+        {
+          "type": "product",
+          "id": "product_4",
+          "label": "Producto sugerido 4"
+        }
+      ]
+    },
+    {
+      "type": "cart_promo",
+      "name": "Promoción",
+      "settings": [
+        {
+          "type": "product",
+          "id": "trigger_product",
+          "label": "Producto en carrito (gatillo)",
+          "info": "Cuando este producto esté en el carrito, se mostrará la promoción"
+        },
+        {
+          "type": "text",
+          "id": "promo_tag",
+          "label": "Etiqueta",
+          "default": "OFERTA ESPECIAL"
+        },
+        {
+          "type": "text",
+          "id": "promo_title",
+          "label": "Título de la promoción"
+        },
+        {
+          "type": "textarea",
+          "id": "promo_text",
+          "label": "Descripción"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_image",
+          "label": "Imagen de la promoción"
+        },
+        {
+          "type": "url",
+          "id": "promo_link",
+          "label": "Enlace"
+        },
+        {
+          "type": "text",
+          "id": "promo_button_text",
+          "label": "Texto del botón",
+          "default": "Ver oferta"
+        }
+      ]
     }
   ]
 }

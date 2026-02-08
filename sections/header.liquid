@@ -46,7 +46,18 @@
               </a>
 
               {%- comment -%} Mega menu panel {%- endcomment -%}
-              <div class="mega-panel" id="mega-{{ forloop.index }}" data-mega-panel>
+              {%- comment -%} Check for featured images (case-insensitive) {%- endcomment -%}
+              {%- assign has_featured = false -%}
+              {%- assign link_lower = link.title | downcase -%}
+              {%- for block in section.blocks -%}
+                {%- assign parent_lower = block.settings.mega_menu_parent | downcase -%}
+                {%- if block.type == 'mega_image' and parent_lower == link_lower -%}
+                  {%- assign has_featured = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              <div class="mega-panel{% unless has_featured %} mega-panel--compact{% endunless %}" id="mega-{{ forloop.index }}" data-mega-panel>
+                <div class="mega-panel__bg">
                 <div class="mega-panel__inner page-width">
                   <div class="mega-panel__menus">
                     {%- for child in link.links -%}
@@ -65,18 +76,11 @@
                     {%- endfor -%}
                   </div>
 
-                  {%- comment -%} Featured image cards from blocks {%- endcomment -%}
-                  {%- assign has_featured = false -%}
-                  {%- for block in section.blocks -%}
-                    {%- if block.type == 'mega_image' and block.settings.mega_menu_parent == link.title -%}
-                      {%- assign has_featured = true -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-
                   {%- if has_featured -%}
                     <div class="mega-panel__featured">
                       {%- for block in section.blocks -%}
-                        {%- if block.type == 'mega_image' and block.settings.mega_menu_parent == link.title -%}
+                        {%- assign parent_lower = block.settings.mega_menu_parent | downcase -%}
+                        {%- if block.type == 'mega_image' and parent_lower == link_lower -%}
                           <a href="{{ block.settings.link }}" class="mega-featured" {{ block.shopify_attributes }}>
                             {%- if block.settings.image != blank -%}
                               <div class="mega-featured__media">
@@ -105,6 +109,7 @@
                       {%- endfor -%}
                     </div>
                   {%- endif -%}
+                </div>
                 </div>
               </div>
             </div>
@@ -197,13 +202,14 @@
 </div>
 
 <script>
-  /* === Mega Menu: desktop hover + mobile toggle === */
+  /* === Mega Menu: desktop hover with reliable bridge + mobile toggle === */
   (function() {
     const triggers = document.querySelectorAll('.mega-trigger');
     const overlay = document.querySelector('[data-mega-overlay]');
     const header = document.querySelector('.site-header');
     let currentPanel = null;
     let closeTimer = null;
+    let isInsideMenu = false;
 
     function openPanel(trigger) {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
@@ -217,6 +223,7 @@
       overlay.classList.add('is-visible');
       header.classList.add('mega-open');
       currentPanel = panel;
+      isInsideMenu = true;
     }
 
     function closeAll() {
@@ -227,37 +234,49 @@
       }
       overlay.classList.remove('is-visible');
       header.classList.remove('mega-open');
+      isInsideMenu = false;
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
     }
 
     function scheduleClose() {
-      closeTimer = setTimeout(closeAll, 400);
-    }
-
-    function cancelClose() {
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      if (closeTimer) clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        if (!isInsideMenu) closeAll();
+      }, 500);
     }
 
     triggers.forEach(trigger => {
       const panel = trigger.querySelector('[data-mega-panel]');
 
+      /* Open on hover — enter the trigger (nav link area) */
       trigger.addEventListener('mouseenter', () => {
-        if (window.innerWidth > 989) openPanel(trigger);
-      });
-      trigger.addEventListener('mouseleave', () => {
-        if (window.innerWidth > 989) scheduleClose();
+        if (window.innerWidth > 989) {
+          isInsideMenu = true;
+          openPanel(trigger);
+        }
       });
 
-      /* Keep panel open while mouse is inside the panel */
+      /* When leaving the trigger, schedule close but give time to reach panel */
+      trigger.addEventListener('mouseleave', (e) => {
+        if (window.innerWidth > 989) {
+          isInsideMenu = false;
+          scheduleClose();
+        }
+      });
+
+      /* Panel hover: cancel close when mouse enters panel */
       if (panel) {
         panel.addEventListener('mouseenter', () => {
-          cancelClose();
+          isInsideMenu = true;
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
         });
         panel.addEventListener('mouseleave', () => {
+          isInsideMenu = false;
           if (window.innerWidth > 989) scheduleClose();
         });
       }
 
-      /* Prevent default on link click on desktop — let hover handle it */
+      /* Click on the nav link opens panel, doesn't navigate */
       const link = trigger.querySelector('[data-mega-toggle]');
       if (link) {
         link.addEventListener('click', (e) => {
@@ -269,8 +288,16 @@
       }
     });
 
+    /* All links inside mega panels should navigate normally */
+    document.querySelectorAll('.mega-panel__link, .mega-panel__col-title--link, .mega-featured').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.stopPropagation();
+        /* Let it navigate */
+      });
+    });
+
     if (overlay) {
-      overlay.addEventListener('mouseenter', scheduleClose);
+      overlay.addEventListener('mouseenter', () => { isInsideMenu = false; scheduleClose(); });
       overlay.addEventListener('click', closeAll);
     }
 

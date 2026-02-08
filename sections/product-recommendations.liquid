@@ -1,0 +1,247 @@
+{%- comment -%}
+  Section: Product Recommendations — Productos seleccionados a mano
+  El usuario puede elegir productos específicos para cada producto
+  usando metafields (custom.recommended_products) o la lista de la sección como fallback.
+{%- endcomment -%}
+
+{%- comment -%} Gather recommended products {%- endcomment -%}
+{%- assign rec_products = product.metafields.custom.recommended_products.value -%}
+{%- assign has_metafield_recs = false -%}
+{%- if rec_products != blank and rec_products.size > 0 -%}
+  {%- assign has_metafield_recs = true -%}
+{%- endif -%}
+
+{%- comment -%} Fallback: use block-level products (generic per template) {%- endcomment -%}
+{%- assign has_block_recs = false -%}
+{%- if section.blocks.size > 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'product' and block.settings.product != blank -%}
+      {%- assign has_block_recs = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- comment -%} Second fallback: section product_list setting {%- endcomment -%}
+{%- assign has_list_recs = false -%}
+{%- if section.settings.products != blank and section.settings.products.size > 0 -%}
+  {%- assign has_list_recs = true -%}
+{%- endif -%}
+
+{%- if has_metafield_recs or has_block_recs or has_list_recs -%}
+<section class="prec section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="prec__header">
+        <h2 class="prec__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="prec__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="prec__grid">
+      {%- if has_metafield_recs -%}
+        {%- comment -%} === Per-product picks from metafield === {%- endcomment -%}
+        {%- for rec in rec_products limit: section.settings.max_products -%}
+          {%- if rec.available != nil -%}
+            <div class="prec__item">
+              <a href="{{ rec.url }}" class="prec__product">
+                <div class="prec__media">
+                  {%- if rec.featured_image != blank -%}
+                    <img
+                      src="{{ rec.featured_image | image_url: width: 500 }}"
+                      srcset="{{ rec.featured_image | image_url: width: 250 }} 250w, {{ rec.featured_image | image_url: width: 400 }} 400w, {{ rec.featured_image | image_url: width: 500 }} 500w"
+                      sizes="(max-width: 767px) 45vw, 260px"
+                      alt="{{ rec.title }}"
+                      loading="lazy"
+                      decoding="async"
+                      width="{{ rec.featured_image.width }}"
+                      height="{{ rec.featured_image.height }}"
+                    >
+                    {%- if rec.images[1] != blank -%}
+                      <img
+                        class="prec__img-hover"
+                        src="{{ rec.images[1] | image_url: width: 500 }}"
+                        alt="{{ rec.title }}"
+                        loading="lazy"
+                        decoding="async"
+                        width="{{ rec.images[1].width }}"
+                        height="{{ rec.images[1].height }}"
+                      >
+                    {%- endif -%}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                  {%- if rec.compare_at_price > rec.price -%}
+                    {%- assign discount = rec.compare_at_price | minus: rec.price | times: 100 | divided_by: rec.compare_at_price -%}
+                    <span class="prec__badge">-{{ discount }}%</span>
+                  {%- endif -%}
+                </div>
+                <div class="prec__info">
+                  <span class="prec__title">{{ rec.title }}</span>
+                  {%- if section.settings.show_vendor and rec.vendor != blank -%}
+                    <span class="prec__vendor">{{ rec.vendor }}</span>
+                  {%- endif -%}
+                  <span class="prec__price">
+                    {%- if rec.compare_at_price > rec.price -%}
+                      <s>{{ rec.compare_at_price | money }}</s>
+                      <span class="prec__price--sale">{{ rec.price | money }}</span>
+                    {%- else -%}
+                      {{ rec.price | money }}
+                    {%- endif -%}
+                  </span>
+                </div>
+              </a>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+      {%- elsif has_block_recs -%}
+        {%- comment -%} === Block-picked products (per section) === {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product' and block.settings.product != blank -%}
+            {%- assign rec = block.settings.product -%}
+            <div class="prec__item" {{ block.shopify_attributes }}>
+              <a href="{{ rec.url }}" class="prec__product">
+                <div class="prec__media">
+                  {%- if rec.featured_image != blank -%}
+                    <img
+                      src="{{ rec.featured_image | image_url: width: 500 }}"
+                      srcset="{{ rec.featured_image | image_url: width: 250 }} 250w, {{ rec.featured_image | image_url: width: 400 }} 400w, {{ rec.featured_image | image_url: width: 500 }} 500w"
+                      sizes="(max-width: 767px) 45vw, 260px"
+                      alt="{{ rec.title }}"
+                      loading="lazy"
+                      decoding="async"
+                      width="{{ rec.featured_image.width }}"
+                      height="{{ rec.featured_image.height }}"
+                    >
+                    {%- if rec.images[1] != blank -%}
+                      <img
+                        class="prec__img-hover"
+                        src="{{ rec.images[1] | image_url: width: 500 }}"
+                        alt="{{ rec.title }}"
+                        loading="lazy"
+                        decoding="async"
+                        width="{{ rec.images[1].width }}"
+                        height="{{ rec.images[1].height }}"
+                      >
+                    {%- endif -%}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                  {%- if rec.compare_at_price > rec.price -%}
+                    {%- assign discount = rec.compare_at_price | minus: rec.price | times: 100 | divided_by: rec.compare_at_price -%}
+                    <span class="prec__badge">-{{ discount }}%</span>
+                  {%- endif -%}
+                </div>
+                <div class="prec__info">
+                  <span class="prec__title">{{ rec.title }}</span>
+                  {%- if section.settings.show_vendor and rec.vendor != blank -%}
+                    <span class="prec__vendor">{{ rec.vendor }}</span>
+                  {%- endif -%}
+                  <span class="prec__price">
+                    {%- if rec.compare_at_price > rec.price -%}
+                      <s>{{ rec.compare_at_price | money }}</s>
+                      <span class="prec__price--sale">{{ rec.price | money }}</span>
+                    {%- else -%}
+                      {{ rec.price | money }}
+                    {%- endif -%}
+                  </span>
+                </div>
+              </a>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+      {%- elsif has_list_recs -%}
+        {%- comment -%} === Product list setting (fallback) === {%- endcomment -%}
+        {%- for rec in section.settings.products limit: section.settings.max_products -%}
+          <div class="prec__item">
+            <a href="{{ rec.url }}" class="prec__product">
+              <div class="prec__media">
+                {%- if rec.featured_image != blank -%}
+                  <img
+                    src="{{ rec.featured_image | image_url: width: 500 }}"
+                    srcset="{{ rec.featured_image | image_url: width: 250 }} 250w, {{ rec.featured_image | image_url: width: 400 }} 400w, {{ rec.featured_image | image_url: width: 500 }} 500w"
+                    sizes="(max-width: 767px) 45vw, 260px"
+                    alt="{{ rec.title }}"
+                    loading="lazy"
+                    decoding="async"
+                    width="{{ rec.featured_image.width }}"
+                    height="{{ rec.featured_image.height }}"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              <div class="prec__info">
+                <span class="prec__title">{{ rec.title }}</span>
+                <span class="prec__price">{{ rec.price | money }}</span>
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Recomendaciones de producto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "COMPLETA TU LOOK"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Productos genéricos (fallback)",
+      "info": "Se muestran solo si el producto no tiene recomendaciones propias vía metafield ni bloques."
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Máximo de productos",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Mostrar marca",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Producto",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recomendaciones de producto"
+    }
+  ]
+}
+{% endschema %}
