@@ -167,6 +167,8 @@
         "full_width": true,
         "full_height": false,
         "full_height_value": 70,
+        "padding_top": 15,
+        "padding_bottom": 15,
         "background_color": "#690f17"
       }
     },
@@ -650,6 +652,8 @@
         "full_width": false,
         "full_height": false,
         "full_height_value": 80,
+        "padding_top": 40,
+        "padding_bottom": 40,
         "background_color": "#1a1a1a"
       }
     }
