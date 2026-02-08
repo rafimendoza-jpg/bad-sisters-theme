@@ -5,7 +5,10 @@
       "settings": {
         "columns": "4",
         "show_sort": true,
-        "show_description": true
+        "show_description": true,
+        "hero_full_width": true,
+        "occasion_group": "Ocasión",
+        "default_columns": "4"
       }
     }
   },

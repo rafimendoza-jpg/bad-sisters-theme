@@ -1,7 +1,8 @@
 {%- comment -%}
-  Section: Main Collection — Rediseñada estilo Zara
-  - Header hero con imagen de colección
-  - Filtros por tags
+  Section: Main Collection — Rediseñada estilo Revolve editorial
+  - Hero banner full-width con imagen + nombre superpuesto
+  - Quick occasion filter tags (Ocasión:xxx) debajo del título
+  - Filtros detallados: Talla, Color, Precio, Tipo de prenda
   - Layout limpio y elegante
   - Hover reveal segundo imagen + tallas
 {%- endcomment -%}
@@ -10,8 +11,8 @@
 
 <section class="zara-collection" data-section-id="{{ section.id }}">
 
-  {%- comment -%} ===== HERO HEADER ===== {%- endcomment -%}
-  <div class="zc-hero{% if collection.image %} zc-hero--has-image{% endif %}">
+  {%- comment -%} ===== EDITORIAL HERO BANNER ===== {%- endcomment -%}
+  <div class="zc-hero{% if collection.image %} zc-hero--has-image{% endif %}{% if section.settings.hero_full_width %} zc-hero--full{% endif %}">
     {%- if collection.image and section.settings.show_hero_image -%}
       <div class="zc-hero__media">
         <img
@@ -29,7 +30,7 @@
         <div class="zc-hero__overlay"></div>
       </div>
     {%- endif -%}
-    <div class="zc-hero__content page-width">
+    <div class="zc-hero__content{% if collection.image and section.settings.show_hero_image %} zc-hero__content--over{% endif %}">
       <h1 class="zc-hero__title">{{ collection.title }}</h1>
       {%- if collection.description != blank and section.settings.show_description -%}
         <p class="zc-hero__desc">{{ collection.description | strip_html | truncatewords: 30 }}</p>
@@ -37,6 +38,36 @@
       <span class="zc-hero__count">{{ collection.products_count }} {% if collection.products_count == 1 %}producto{% else %}productos{% endif %}</span>
     </div>
   </div>
+
+  {%- comment -%} ===== OCCASION QUICK FILTERS (tags with "Ocasión:" prefix) ===== {%- endcomment -%}
+  {%- assign occasion_prefix = section.settings.occasion_group | default: 'Ocasión' -%}
+  {%- assign has_occasion_tags = false -%}
+  {%- for tag in collection.all_tags -%}
+    {%- if tag contains occasion_prefix -%}
+      {%- assign has_occasion_tags = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if has_occasion_tags -%}
+    <div class="zc-occasion-bar page-width">
+      <div class="zc-occasion-bar__inner">
+        <a href="{{ collection.url }}" class="zc-occasion-tag{% unless current_tags.size > 0 %} is-active{% endunless %}">
+          Todo
+        </a>
+        {%- for tag in collection.all_tags -%}
+          {%- if tag contains occasion_prefix -%}
+            {%- assign occasion_val = tag | split: ':' | last | strip -%}
+            {%- if current_tags contains tag -%}
+              <a href="{{ collection.url }}" class="zc-occasion-tag is-active">{{ occasion_val }}</a>
+            {%- else -%}
+              <a href="{{ collection.url }}/{{ tag | handleize }}" class="zc-occasion-tag">{{ occasion_val }}</a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
 
   <div class="page-width">
 
@@ -82,7 +113,7 @@
       </div>
     </div>
 
-    {%- comment -%} ===== TAG FILTERS ===== {%- endcomment -%}
+    {%- comment -%} ===== TAG FILTERS (detailed: talla, color, tipo — excluding occasion) ===== {%- endcomment -%}
     <div class="zc-filters">
       {%- if collection.all_tags.size > 0 -%}
 
@@ -103,17 +134,19 @@
           </div>
         {%- endif -%}
 
-        {%- comment -%} Collect unique group names from "Group:Value" tags {%- endcomment -%}
+        {%- comment -%} Collect unique group names from "Group:Value" tags, excluding occasion {%- endcomment -%}
         {%- assign tag_groups = '' -%}
         {%- assign has_ungrouped = false -%}
 
         {%- for tag in collection.all_tags -%}
           {%- if tag contains ':' -%}
             {%- assign tag_group_name = tag | split: ':' | first | strip -%}
-            {%- unless tag_groups contains tag_group_name -%}
-              {%- if tag_groups != '' -%}{%- assign tag_groups = tag_groups | append: '|||' -%}{%- endif -%}
-              {%- assign tag_groups = tag_groups | append: tag_group_name -%}
-            {%- endunless -%}
+            {%- if tag_group_name != occasion_prefix -%}
+              {%- unless tag_groups contains tag_group_name -%}
+                {%- if tag_groups != '' -%}{%- assign tag_groups = tag_groups | append: '|||' -%}{%- endif -%}
+                {%- assign tag_groups = tag_groups | append: tag_group_name -%}
+              {%- endunless -%}
+            {%- endif -%}
           {%- else -%}
             {%- assign has_ungrouped = true -%}
           {%- endif -%}
@@ -325,7 +358,7 @@
 
 {% schema %}
 {
-  "name": "Colección (Zara style)",
+  "name": "Colección (Revolve style)",
   "settings": [
     {
       "type": "header",
@@ -335,13 +368,32 @@
       "type": "checkbox",
       "id": "show_hero_image",
       "label": "Mostrar imagen hero de colección",
-      "default": true
+      "default": true,
+      "info": "Usa la imagen de la colección como banner editorial"
+    },
+    {
+      "type": "checkbox",
+      "id": "hero_full_width",
+      "label": "Hero a ancho completo",
+      "default": true,
+      "info": "La imagen ocupa todo el ancho de la pantalla"
     },
     {
       "type": "checkbox",
       "id": "show_description",
       "label": "Mostrar descripción",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Filtros por ocasión"
+    },
+    {
+      "type": "text",
+      "id": "occasion_group",
+      "label": "Nombre del grupo de ocasión",
+      "default": "Ocasión",
+      "info": "Los tags con formato 'Ocasión:Oficina' aparecen como filtros rápidos debajo del hero"
     },
     {
       "type": "header",
@@ -356,7 +408,7 @@
         { "value": "3", "label": "3 columnas" },
         { "value": "4", "label": "4 columnas" }
       ],
-      "default": "3"
+      "default": "4"
     },
     {
       "type": "range",

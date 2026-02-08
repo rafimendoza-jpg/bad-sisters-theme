@@ -1,0 +1,215 @@
+{%- comment -%}
+  Section: Shop the Look
+  - Full-width lifestyle image
+  - Hotspot dots positioned via percentage coordinates
+  - Each hotspot links to a product with preview card on hover/click
+{%- endcomment -%}
+
+<section class="stl" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="stl__header">
+        <h2 class="stl__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="stl__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="stl__container">
+      {%- comment -%} Main lifestyle image {%- endcomment -%}
+      <div class="stl__image-wrap">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1600 }}"
+            srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1600 }} 1600w"
+            sizes="(max-width: 768px) 100vw, min(1400px, 100vw)"
+            alt="{{ section.settings.heading | default: 'Shop the Look' }}"
+            loading="lazy"
+            decoding="async"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            class="stl__image"
+          >
+        {%- else -%}
+          <div class="stl__placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Hotspot dots {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'hotspot' and block.settings.product != blank -%}
+            {%- assign hs_product = block.settings.product -%}
+            <div
+              class="stl__hotspot"
+              style="left: {{ block.settings.pos_x }}%; top: {{ block.settings.pos_y }}%;"
+              data-hotspot="{{ forloop.index }}"
+              {{ block.shopify_attributes }}
+            >
+              <button class="stl__dot" aria-label="Ver {{ hs_product.title }}">
+                <span class="stl__dot-ring"></span>
+                <span class="stl__dot-center"></span>
+              </button>
+
+              {%- comment -%} Product preview card {%- endcomment -%}
+              <div class="stl__card" data-card="{{ forloop.index }}">
+                <a href="{{ hs_product.url }}" class="stl__card-inner">
+                  {%- if hs_product.featured_image -%}
+                    <div class="stl__card-media">
+                      <img
+                        src="{{ hs_product.featured_image | image_url: width: 400 }}"
+                        alt="{{ hs_product.title }}"
+                        loading="lazy"
+                        decoding="async"
+                        width="{{ hs_product.featured_image.width }}"
+                        height="{{ hs_product.featured_image.height }}"
+                      >
+                    </div>
+                  {%- endif -%}
+                  <div class="stl__card-info">
+                    <span class="stl__card-title">{{ hs_product.title }}</span>
+                    <span class="stl__card-price">
+                      {%- if hs_product.compare_at_price > hs_product.price -%}
+                        <s>{{ hs_product.compare_at_price | money }}</s>
+                        {{ hs_product.price | money }}
+                      {%- else -%}
+                        {{ hs_product.price | money }}
+                      {%- endif -%}
+                    </span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Product list strip below (mobile + summary) {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="stl__products-strip">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'hotspot' and block.settings.product != blank -%}
+              {%- assign sp = block.settings.product -%}
+              <a href="{{ sp.url }}" class="stl__strip-item">
+                {%- if sp.featured_image -%}
+                  <div class="stl__strip-media">
+                    <img
+                      src="{{ sp.featured_image | image_url: width: 200 }}"
+                      alt="{{ sp.title }}"
+                      loading="lazy"
+                      decoding="async"
+                      width="{{ sp.featured_image.width }}"
+                      height="{{ sp.featured_image.height }}"
+                    >
+                  </div>
+                {%- endif -%}
+                <div class="stl__strip-info">
+                  <span class="stl__strip-title">{{ sp.title }}</span>
+                  <span class="stl__strip-price">{{ sp.price | money }}</span>
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Shop the Look: toggle hotspot cards */
+  (function() {
+    const hotspots = document.querySelectorAll('.stl__hotspot');
+    let activeCard = null;
+
+    hotspots.forEach(hs => {
+      const dot = hs.querySelector('.stl__dot');
+      const card = hs.querySelector('.stl__card');
+
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (activeCard && activeCard !== card) {
+          activeCard.classList.remove('is-visible');
+          activeCard.closest('.stl__hotspot').classList.remove('is-active');
+        }
+        card.classList.toggle('is-visible');
+        hs.classList.toggle('is-active');
+        activeCard = card.classList.contains('is-visible') ? card : null;
+      });
+    });
+
+    document.addEventListener('click', () => {
+      if (activeCard) {
+        activeCard.classList.remove('is-visible');
+        activeCard.closest('.stl__hotspot').classList.remove('is-active');
+        activeCard = null;
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Shop the Look",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "SHOP THE LOOK"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Haz clic en los puntos para descubrir cada pieza"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen del look"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Producto (punto)",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto"
+        },
+        {
+          "type": "range",
+          "id": "pos_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Posición horizontal (%)",
+          "default": 50,
+          "info": "0 = izquierda, 100 = derecha"
+        },
+        {
+          "type": "range",
+          "id": "pos_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "Posición vertical (%)",
+          "default": 50,
+          "info": "0 = arriba, 100 = abajo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the Look",
+      "category": "Imagen"
+    }
+  ]
+}
+{% endschema %}

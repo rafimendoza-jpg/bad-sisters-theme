@@ -1,0 +1,215 @@
+{%- comment -%}
+  Section: Product Carousel — estilo Revolve "SUPERVENTAS"
+  - Horizontal scrollable product row
+  - Arrow navigation (prev / next)
+  - Configurable collection source
+{%- endcomment -%}
+
+{%- assign carousel_collection = collections[section.settings.collection] -%}
+
+<section class="pc" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {%- comment -%} Header with title + arrows {%- endcomment -%}
+    <div class="pc__header">
+      <div class="pc__title-wrap">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pc__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="pc__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="pc__controls">
+        <button class="pc__arrow pc__arrow--prev" aria-label="Anterior" data-carousel-prev="{{ section.id }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="pc__arrow pc__arrow--next" aria-label="Siguiente" data-carousel-next="{{ section.id }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    {%- comment -%} Scrollable track {%- endcomment -%}
+    <div class="pc__track-wrapper">
+      <div class="pc__track" data-carousel-track="{{ section.id }}">
+        {%- if carousel_collection != blank -%}
+          {%- for product in carousel_collection.products limit: section.settings.products_to_show -%}
+            <div class="pc__slide">
+              <a href="{{ product.url }}" class="pc__product">
+                <div class="pc__media">
+                  {%- if product.featured_image -%}
+                    <img
+                      src="{{ product.featured_image | image_url: width: 500 }}"
+                      srcset="{{ product.featured_image | image_url: width: 280 }} 280w, {{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 500 }} 500w"
+                      sizes="(max-width: 480px) 60vw, (max-width: 768px) 40vw, 260px"
+                      alt="{{ product.featured_image.alt | default: product.title }}"
+                      loading="lazy"
+                      decoding="async"
+                      width="{{ product.featured_image.width }}"
+                      height="{{ product.featured_image.height }}"
+                      class="pc__img pc__img--primary"
+                    >
+                    {%- if product.images[1] != blank -%}
+                      <img
+                        src="{{ product.images[1] | image_url: width: 500 }}"
+                        alt="{{ product.title }}"
+                        loading="lazy"
+                        decoding="async"
+                        width="{{ product.images[1].width }}"
+                        height="{{ product.images[1].height }}"
+                        class="pc__img pc__img--hover"
+                      >
+                    {%- endif -%}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="pc__badge">
+                      -{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
+                    </span>
+                  {%- endif -%}
+                </div>
+
+                <div class="pc__info">
+                  <span class="pc__product-title">{{ product.title }}</span>
+                  {%- if section.settings.show_vendor and product.vendor != blank -%}
+                    <span class="pc__vendor">{{ product.vendor }}</span>
+                  {%- endif -%}
+                  <span class="pc__price">
+                    {%- if product.compare_at_price > product.price -%}
+                      <s class="pc__price--compare">{{ product.compare_at_price | money }}</s>
+                      <span class="pc__price--sale">{{ product.price | money }}</span>
+                    {%- else -%}
+                      {{ product.price | money }}
+                    {%- endif -%}
+                  </span>
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- comment -%} Placeholder slides if no collection selected {%- endcomment -%}
+          {%- for i in (1..6) -%}
+            <div class="pc__slide">
+              <div class="pc__product">
+                <div class="pc__media pc__media--placeholder">
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+                <div class="pc__info">
+                  <span class="pc__product-title">Producto de ejemplo {{ i }}</span>
+                  <span class="pc__price">$0.00</span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.button_label != blank and carousel_collection != blank -%}
+      <div class="pc__footer">
+        <a href="{{ carousel_collection.url }}" class="pc__cta">{{ section.settings.button_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  /* Product Carousel: scroll-based with arrow buttons */
+  (function() {
+    const id = '{{ section.id }}';
+    const track = document.querySelector('[data-carousel-track="' + id + '"]');
+    const prevBtn = document.querySelector('[data-carousel-prev="' + id + '"]');
+    const nextBtn = document.querySelector('[data-carousel-next="' + id + '"]');
+    if (!track) return;
+
+    function getScrollAmount() {
+      const slide = track.querySelector('.pc__slide');
+      if (!slide) return 300;
+      const style = getComputedStyle(track);
+      const gap = parseFloat(style.gap) || 20;
+      return (slide.offsetWidth + gap) * {{ section.settings.scroll_count | default: 3 }};
+    }
+
+    function updateArrows() {
+      if (!prevBtn || !nextBtn) return;
+      prevBtn.disabled = track.scrollLeft <= 5;
+      nextBtn.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 5;
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+    });
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    });
+
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    updateArrows();
+    /* Re-check after images load */
+    window.addEventListener('load', updateArrows);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Carrusel de Productos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "SUPERVENTAS"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "label": "Productos a mostrar",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "scroll_count",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Productos por scroll",
+      "default": 3,
+      "info": "Cuántos productos se desplazan por clic"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Mostrar marca/diseñador",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón CTA",
+      "default": "Comprar todos los más vendidos"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrusel de Productos",
+      "category": "Productos"
+    }
+  ]
+}
+{% endschema %}
