@@ -1,118 +1,147 @@
 {%- comment -%}
-  Section: Shop the Look
-  - Full-width lifestyle image
-  - Hotspot dots positioned via percentage coordinates
-  - Each hotspot links to a product with preview card on hover/click
+  Section: Shop the Look — Layout flexible
+  - Foto + productos lado a lado o arriba/abajo
+  - Control de posición y tamaño de la imagen
+  - Texto y botón CTA
 {%- endcomment -%}
 
-<section class="stl" data-section-id="{{ section.id }}">
-  <div class="page-width">
-    {%- if section.settings.heading != blank -%}
+{%- assign layout = section.settings.layout -%}
+{%- assign image_size = section.settings.image_size -%}
+
+<section class="stl section-padding" data-section-id="{{ section.id }}">
+  <div class="{% if section.settings.full_width %}stl--full{% else %}page-width{% endif %}">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="stl__header">
-        <h2 class="stl__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.heading != blank -%}
+          <h2 class="stl__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
         {%- if section.settings.subheading != blank -%}
           <p class="stl__subheading">{{ section.settings.subheading }}</p>
         {%- endif -%}
       </div>
     {%- endif -%}
 
-    <div class="stl__container">
-      {%- comment -%} Main lifestyle image {%- endcomment -%}
-      <div class="stl__image-wrap">
+    <div class="stl__layout stl__layout--{{ layout }}" style="
+      {%- if layout == 'image-left' or layout == 'image-right' -%}
+        --stl-image-size: {{ image_size }}%;
+      {%- endif -%}
+    ">
+      {%- comment -%} === IMAGE SIDE === {%- endcomment -%}
+      <div class="stl__image-side">
         {%- if section.settings.image != blank -%}
-          <img
-            src="{{ section.settings.image | image_url: width: 1600 }}"
-            srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1600 }} 1600w"
-            sizes="(max-width: 768px) 100vw, min(1400px, 100vw)"
-            alt="{{ section.settings.heading | default: 'Shop the Look' }}"
-            loading="lazy"
-            decoding="async"
-            width="{{ section.settings.image.width }}"
-            height="{{ section.settings.image.height }}"
-            class="stl__image"
-          >
+          <div class="stl__image-wrap">
+            <img
+              src="{{ section.settings.image | image_url: width: 1600 }}"
+              srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1600 }} 1600w"
+              sizes="(max-width: 768px) 100vw, {{ image_size }}vw"
+              alt="{{ section.settings.heading | default: 'Shop the Look' }}"
+              loading="lazy"
+              decoding="async"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+              class="stl__image"
+            >
+
+            {%- comment -%} Hotspot dots on image {%- endcomment -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'hotspot' and block.settings.product != blank -%}
+                {%- assign hs_product = block.settings.product -%}
+                <div
+                  class="stl__hotspot"
+                  style="left: {{ block.settings.pos_x }}%; top: {{ block.settings.pos_y }}%;"
+                  data-hotspot="{{ forloop.index }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <button class="stl__dot" aria-label="Ver {{ hs_product.title }}">
+                    <span class="stl__dot-ring"></span>
+                    <span class="stl__dot-center"></span>
+                  </button>
+                  <div class="stl__card" data-card="{{ forloop.index }}">
+                    <a href="{{ hs_product.url }}" class="stl__card-inner">
+                      {%- if hs_product.featured_image -%}
+                        <div class="stl__card-media">
+                          <img src="{{ hs_product.featured_image | image_url: width: 400 }}" alt="{{ hs_product.title }}" loading="lazy" decoding="async" width="{{ hs_product.featured_image.width }}" height="{{ hs_product.featured_image.height }}">
+                        </div>
+                      {%- endif -%}
+                      <div class="stl__card-info">
+                        <span class="stl__card-title">{{ hs_product.title }}</span>
+                        <span class="stl__card-price">
+                          {%- if hs_product.compare_at_price > hs_product.price -%}
+                            <s>{{ hs_product.compare_at_price | money }}</s> {{ hs_product.price | money }}
+                          {%- else -%}
+                            {{ hs_product.price | money }}
+                          {%- endif -%}
+                        </span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
         {%- else -%}
           <div class="stl__placeholder">
             {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
           </div>
         {%- endif -%}
-
-        {%- comment -%} Hotspot dots {%- endcomment -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'hotspot' and block.settings.product != blank -%}
-            {%- assign hs_product = block.settings.product -%}
-            <div
-              class="stl__hotspot"
-              style="left: {{ block.settings.pos_x }}%; top: {{ block.settings.pos_y }}%;"
-              data-hotspot="{{ forloop.index }}"
-              {{ block.shopify_attributes }}
-            >
-              <button class="stl__dot" aria-label="Ver {{ hs_product.title }}">
-                <span class="stl__dot-ring"></span>
-                <span class="stl__dot-center"></span>
-              </button>
-
-              {%- comment -%} Product preview card {%- endcomment -%}
-              <div class="stl__card" data-card="{{ forloop.index }}">
-                <a href="{{ hs_product.url }}" class="stl__card-inner">
-                  {%- if hs_product.featured_image -%}
-                    <div class="stl__card-media">
-                      <img
-                        src="{{ hs_product.featured_image | image_url: width: 400 }}"
-                        alt="{{ hs_product.title }}"
-                        loading="lazy"
-                        decoding="async"
-                        width="{{ hs_product.featured_image.width }}"
-                        height="{{ hs_product.featured_image.height }}"
-                      >
-                    </div>
-                  {%- endif -%}
-                  <div class="stl__card-info">
-                    <span class="stl__card-title">{{ hs_product.title }}</span>
-                    <span class="stl__card-price">
-                      {%- if hs_product.compare_at_price > hs_product.price -%}
-                        <s>{{ hs_product.compare_at_price | money }}</s>
-                        {{ hs_product.price | money }}
-                      {%- else -%}
-                        {{ hs_product.price | money }}
-                      {%- endif -%}
-                    </span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
       </div>
 
-      {%- comment -%} Product list strip below (mobile + summary) {%- endcomment -%}
-      {%- if section.blocks.size > 0 -%}
-        <div class="stl__products-strip">
+      {%- comment -%} === PRODUCTS SIDE === {%- endcomment -%}
+      <div class="stl__products-side">
+        {%- if section.settings.text_content != blank -%}
+          <div class="stl__text">
+            {{ section.settings.text_content }}
+          </div>
+        {%- endif -%}
+
+        <div class="stl__products-list">
           {%- for block in section.blocks -%}
             {%- if block.type == 'hotspot' and block.settings.product != blank -%}
               {%- assign sp = block.settings.product -%}
-              <a href="{{ sp.url }}" class="stl__strip-item">
-                {%- if sp.featured_image -%}
-                  <div class="stl__strip-media">
+              <a href="{{ sp.url }}" class="stl__product-item" {{ block.shopify_attributes }}>
+                <div class="stl__product-media">
+                  {%- if sp.featured_image -%}
                     <img
-                      src="{{ sp.featured_image | image_url: width: 200 }}"
+                      src="{{ sp.featured_image | image_url: width: 300 }}"
+                      srcset="{{ sp.featured_image | image_url: width: 150 }} 150w, {{ sp.featured_image | image_url: width: 300 }} 300w"
+                      sizes="(max-width: 767px) 120px, 140px"
                       alt="{{ sp.title }}"
                       loading="lazy"
                       decoding="async"
                       width="{{ sp.featured_image.width }}"
                       height="{{ sp.featured_image.height }}"
                     >
-                  </div>
-                {%- endif -%}
-                <div class="stl__strip-info">
-                  <span class="stl__strip-title">{{ sp.title }}</span>
-                  <span class="stl__strip-price">{{ sp.price | money }}</span>
+                  {%- endif -%}
+                  {%- if sp.compare_at_price > sp.price -%}
+                    {%- assign discount = sp.compare_at_price | minus: sp.price | times: 100 | divided_by: sp.compare_at_price -%}
+                    <span class="stl__product-badge">-{{ discount }}%</span>
+                  {%- endif -%}
+                </div>
+                <div class="stl__product-info">
+                  <span class="stl__product-title">{{ sp.title }}</span>
+                  <span class="stl__product-price">
+                    {%- if sp.compare_at_price > sp.price -%}
+                      <s>{{ sp.compare_at_price | money }}</s>
+                      <span class="stl__product-price--sale">{{ sp.price | money }}</span>
+                    {%- else -%}
+                      {{ sp.price | money }}
+                    {%- endif -%}
+                  </span>
                 </div>
               </a>
             {%- endif -%}
           {%- endfor -%}
         </div>
-      {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="stl__cta-wrap">
+            <a href="{{ section.settings.button_link | default: '#' }}" class="stl__cta">
+              {{ section.settings.button_label }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
@@ -120,7 +149,9 @@
 <script>
   /* Shop the Look: toggle hotspot cards */
   (function() {
-    const hotspots = document.querySelectorAll('.stl__hotspot');
+    const section = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!section) return;
+    const hotspots = section.querySelectorAll('.stl__hotspot');
     let activeCard = null;
 
     hotspots.forEach(hs => {
@@ -162,19 +193,68 @@
     {
       "type": "text",
       "id": "subheading",
-      "label": "Subtítulo",
-      "default": "Haz clic en los puntos para descubrir cada pieza"
+      "label": "Subtítulo"
     },
     {
       "type": "image_picker",
       "id": "image",
       "label": "Imagen del look"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Posición de la imagen",
+      "options": [
+        { "value": "image-left", "label": "Imagen a la izquierda" },
+        { "value": "image-right", "label": "Imagen a la derecha" },
+        { "value": "image-top", "label": "Imagen arriba" },
+        { "value": "image-bottom", "label": "Imagen abajo" }
+      ],
+      "default": "image-left",
+      "info": "Usa izquierda/derecha para fotos verticales, arriba/abajo para horizontales"
+    },
+    {
+      "type": "range",
+      "id": "image_size",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "label": "Tamaño de la imagen",
+      "default": 55,
+      "info": "Porcentaje del espacio que ocupa la imagen (aplica en layout lateral)"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Texto y botón"
+    },
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Texto descriptivo",
+      "info": "Aparece arriba de los productos"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
     }
   ],
   "blocks": [
     {
       "type": "hotspot",
-      "name": "Producto (punto)",
+      "name": "Producto",
       "limit": 8,
       "settings": [
         {
@@ -188,7 +268,7 @@
           "min": 0,
           "max": 100,
           "step": 1,
-          "label": "Posición horizontal (%)",
+          "label": "Punto en imagen — Horizontal (%)",
           "default": 50,
           "info": "0 = izquierda, 100 = derecha"
         },
@@ -198,7 +278,7 @@
           "min": 0,
           "max": 100,
           "step": 1,
-          "label": "Posición vertical (%)",
+          "label": "Punto en imagen — Vertical (%)",
           "default": 50,
           "info": "0 = arriba, 100 = abajo"
         }

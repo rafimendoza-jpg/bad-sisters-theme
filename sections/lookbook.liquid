@@ -1,14 +1,15 @@
 {%- comment -%}
-  Section: Lookbook — Grid personalizable
-  Cada imagen tiene controles individuales de:
-  - Columnas que ocupa (1-6)
-  - Filas que ocupa (1-3)
-  - Aspect ratio o altura personalizada
-  - Hotspot de producto
-  - Overlay con texto
+  Section: Lookbook — Layouts predefinidos que funcionan
+  Layout options:
+  - 1 columna (full)
+  - 2 columnas (50/50)
+  - 2 columnas (70/30 o 30/70)
+  - 3 columnas iguales
+  - Grid masonry (1 grande + 2 chicas)
+  Cada imagen tiene tamaño configurable (aspect ratio), overlay de texto, hotspot
 {%- endcomment -%}
 
-{%- assign grid_cols = section.settings.columns -%}
+{%- assign layout = section.settings.layout -%}
 
 <section class="lbk section-padding" data-section-id="{{ section.id }}"
   style="background: {{ section.settings.bg_color }};">
@@ -26,189 +27,136 @@
       </div>
     {%- endif -%}
 
-    <div class="lbk__grid"
-      style="
-        display: grid;
-        grid-template-columns: repeat({{ grid_cols }}, 1fr);
-        grid-auto-rows: {{ section.settings.row_height }}px;
-        gap: {{ section.settings.gap }}px;
-      ">
-
+    <div class="lbk__grid lbk__grid--{{ layout }}" style="gap: {{ section.settings.gap }}px;">
       {%- for block in section.blocks -%}
-        {%- assign col_span = block.settings.col_span | default: 1 -%}
-        {%- assign row_span = block.settings.row_span | default: 2 -%}
-
-        <div class="lbk__item" {{ block.shopify_attributes }}
-          style="
-            grid-column: span {{ col_span }};
-            grid-row: span {{ row_span }};
-            position: relative;
-            overflow: hidden;
-            border-radius: {{ section.settings.border_radius }}px;
-          ">
-
-          {%- comment -%} IMAGEN DE FONDO {%- endcomment -%}
+        {%- assign aspect = block.settings.aspect_ratio -%}
+        <div class="lbk__item" {{ block.shopify_attributes }} style="
+          {%- if aspect != 'auto' -%}aspect-ratio: {{ aspect }};{%- endif -%}
+          border-radius: {{ section.settings.border_radius }}px;
+        ">
+          {%- comment -%} IMAGE {%- endcomment -%}
           {%- if block.settings.image != blank -%}
             <img
               src="{{ block.settings.image | image_url: width: 1600 }}"
+              srcset="{{ block.settings.image | image_url: width: 500 }} 500w, {{ block.settings.image | image_url: width: 800 }} 800w, {{ block.settings.image | image_url: width: 1200 }} 1200w, {{ block.settings.image | image_url: width: 1600 }} 1600w"
+              sizes="(max-width: 767px) 100vw, 50vw"
               alt="{{ block.settings.image.alt | default: block.settings.overlay_title | default: 'Lookbook' }}"
               loading="lazy"
+              decoding="async"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
               class="lbk__img"
-              style="
-                width: 100%; height: 100%; object-fit: cover; display: block;
-                transition: transform 0.8s ease;
-                {%- if block.settings.focal_point != 'center center' -%}
-                  object-position: {{ block.settings.focal_point }};
-                {%- endif -%}
-              "
+              {%- if block.settings.focal_point != 'center center' -%}
+                style="object-position: {{ block.settings.focal_point }};"
+              {%- endif -%}
             >
           {%- else -%}
-            <div style="width:100%;height:100%;background:linear-gradient(135deg,#f5f0eb,#e8ddd3);display:flex;align-items:center;justify-content:center;">
+            <div class="lbk__placeholder">
               {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
           {%- endif -%}
 
-          {%- comment -%} HOTSPOT DE PRODUCTO {%- endcomment -%}
+          {%- comment -%} HOTSPOT 1 {%- endcomment -%}
           {%- if block.settings.product != blank -%}
-            <div class="lbk__hotspot" style="position:absolute;top:{{ block.settings.tag_y }}%;left:{{ block.settings.tag_x }}%;z-index:3;transform:translate(-50%,-50%);">
-              <button class="lbk__dot" aria-label="Ver producto" type="button"
-                style="
-                  width: 28px; height: 28px; border-radius: 50%;
-                  background: rgba(255,255,255,0.9); border: 2px solid var(--color-primary, #1a1a1a);
-                  cursor: pointer; display: flex; align-items: center; justify-content: center;
-                  animation: lbk-pulse 2s infinite; transition: transform 0.3s;
-                ">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--color-primary,#1a1a1a);"></span>
+            {%- assign hp = block.settings.product -%}
+            <div class="lbk__hotspot" style="top: {{ block.settings.tag_y }}%; left: {{ block.settings.tag_x }}%;">
+              <button class="lbk__dot" aria-label="Ver {{ hp.title }}" type="button">
+                <span class="lbk__dot-ring"></span>
+                <span class="lbk__dot-center"></span>
               </button>
-              {%- assign hp = block.settings.product -%}
-              <div class="lbk__card" style="
-                position: absolute; bottom: calc(100% + 12px); left: 50%;
-                transform: translateX(-50%); background: #fff; padding: 0.75rem;
-                box-shadow: 0 4px 24px rgba(0,0,0,0.15); min-width: 200px;
-                opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 4;
-              ">
-                <a href="{{ hp.url }}" style="display:flex;gap:0.75rem;text-decoration:none;color:inherit;" class="lbk__card-link">
+              <div class="lbk__card">
+                <a href="{{ hp.url }}" class="lbk__card-link">
                   {%- if hp.featured_image -%}
-                    <img src="{{ hp.featured_image | image_url: width: 80 }}" alt="{{ hp.title }}" style="width:60px;height:75px;object-fit:cover;">
+                    <img src="{{ hp.featured_image | image_url: width: 120 }}" alt="{{ hp.title }}" loading="lazy" decoding="async">
                   {%- endif -%}
-                  <div>
-                    <p style="font-size:0.8rem;font-weight:500;margin:0 0 0.25rem;">{{ hp.title }}</p>
-                    <p style="font-size:0.75rem;color:var(--color-text-light,#888);margin:0;">{{ hp.price | money }}</p>
-                    <span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent,#8b6f47);margin-top:0.25rem;display:block;">Ver producto →</span>
+                  <div class="lbk__card-info">
+                    <span class="lbk__card-title">{{ hp.title }}</span>
+                    <span class="lbk__card-price">{{ hp.price | money }}</span>
+                    <span class="lbk__card-cta">Ver producto →</span>
                   </div>
                 </a>
               </div>
             </div>
           {%- endif -%}
 
-          {%- comment -%} SEGUNDO HOTSPOT (OPCIONAL) {%- endcomment -%}
+          {%- comment -%} HOTSPOT 2 {%- endcomment -%}
           {%- if block.settings.product_2 != blank -%}
-            <div class="lbk__hotspot" style="position:absolute;top:{{ block.settings.tag_y_2 }}%;left:{{ block.settings.tag_x_2 }}%;z-index:3;transform:translate(-50%,-50%);">
-              <button class="lbk__dot" aria-label="Ver producto" type="button"
-                style="
-                  width: 28px; height: 28px; border-radius: 50%;
-                  background: rgba(255,255,255,0.9); border: 2px solid var(--color-primary, #1a1a1a);
-                  cursor: pointer; display: flex; align-items: center; justify-content: center;
-                  animation: lbk-pulse 2s infinite 0.5s; transition: transform 0.3s;
-                ">
-                <span style="width:8px;height:8px;border-radius:50%;background:var(--color-primary,#1a1a1a);"></span>
+            {%- assign hp2 = block.settings.product_2 -%}
+            <div class="lbk__hotspot" style="top: {{ block.settings.tag_y_2 }}%; left: {{ block.settings.tag_x_2 }}%;">
+              <button class="lbk__dot" aria-label="Ver {{ hp2.title }}" type="button">
+                <span class="lbk__dot-ring"></span>
+                <span class="lbk__dot-center"></span>
               </button>
-              {%- assign hp2 = block.settings.product_2 -%}
-              <div class="lbk__card" style="
-                position: absolute; bottom: calc(100% + 12px); left: 50%;
-                transform: translateX(-50%); background: #fff; padding: 0.75rem;
-                box-shadow: 0 4px 24px rgba(0,0,0,0.15); min-width: 200px;
-                opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 4;
-              ">
-                <a href="{{ hp2.url }}" style="display:flex;gap:0.75rem;text-decoration:none;color:inherit;" class="lbk__card-link">
+              <div class="lbk__card">
+                <a href="{{ hp2.url }}" class="lbk__card-link">
                   {%- if hp2.featured_image -%}
-                    <img src="{{ hp2.featured_image | image_url: width: 80 }}" alt="{{ hp2.title }}" style="width:60px;height:75px;object-fit:cover;">
+                    <img src="{{ hp2.featured_image | image_url: width: 120 }}" alt="{{ hp2.title }}" loading="lazy" decoding="async">
                   {%- endif -%}
-                  <div>
-                    <p style="font-size:0.8rem;font-weight:500;margin:0 0 0.25rem;">{{ hp2.title }}</p>
-                    <p style="font-size:0.75rem;color:var(--color-text-light,#888);margin:0;">{{ hp2.price | money }}</p>
-                    <span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent,#8b6f47);margin-top:0.25rem;display:block;">Ver producto →</span>
+                  <div class="lbk__card-info">
+                    <span class="lbk__card-title">{{ hp2.title }}</span>
+                    <span class="lbk__card-price">{{ hp2.price | money }}</span>
+                    <span class="lbk__card-cta">Ver producto →</span>
                   </div>
                 </a>
               </div>
             </div>
           {%- endif -%}
 
-          {%- comment -%} OVERLAY DE TEXTO {%- endcomment -%}
+          {%- comment -%} TEXT OVERLAY {%- endcomment -%}
           {%- if block.settings.overlay_title != blank or block.settings.overlay_subtitle != blank -%}
-            <div class="lbk__overlay" style="
-              position: absolute; inset: 0; display: flex; flex-direction: column;
-              justify-content: {{ block.settings.text_position }};
-              align-items: {{ block.settings.text_align }};
+            <div class="lbk__overlay lbk__overlay--{{ block.settings.text_position }}" style="
+              --lbk-overlay-opacity: {{ block.settings.overlay_opacity }};
               padding: {{ block.settings.overlay_padding }}px;
-              background: linear-gradient(
-                {% if block.settings.text_position == 'flex-end' %}0deg{% elsif block.settings.text_position == 'flex-start' %}180deg{% else %}0deg{% endif %},
-                rgba(0,0,0,{{ block.settings.overlay_opacity }}) 0%, transparent 70%
-              );
-              z-index: 2; pointer-events: none;
             ">
               {%- if block.settings.overlay_title != blank -%}
-                <h3 style="
-                  color: #fff; margin: 0;
-                  font-size: {{ block.settings.title_size }}rem;
-                  font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase;
-                ">{{ block.settings.overlay_title }}</h3>
+                <h3 class="lbk__overlay-title" style="font-size: {{ block.settings.title_size }}rem;">
+                  {{ block.settings.overlay_title }}
+                </h3>
               {%- endif -%}
               {%- if block.settings.overlay_subtitle != blank -%}
-                <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:0.3rem 0 0;">
-                  {{ block.settings.overlay_subtitle }}
-                </p>
+                <p class="lbk__overlay-sub">{{ block.settings.overlay_subtitle }}</p>
               {%- endif -%}
               {%- if block.settings.overlay_link_text != blank and block.settings.overlay_link != blank -%}
-                <a href="{{ block.settings.overlay_link }}" style="
-                  display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1.5rem;
-                  border: 1px solid #fff; color: #fff; font-size: 0.75rem;
-                  letter-spacing: 0.15em; text-transform: uppercase;
-                  text-decoration: none; pointer-events: all; transition: all 0.3s;
-                " onmouseover="this.style.background='#fff';this.style.color='#000';"
-                  onmouseout="this.style.background='transparent';this.style.color='#fff';">
+                <a href="{{ block.settings.overlay_link }}" class="lbk__overlay-btn">
                   {{ block.settings.overlay_link_text }}
                 </a>
               {%- endif -%}
             </div>
           {%- endif -%}
-
         </div>
       {%- endfor -%}
     </div>
   </div>
 </section>
 
-<style>
-  .lbk--full { width: 100%; padding: 0; }
-  .lbk__header { text-align: center; margin-bottom: 2.5rem; }
-  .lbk__sub { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--color-text-light); margin: 0 0 0.5rem; }
-  .lbk__title { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+<script>
+  /* Lookbook: hotspot click to show card */
+  (function() {
+    const section = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!section) return;
+    const dots = section.querySelectorAll('.lbk__dot');
+    let activeCard = null;
 
-  .lbk__item:hover .lbk__img { transform: scale(1.02); }
+    dots.forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = dot.parentElement.querySelector('.lbk__card');
+        if (activeCard && activeCard !== card) {
+          activeCard.classList.remove('is-visible');
+        }
+        card.classList.toggle('is-visible');
+        activeCard = card.classList.contains('is-visible') ? card : null;
+      });
+    });
 
-  /* Hotspot hover */
-  .lbk__hotspot:hover .lbk__card { opacity: 1 !important; visibility: visible !important; }
-  .lbk__dot:hover { transform: scale(1.2); }
-
-  @keyframes lbk-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(0,0,0,0.12); }
-    50% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
-  }
-
-  /* Responsive: collapse to 2 cols on mobile */
-  @media (max-width: 767px) {
-    .lbk__grid { grid-template-columns: repeat(2, 1fr) !important; }
-    .lbk__item[style*="grid-column: span 3"],
-    .lbk__item[style*="grid-column: span 4"],
-    .lbk__item[style*="grid-column: span 5"],
-    .lbk__item[style*="grid-column: span 6"] { grid-column: span 2 !important; }
-  }
-  @media (max-width: 480px) {
-    .lbk__grid { grid-template-columns: 1fr !important; }
-    .lbk__item { grid-column: span 1 !important; }
-  }
-</style>
+    document.addEventListener('click', () => {
+      if (activeCard) {
+        activeCard.classList.remove('is-visible');
+        activeCard = null;
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -226,29 +174,18 @@
       "default": "Lookbook"
     },
     {
-      "type": "header",
-      "content": "Grid"
-    },
-    {
-      "type": "range",
-      "id": "columns",
-      "min": 1,
-      "max": 6,
-      "step": 1,
-      "label": "Columnas del grid",
-      "default": 3,
-      "info": "Cada imagen puede ocupar múltiples columnas"
-    },
-    {
-      "type": "range",
-      "id": "row_height",
-      "min": 100,
-      "max": 500,
-      "step": 10,
-      "unit": "px",
-      "label": "Altura base de fila",
-      "default": 200,
-      "info": "Una imagen de 2 filas = doble alto, 3 filas = triple, etc."
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "1-col", "label": "1 columna (ancho completo)" },
+        { "value": "2-col", "label": "2 columnas (50/50)" },
+        { "value": "2-col-left", "label": "2 columnas (grande izq + chica der)" },
+        { "value": "2-col-right", "label": "2 columnas (chica izq + grande der)" },
+        { "value": "3-col", "label": "3 columnas iguales" },
+        { "value": "masonry", "label": "Masonry (1 grande + 2 chicas apiladas)" }
+      ],
+      "default": "2-col"
     },
     {
       "type": "range",
@@ -294,28 +231,19 @@
           "label": "Imagen"
         },
         {
-          "type": "header",
-          "content": "📐 Tamaño en el grid"
-        },
-        {
-          "type": "range",
-          "id": "col_span",
-          "min": 1,
-          "max": 6,
-          "step": 1,
-          "label": "Columnas que ocupa",
-          "default": 1,
-          "info": "1 = una columna, 2 = doble ancho, 3 = ocupa 3 columnas..."
-        },
-        {
-          "type": "range",
-          "id": "row_span",
-          "min": 1,
-          "max": 4,
-          "step": 1,
-          "label": "Filas que ocupa",
-          "default": 2,
-          "info": "Más filas = más alta la imagen"
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Proporción de la imagen",
+          "options": [
+            { "value": "auto", "label": "Automática (tamaño original)" },
+            { "value": "1/1", "label": "Cuadrada (1:1)" },
+            { "value": "3/4", "label": "Vertical (3:4)" },
+            { "value": "2/3", "label": "Vertical alta (2:3)" },
+            { "value": "4/3", "label": "Horizontal (4:3)" },
+            { "value": "16/9", "label": "Panorámica (16:9)" },
+            { "value": "4/5", "label": "Instagram (4:5)" }
+          ],
+          "default": "auto"
         },
         {
           "type": "select",
@@ -332,7 +260,7 @@
         },
         {
           "type": "header",
-          "content": "📍 Producto hotspot 1"
+          "content": "📍 Producto 1"
         },
         {
           "type": "product",
@@ -361,12 +289,12 @@
         },
         {
           "type": "header",
-          "content": "📍 Producto hotspot 2 (opcional)"
+          "content": "📍 Producto 2 (opcional)"
         },
         {
           "type": "product",
           "id": "product_2",
-          "label": "Segundo producto vinculado"
+          "label": "Segundo producto"
         },
         {
           "type": "range",
@@ -414,24 +342,16 @@
         {
           "type": "select",
           "id": "text_position",
-          "label": "Posición vertical del texto",
+          "label": "Posición del texto",
           "options": [
-            { "value": "flex-start", "label": "Arriba" },
+            { "value": "top-left", "label": "Arriba izquierda" },
+            { "value": "top-center", "label": "Arriba centro" },
             { "value": "center", "label": "Centro" },
-            { "value": "flex-end", "label": "Abajo" }
+            { "value": "bottom-left", "label": "Abajo izquierda" },
+            { "value": "bottom-center", "label": "Abajo centro" },
+            { "value": "bottom-right", "label": "Abajo derecha" }
           ],
-          "default": "flex-end"
-        },
-        {
-          "type": "select",
-          "id": "text_align",
-          "label": "Alineación horizontal",
-          "options": [
-            { "value": "flex-start", "label": "Izquierda" },
-            { "value": "center", "label": "Centro" },
-            { "value": "flex-end", "label": "Derecha" }
-          ],
-          "default": "flex-start"
+          "default": "bottom-left"
         },
         {
           "type": "range",
@@ -469,15 +389,13 @@
     {
       "name": "Lookbook",
       "settings": {
-        "columns": 3,
-        "row_height": 200,
+        "layout": "2-col",
         "gap": 4,
         "full_width": true
       },
       "blocks": [
-        { "type": "image", "settings": { "col_span": 2, "row_span": 3 } },
-        { "type": "image", "settings": { "col_span": 1, "row_span": 2 } },
-        { "type": "image", "settings": { "col_span": 1, "row_span": 1 } }
+        { "type": "image" },
+        { "type": "image" }
       ]
     }
   ]
