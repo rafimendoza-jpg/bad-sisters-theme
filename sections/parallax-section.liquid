@@ -1,0 +1,397 @@
+{%- comment -%}
+  Section: Parallax — Banner con efecto de profundidad
+  La imagen de fondo se mueve a velocidad distinta creando sensación 3D.
+  Usa transform para compatibilidad con iOS (no background-attachment: fixed).
+{%- endcomment -%}
+
+<style>
+  #PLX-{{ section.id }} {
+    position: relative;
+    height: {{ section.settings.section_height }}vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Background image — oversized for parallax room */
+  #PLX-{{ section.id }} .plx__bg {
+    position: absolute;
+    inset: -15% 0;
+    z-index: 1;
+    will-change: transform;
+  }
+  #PLX-{{ section.id }} .plx__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    {%- if section.settings.focal_point != 'center center' -%}
+      object-position: {{ section.settings.focal_point }};
+    {%- endif -%}
+  }
+
+  /* Overlay gradient */
+  #PLX-{{ section.id }} .plx__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    {%- case section.settings.overlay_style -%}
+      {%- when 'solid' -%}
+        background: {{ section.settings.overlay_color | default: '#000' }};
+        opacity: {{ section.settings.overlay_opacity }};
+      {%- when 'gradient-bottom' -%}
+        background: linear-gradient(0deg, {{ section.settings.overlay_color | default: '#000' }} 0%, transparent 60%);
+        opacity: {{ section.settings.overlay_opacity | times: 1.5 | at_most: 1 }};
+      {%- when 'gradient-top' -%}
+        background: linear-gradient(180deg, {{ section.settings.overlay_color | default: '#000' }} 0%, transparent 60%);
+        opacity: {{ section.settings.overlay_opacity | times: 1.5 | at_most: 1 }};
+      {%- when 'vignette' -%}
+        background: radial-gradient(ellipse at center, transparent 30%, {{ section.settings.overlay_color | default: '#000' }} 100%);
+        opacity: {{ section.settings.overlay_opacity }};
+    {%- endcase -%}
+    pointer-events: none;
+  }
+
+  /* Content */
+  #PLX-{{ section.id }} .plx__content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    color: {{ section.settings.text_color | default: '#ffffff' }};
+    max-width: 800px;
+    width: 90%;
+
+    {%- case section.settings.text_align -%}
+      {%- when 'left' -%}
+        align-items: flex-start; text-align: left; align-self: flex-start; margin-left: 5%;
+      {%- when 'center' -%}
+        align-items: center; text-align: center;
+      {%- when 'right' -%}
+        align-items: flex-end; text-align: right; align-self: flex-end; margin-right: 5%;
+    {%- endcase -%}
+  }
+
+  #PLX-{{ section.id }} .plx__sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  #PLX-{{ section.id }} .plx__heading {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 200;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0 0 1.25rem;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  #PLX-{{ section.id }} .plx__text {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    line-height: 1.7;
+    margin: 0 0 2rem;
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  #PLX-{{ section.id }} .plx__cta {
+    display: inline-block;
+    padding: 0.85rem 2.5rem;
+    border: 1px solid currentColor;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  #PLX-{{ section.id }} .plx__cta:hover {
+    background: {{ section.settings.text_color | default: '#fff' }};
+    color: {{ section.settings.overlay_color | default: '#000' }};
+  }
+
+  /* Animations */
+  #PLX-{{ section.id }} .plx__sub,
+  #PLX-{{ section.id }} .plx__heading,
+  #PLX-{{ section.id }} .plx__text,
+  #PLX-{{ section.id }} .plx__cta {
+    transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  #PLX-{{ section.id }} .plx__heading { transition-delay: 0.15s; }
+  #PLX-{{ section.id }} .plx__text { transition-delay: 0.3s; }
+  #PLX-{{ section.id }} .plx__cta { transition-delay: 0.45s; }
+
+  #PLX-{{ section.id }}.plx--visible .plx__sub,
+  #PLX-{{ section.id }}.plx--visible .plx__heading,
+  #PLX-{{ section.id }}.plx--visible .plx__text,
+  #PLX-{{ section.id }}.plx--visible .plx__cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    #PLX-{{ section.id }} { height: {{ section.settings.section_height | times: 0.7 | round }}vh; }
+    #PLX-{{ section.id }} .plx__content {
+      text-align: center !important;
+      align-items: center !important;
+      align-self: center !important;
+      margin: 0 !important;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    #PLX-{{ section.id }} .plx__bg { will-change: auto; }
+    #PLX-{{ section.id }} .plx__sub,
+    #PLX-{{ section.id }} .plx__heading,
+    #PLX-{{ section.id }} .plx__text,
+    #PLX-{{ section.id }} .plx__cta {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<section id="PLX-{{ section.id }}" class="plx" data-section-id="{{ section.id }}" data-plx-speed="{{ section.settings.parallax_speed }}">
+  <div class="plx__bg" data-plx-bg="{{ section.id }}">
+    {%- if section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 2400 }}"
+        srcset="{{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2400 }} 2400w"
+        sizes="100vw"
+        alt="{{ section.settings.image.alt | default: section.settings.heading | default: 'Banner' }}"
+        loading="lazy" decoding="async"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        class="plx__img"
+      >
+    {%- elsif section.settings.video_url != blank -%}
+      <video autoplay muted loop playsinline class="plx__img"
+        poster="{{ section.settings.image | image_url: width: 1600 }}">
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+      </video>
+    {%- else -%}
+      <div class="plx__img" style="background:#2a2a2a;"></div>
+    {%- endif -%}
+  </div>
+
+  <div class="plx__overlay"></div>
+
+  <div class="plx__content">
+    {%- if section.settings.subheading != blank -%}
+      <p class="plx__sub">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="plx__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="plx__text rte">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link | default: '#' }}" class="plx__cta">{{ section.settings.button_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const section = document.getElementById('PLX-{{ section.id }}');
+    if (!section) return;
+    const bg = section.querySelector('[data-plx-bg="{{ section.id }}"]');
+    const speed = parseFloat('{{ section.settings.parallax_speed }}') || 0.4;
+    let ticking = false;
+
+    /* Content reveal via IntersectionObserver */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          section.classList.add('plx--visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(section);
+
+    if (reducedMotion) return;
+
+    /* Parallax scroll handler */
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function() {
+        const rect = section.getBoundingClientRect();
+        const viewH = window.innerHeight;
+        const sectionH = section.offsetHeight;
+
+        /* Progress: 0 = section about to enter from bottom, 1 = section about to leave from top */
+        const progress = (viewH - rect.top) / (viewH + sectionH);
+        const clampedProgress = Math.max(0, Math.min(1, progress));
+
+        /* Shift: centered at 0, range = ±maxShift */
+        const maxShift = sectionH * 0.15 * speed;
+        const shift = (clampedProgress - 0.5) * 2 * maxShift;
+
+        bg.style.transform = 'translate3d(0,' + shift + 'px, 0)';
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Parallax",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "URL de video (opcional)",
+      "info": "URL directa a archivo .mp4. Aparece en vez de la imagen."
+    },
+    {
+      "type": "select",
+      "id": "focal_point",
+      "label": "Punto focal de la imagen",
+      "options": [
+        { "value": "center center", "label": "Centro" },
+        { "value": "top center", "label": "Arriba" },
+        { "value": "bottom center", "label": "Abajo" },
+        { "value": "left center", "label": "Izquierda" },
+        { "value": "right center", "label": "Derecha" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "✍️ Contenido"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "NUEVA COLECCIÓN"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "⚙️ Parallax"
+    },
+    {
+      "type": "range",
+      "id": "parallax_speed",
+      "min": 0.1,
+      "max": 1,
+      "step": 0.1,
+      "label": "Intensidad del parallax",
+      "default": 0.4,
+      "info": "0.1 = muy sutil, 1 = muy pronunciado"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Altura de la sección",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "🎨 Estilo"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "Tipo de overlay",
+      "options": [
+        { "value": "solid", "label": "Color sólido" },
+        { "value": "gradient-bottom", "label": "Degradado desde abajo" },
+        { "value": "gradient-top", "label": "Degradado desde arriba" },
+        { "value": "vignette", "label": "Viñeta (oscurece bordes)" }
+      ],
+      "default": "vignette"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Color del overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 0.8,
+      "step": 0.1,
+      "label": "Opacidad del overlay",
+      "default": 0.3
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color del texto",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Parallax",
+      "settings": {
+        "heading": "NUEVA COLECCIÓN",
+        "parallax_speed": 0.4,
+        "section_height": 80
+      }
+    }
+  ]
+}
+{% endschema %}
