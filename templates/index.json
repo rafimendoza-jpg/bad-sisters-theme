@@ -258,62 +258,13 @@
         "heading": "DESTACADO",
         "subheading": "",
         "image_position": "right",
-        "full_width": false,
+        "full_width": true,
         "show_vendor": true,
         "show_description": true,
         "description_words": 40,
         "custom_text": "",
         "button_label": "Ver producto",
         "text_color": ""
-      }
-    },
-    "featured-collection": {
-      "type": "featured-collection",
-      "settings": {
-        "subheading": "venecia - bad sisters atelier",
-        "heading": "Accesorios de seda",
-        "description": "",
-        "collection": "accesorios-de-seda",
-        "products_to_show": 3,
-        "columns": "3",
-        "show_vendor": false,
-        "show_view_all": true,
-        "view_all_text": "Ver todos"
-      }
-    },
-    "image-with-text": {
-      "type": "image-with-text",
-      "settings": {
-        "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
-        "layout": "image_left",
-        "subheading": "",
-        "heading": "Nuestra historia",
-        "text": "<p>Bad Sisters Design nació con la idea de crear productos con personalidad. Cada pieza está diseñada con atención al detalle.</p>",
-        "text_alignment": "left",
-        "background_color": "#ffffff",
-        "button_label": "Conocer más",
-        "button_link": "",
-        "button_style": "secondary"
-      }
-    },
-    "collection-list": {
-      "type": "collection-list",
-      "settings": {
-        "subheading": "Explora",
-        "heading": "Nuestras colecciones",
-        "columns": "3"
-      }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "subheading": "",
-        "heading": "Únete a la familia",
-        "text": "Sé la primera en enterarte de nuevos lanzamientos, ofertas y más.",
-        "placeholder": "Tu dirección de email",
-        "button_text": "Suscribirme",
-        "button_style": "primary",
-        "background_color": "#f5f0eb"
       }
     },
     "lookbook_BYqcJD": {
@@ -325,9 +276,9 @@
             "image": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
             "aspect_ratio": "auto",
             "focal_point": "center center",
-            "product": "",
+            "product": "vestido-ibiza-mesh-pre-orden-entrega-30-01",
             "tag_x": 50,
-            "tag_y": 50,
+            "tag_y": 82,
             "product_2": "",
             "tag_x_2": 70,
             "tag_y_2": 65,
@@ -344,54 +295,10 @@
         "image_YmNtdH": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
+            "image": "shopify://shop_images/F2A35745-B405-4A96-A0BE-AD51D4C20F37.jpg",
             "aspect_ratio": "auto",
             "focal_point": "center center",
-            "product": "",
-            "tag_x": 50,
-            "tag_y": 50,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_G9DVx8": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/493A211F-58C1-401C-9F8D-282C60A76BFB.png",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "",
-            "tag_x": 50,
-            "tag_y": 50,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_d43DmB": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "top-peplum-floral-geisha-rojo",
+            "product": "vestido-ibiza-mesh-pre-orden-entrega-30-01",
             "tag_x": 50,
             "tag_y": 50,
             "product_2": "",
@@ -410,19 +317,31 @@
       },
       "block_order": [
         "image_NAREM6",
-        "image_YmNtdH",
-        "image_G9DVx8",
-        "image_d43DmB"
+        "image_YmNtdH"
       ],
       "settings": {
         "subheading": "",
-        "heading": "Lookbook",
+        "heading": "",
         "layout": "2-col-right",
         "gap": 16,
         "border_radius": 0,
         "full_width": true,
         "background_color": "#690f17",
-        "text_color": ""
+        "text_color": "#ffffff"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "subheading": "venecia - bad sisters atelier",
+        "heading": "Accesorios de seda",
+        "description": "",
+        "collection": "accesorios-de-seda",
+        "products_to_show": 3,
+        "columns": "3",
+        "show_vendor": false,
+        "show_view_all": true,
+        "view_all_text": "Ver todos"
       }
     },
     "shop_the_look_zAA7z8": {
@@ -461,97 +380,6 @@
         "button_label": "Shop all",
         "button_link": "shopify://collections/family-rose",
         "text_color": ""
-      }
-    },
-    "product_carousel_c98Px8": {
-      "type": "product-carousel",
-      "name": "Carrusel de Productos",
-      "settings": {
-        "heading": "SUPERVENTAS",
-        "subheading": "",
-        "products": [],
-        "collection": "summer-basics",
-        "products_to_show": 12,
-        "scroll_count": 3,
-        "show_vendor": true,
-        "show_button": true,
-        "button_label": "Comprar todos los más vendidos",
-        "button_link": "",
-        "text_color": ""
-      }
-    },
-    "scroll_reveal_WByax6": {
-      "type": "scroll-reveal",
-      "blocks": {
-        "block_4tz77k": {
-          "type": "block",
-          "settings": {
-            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
-            "image_height": "auto",
-            "heading": "Diseño artesanal",
-            "text": "<p>Describe algo increíble sobre tu marca o producto.</p>",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "block_rNxUUM": {
-          "type": "block",
-          "settings": {
-            "image_height": "auto",
-            "heading": "Hecho con amor",
-            "text": "<p>Describe algo increíble sobre tu marca o producto.</p>",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "block_ykFznb": {
-          "type": "block",
-          "settings": {
-            "image_height": "auto",
-            "heading": "Para ti",
-            "text": "<p>Describe algo increíble sobre tu marca o producto.</p>",
-            "button_label": "",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "block_4tz77k",
-        "block_rNxUUM",
-        "block_ykFznb"
-      ],
-      "name": "Scroll Reveal",
-      "settings": {
-        "subheading": "",
-        "heading": "",
-        "animation_style": "alternating",
-        "animation_duration": 1200,
-        "gap": 40,
-        "block_spacing": 60,
-        "border_radius": 0,
-        "full_width": false,
-        "background_color": "",
-        "text_color": ""
-      }
-    },
-    "image_crossfade_7XqPER": {
-      "type": "image-crossfade",
-      "name": "Image Crossfade",
-      "settings": {
-        "image_before": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
-        "image_after": "shopify://shop_images/F2A35745-B405-4A96-A0BE-AD51D4C20F37.jpg",
-        "show_labels": true,
-        "label_before": "Antes",
-        "label_after": "Después",
-        "heading": "",
-        "subheading": "",
-        "text_position": "center",
-        "button_label": "",
-        "button_link": "",
-        "scroll_distance": 3,
-        "overlay_opacity": 0.2,
-        "show_progress": true,
-        "background_color": ""
       }
     },
     "multicolumn_TK4aff": {
@@ -703,8 +531,8 @@
       "settings": {
         "subheading": "",
         "heading": "",
-        "image_before": "shopify://shop_images/IMG-9635.png",
-        "image_after": "shopify://shop_images/IMG-9638.png",
+        "image_before": "shopify://shop_images/Photoroom_20251219_111621.jpg",
+        "image_after": "shopify://shop_images/Photoroom_20251219_111642.jpg",
         "show_labels": true,
         "label_before": "Antes",
         "label_after": "Después",
@@ -714,6 +542,18 @@
         "full_width": false,
         "background_color": "",
         "text_color": ""
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "subheading": "",
+        "heading": "Únete a la familia",
+        "text": "Sé la primera en enterarte de nuevos lanzamientos, ofertas y más.",
+        "placeholder": "Tu dirección de email",
+        "button_text": "Suscribirme",
+        "button_style": "primary",
+        "background_color": "#f5f0eb"
       }
     }
   },
@@ -725,17 +565,12 @@
     "shop_the_look_Gt3etK",
     "gallery_slideshow_w6zFXM",
     "featured_product_PjjFwN",
-    "featured-collection",
-    "image-with-text",
-    "collection-list",
-    "newsletter",
     "lookbook_BYqcJD",
+    "featured-collection",
     "shop_the_look_zAA7z8",
-    "product_carousel_c98Px8",
-    "scroll_reveal_WByax6",
-    "image_crossfade_7XqPER",
     "multicolumn_TK4aff",
     "staggered_gallery_tGR9Ux",
-    "before_after_iCjxgh"
+    "before_after_iCjxgh",
+    "newsletter"
   ]
 }
