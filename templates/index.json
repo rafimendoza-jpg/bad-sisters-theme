@@ -36,6 +36,7 @@
         "products_to_show": 8,
         "scroll_count": 3,
         "show_vendor": true,
+        "show_button": false,
         "button_label": "Ver más",
         "button_link": ""
       }
@@ -136,10 +137,56 @@
       "settings": {
         "subheading": "",
         "heading": "",
-        "layout": "grid",
-        "gap": 14,
+        "layout": "filmstrip",
+        "gap": 22,
         "full_width": true,
         "background_color": "#1a1a1a"
+      }
+    },
+    "shop_the_look_Gt3etK": {
+      "type": "shop-the-look",
+      "blocks": {
+        "hotspot_4e98FQ": {
+          "type": "hotspot",
+          "settings": {
+            "product": "cintas-lazos-intercambiables-para-zapatos",
+            "pos_x": 50,
+            "pos_y": 85
+          }
+        },
+        "hotspot_8rmmni": {
+          "type": "hotspot",
+          "settings": {
+            "product": "kimono-reversible-con-cola-arte-pintado-a-mano",
+            "pos_x": 35,
+            "pos_y": 74
+          }
+        },
+        "hotspot_y4EdKw": {
+          "type": "hotspot",
+          "settings": {
+            "product": "vestido-de-malla-clavel-manga-larga-con-arte-pintado-a-mano",
+            "pos_x": 50,
+            "pos_y": 50
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_4e98FQ",
+        "hotspot_8rmmni",
+        "hotspot_y4EdKw"
+      ],
+      "name": "Shop the Look",
+      "settings": {
+        "heading": "SHOP THE LOOK",
+        "subheading": "",
+        "image": "shopify://shop_images/90DC7195-59EC-4435-8D63-091CC05E6941.jpg",
+        "layout": "image-left",
+        "image_size": 45,
+        "full_width": true,
+        "text_content": "<h2><strong>It´s about to bloom</strong></h2><p></p><p>Un homenaje a lo eterno, a lo que florece sin miedo a romperse</p>",
+        "button_label": "Más de esta colección",
+        "button_link": "shopify://collections/family-rose"
       }
     },
     "featured_product_PjjFwN": {
@@ -462,6 +509,7 @@
         "products_to_show": 12,
         "scroll_count": 3,
         "show_vendor": true,
+        "show_button": true,
         "button_label": "Comprar todos los más vendidos",
         "button_link": ""
       }
@@ -472,6 +520,7 @@
     "product_carousel_37FEFD",
     "gallery_slideshow_EeWXfP",
     "gallery_NCRgwK",
+    "shop_the_look_Gt3etK",
     "featured_product_PjjFwN",
     "featured-collection",
     "gallery_slideshow_w6zFXM",
