@@ -1,10 +1,13 @@
-{%- comment -%} Section: Header {%- endcomment -%}
+{%- comment -%} Section: Header — Mega Menu estilo Revolve {%- endcomment -%}
 
 <header class="site-header" data-section-id="{{ section.id }}">
+  {%- comment -%} ===== ANNOUNCEMENT BAR (optional, inline) ===== {%- endcomment -%}
+
   <div class="page-width">
     <div class="header__inner">
+
       {%- comment -%} Mobile Menu Toggle {%- endcomment -%}
-      <button class="mobile-menu-toggle" aria-label="Menú">
+      <button class="mobile-menu-toggle" aria-label="Menú" onclick="document.querySelector('.header__nav').classList.toggle('is-open'); this.classList.toggle('active');">
         <span></span>
         <span></span>
         <span></span>
@@ -32,12 +35,86 @@
         </a>
       </div>
 
-      {%- comment -%} Navigation {%- endcomment -%}
+      {%- comment -%} ===== NAVIGATION WITH MEGA MENU ===== {%- endcomment -%}
       <nav class="header__nav" aria-label="Navegación principal">
         {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}" class="header__nav-link{% if link.active %} active{% endif %}">
-            {{ link.title }}
-          </a>
+          {%- if link.links.size > 0 -%}
+            {%- comment -%} ==== This link has a submenu → mega menu ==== {%- endcomment -%}
+            <div class="mega-trigger" data-mega-id="mega-{{ forloop.index }}">
+              <a href="{{ link.url }}" class="header__nav-link{% if link.active %} active{% endif %}" data-mega-toggle="mega-{{ forloop.index }}">
+                {{ link.title }}
+              </a>
+
+              {%- comment -%} Mega menu panel {%- endcomment -%}
+              <div class="mega-panel" id="mega-{{ forloop.index }}" data-mega-panel>
+                <div class="mega-panel__inner page-width">
+                  <div class="mega-panel__menus">
+                    {%- for child in link.links -%}
+                      <div class="mega-panel__col">
+                        {%- if child.links.size > 0 -%}
+                          <span class="mega-panel__col-title">{{ child.title }}</span>
+                          <ul class="mega-panel__list">
+                            {%- for grandchild in child.links -%}
+                              <li><a href="{{ grandchild.url }}" class="mega-panel__link">{{ grandchild.title }}</a></li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- else -%}
+                          <a href="{{ child.url }}" class="mega-panel__col-title mega-panel__col-title--link">{{ child.title }}</a>
+                        {%- endif -%}
+                      </div>
+                    {%- endfor -%}
+                  </div>
+
+                  {%- comment -%} Featured image cards from blocks {%- endcomment -%}
+                  {%- assign has_featured = false -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'mega_image' and block.settings.mega_menu_parent == link.title -%}
+                      {%- assign has_featured = true -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- if has_featured -%}
+                    <div class="mega-panel__featured">
+                      {%- for block in section.blocks -%}
+                        {%- if block.type == 'mega_image' and block.settings.mega_menu_parent == link.title -%}
+                          <a href="{{ block.settings.link }}" class="mega-featured" {{ block.shopify_attributes }}>
+                            {%- if block.settings.image != blank -%}
+                              <div class="mega-featured__media">
+                                <img
+                                  src="{{ block.settings.image | image_url: width: 500 }}"
+                                  srcset="{{ block.settings.image | image_url: width: 250 }} 250w, {{ block.settings.image | image_url: width: 500 }} 500w"
+                                  sizes="220px"
+                                  alt="{{ block.settings.heading | default: block.settings.image.alt }}"
+                                  loading="lazy"
+                                  decoding="async"
+                                  width="{{ block.settings.image.width }}"
+                                  height="{{ block.settings.image.height }}"
+                                >
+                              </div>
+                            {%- endif -%}
+                            <div class="mega-featured__info">
+                              {%- if block.settings.heading != blank -%}
+                                <span class="mega-featured__title">{{ block.settings.heading }}</span>
+                              {%- endif -%}
+                              {%- if block.settings.text != blank -%}
+                                <span class="mega-featured__text">{{ block.settings.text }}</span>
+                              {%- endif -%}
+                            </div>
+                          </a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+
+          {%- else -%}
+            {%- comment -%} ==== Simple link, no submenu ==== {%- endcomment -%}
+            <a href="{{ link.url }}" class="header__nav-link{% if link.active %} active{% endif %}">
+              {{ link.title }}
+            </a>
+          {%- endif -%}
         {%- endfor -%}
       </nav>
 
@@ -64,7 +141,152 @@
       </div>
     </div>
   </div>
+
+  {%- comment -%} Mega menu overlay {%- endcomment -%}
+  <div class="mega-overlay" data-mega-overlay></div>
 </header>
+
+{%- comment -%} ===== MOBILE MENU PANEL (slide-in, accordion) ===== {%- endcomment -%}
+<div class="mobile-nav" id="MobileNav" data-mobile-nav>
+  <div class="mobile-nav__header">
+    <span class="mobile-nav__title">Menú</span>
+    <button class="mobile-nav__close" onclick="document.getElementById('MobileNav').classList.remove('is-open'); document.querySelector('.mobile-menu-toggle').classList.remove('active');" aria-label="Cerrar menú">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav__body">
+    {%- for link in section.settings.menu.links -%}
+      {%- if link.links.size > 0 -%}
+        <div class="mobile-nav__group">
+          <button class="mobile-nav__parent" onclick="this.parentElement.classList.toggle('is-open')">
+            {{ link.title }}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="mobile-nav__submenu">
+            {%- for child in link.links -%}
+              {%- if child.links.size > 0 -%}
+                <span class="mobile-nav__subtitle">{{ child.title }}</span>
+                {%- for grandchild in child.links -%}
+                  <a href="{{ grandchild.url }}" class="mobile-nav__link">{{ grandchild.title }}</a>
+                {%- endfor -%}
+              {%- else -%}
+                <a href="{{ child.url }}" class="mobile-nav__link">{{ child.title }}</a>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- comment -%} Featured images in mobile too {%- endcomment -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'mega_image' and block.settings.mega_menu_parent == link.title -%}
+                <a href="{{ block.settings.link }}" class="mobile-nav__featured">
+                  {%- if block.settings.image != blank -%}
+                    <img src="{{ block.settings.image | image_url: width: 300 }}" alt="{{ block.settings.heading }}" loading="lazy" decoding="async">
+                  {%- endif -%}
+                  {%- if block.settings.heading != blank -%}
+                    <span>{{ block.settings.heading }}</span>
+                  {%- endif -%}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- else -%}
+        <a href="{{ link.url }}" class="mobile-nav__link mobile-nav__link--top">{{ link.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  /* === Mega Menu: desktop hover + mobile toggle === */
+  (function() {
+    const triggers = document.querySelectorAll('.mega-trigger');
+    const overlay = document.querySelector('[data-mega-overlay]');
+    const header = document.querySelector('.site-header');
+    let currentPanel = null;
+    let closeTimer = null;
+
+    function openPanel(trigger) {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      const panel = trigger.querySelector('[data-mega-panel]');
+      if (currentPanel && currentPanel !== panel) {
+        currentPanel.classList.remove('is-open');
+        currentPanel.closest('.mega-trigger').classList.remove('is-active');
+      }
+      panel.classList.add('is-open');
+      trigger.classList.add('is-active');
+      overlay.classList.add('is-visible');
+      header.classList.add('mega-open');
+      currentPanel = panel;
+    }
+
+    function closeAll() {
+      if (currentPanel) {
+        currentPanel.classList.remove('is-open');
+        currentPanel.closest('.mega-trigger').classList.remove('is-active');
+        currentPanel = null;
+      }
+      overlay.classList.remove('is-visible');
+      header.classList.remove('mega-open');
+    }
+
+    function scheduleClose() {
+      closeTimer = setTimeout(closeAll, 200);
+    }
+
+    function cancelClose() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    }
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 989) openPanel(trigger);
+      });
+      trigger.addEventListener('mouseleave', () => {
+        if (window.innerWidth > 989) scheduleClose();
+      });
+
+      /* Prevent default on link click on desktop — let hover handle it */
+      const link = trigger.querySelector('[data-mega-toggle]');
+      if (link) {
+        link.addEventListener('click', (e) => {
+          if (window.innerWidth > 989) {
+            e.preventDefault();
+            openPanel(trigger);
+          }
+        });
+      }
+    });
+
+    if (overlay) {
+      overlay.addEventListener('mouseenter', scheduleClose);
+      overlay.addEventListener('click', closeAll);
+    }
+
+    /* Close on Escape */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAll();
+    });
+
+    /* Mobile menu toggle */
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileNav = document.getElementById('MobileNav');
+    if (mobileToggle && mobileNav) {
+      mobileToggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('is-open');
+        mobileToggle.classList.toggle('active');
+        document.body.classList.toggle('mobile-nav-open');
+      });
+    }
+
+    /* Sticky header scroll effect */
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      header.classList.toggle('scrolled', scroll > 20);
+      lastScroll = scroll;
+    }, { passive: true });
+  })();
+</script>
 
 {% schema %}
 {
@@ -89,13 +311,49 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menú de navegación",
-      "default": "main-menu"
+      "default": "main-menu",
+      "info": "Usa un menú con sub-items para activar los mega menús. Los items con hijos se convierten en desplegables."
     },
     {
       "type": "checkbox",
       "id": "show_search",
       "label": "Mostrar ícono de búsqueda",
       "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_image",
+      "name": "Imagen mega menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "mega_menu_parent",
+          "label": "Nombre del menú padre",
+          "info": "Escribe el título exacto del link de nivel superior donde quieres que aparezca esta imagen (ej: 'Shop', 'Novedades')"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Nueva colección"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descripción (opcional)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        }
+      ]
     }
   ]
 }
