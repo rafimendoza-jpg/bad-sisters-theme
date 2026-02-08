@@ -1,42 +1,317 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero-banner",
       "settings": {
+        "image": "shopify://shop_images/C6B690B1-AA7F-49D6-90FD-DD20B54C23E8.png",
+        "height": "large",
+        "overlay_opacity": 30,
+        "subheading": "Nueva colección",
         "heading": "Bad Sisters Design",
         "text": "Diseño con actitud. Descubre nuestra nueva colección.",
-        "height": "large"
+        "text_alignment": "text-center",
+        "button_label_1": "Comprar ahora",
+        "button_link_1": "",
+        "button_label_2": "Ver colecciones",
+        "button_link_2": ""
       }
     },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
+        "subheading": "Lo más nuevo",
         "heading": "Productos destacados",
+        "description": "",
+        "collection": "",
         "products_to_show": 4,
-        "columns": "4"
+        "columns": "4",
+        "show_vendor": false,
+        "show_view_all": true,
+        "view_all_text": "Ver toda la colección"
       }
     },
     "image-with-text": {
       "type": "image-with-text",
       "settings": {
+        "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
+        "layout": "image_left",
+        "subheading": "",
         "heading": "Nuestra historia",
         "text": "<p>Bad Sisters Design nació con la idea de crear productos con personalidad. Cada pieza está diseñada con atención al detalle.</p>",
+        "text_alignment": "left",
+        "background_color": "#ffffff",
         "button_label": "Conocer más",
-        "layout": "image_left"
+        "button_link": "",
+        "button_style": "secondary"
       }
     },
     "collection-list": {
       "type": "collection-list",
       "settings": {
+        "subheading": "Explora",
         "heading": "Nuestras colecciones",
         "columns": "3"
+      }
+    },
+    "multicolumn_TK4aff": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_yPKkKL": {
+          "type": "column",
+          "settings": {
+            "icon": "",
+            "heading": "Columna",
+            "text": "<p>Describe una característica, un beneficio o un paso.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_8ddYJx": {
+          "type": "column",
+          "settings": {
+            "icon": "",
+            "heading": "Columna",
+            "text": "<p>Describe una característica, un beneficio o un paso.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_cBQndp": {
+          "type": "column",
+          "settings": {
+            "icon": "",
+            "heading": "Columna",
+            "text": "<p>Describe una característica, un beneficio o un paso.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_yPKkKL",
+        "column_8ddYJx",
+        "column_cBQndp"
+      ],
+      "name": "Multicolumna",
+      "settings": {
+        "subheading": "",
+        "heading": "Multicolumna",
+        "columns": "3",
+        "text_alignment": "center",
+        "background_color": "#ffffff"
+      }
+    },
+    "gallery_NCRgwK": {
+      "type": "gallery",
+      "blocks": {
+        "image_8KFnaB": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
+            "video": "shopify://files/videos/BADSISTERS_NOLOGO.mov",
+            "size": "small",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "image_jPpEp8": {
+          "type": "image",
+          "settings": {
+            "size": "small",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "image_WgMNTd": {
+          "type": "image",
+          "settings": {
+            "size": "small",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "image_p3K49m": {
+          "type": "image",
+          "settings": {
+            "size": "small",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "image_GkNxgw": {
+          "type": "image",
+          "settings": {
+            "size": "medium",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "image_bExwqQ": {
+          "type": "image",
+          "settings": {
+            "size": "small",
+            "show_overlay": false,
+            "caption": "",
+            "subtitle": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_8KFnaB",
+        "image_jPpEp8",
+        "image_WgMNTd",
+        "image_p3K49m",
+        "image_GkNxgw",
+        "image_bExwqQ"
+      ],
+      "name": "Galería de fotos",
+      "settings": {
+        "subheading": "",
+        "heading": "Galería",
+        "layout": "masonry",
+        "gap": 4,
+        "full_width": false,
+        "background_color": "#ffffff"
+      }
+    },
+    "gallery_slideshow_EeWXfP": {
+      "type": "gallery-slideshow",
+      "blocks": {
+        "slide_Y4mj9f": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "slide_MNbwNH": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "slide_BdJAyw": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/0CE252E3-1702-43B4-A5B0-933348F6064D.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_Y4mj9f",
+        "slide_MNbwNH",
+        "slide_BdJAyw"
+      ],
+      "name": "Galería slideshow",
+      "settings": {
+        "height": "large",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_counter": true
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
+        "subheading": "",
         "heading": "Únete a la familia",
-        "text": "Sé la primera en enterarte de nuevos lanzamientos, ofertas y más."
+        "text": "Sé la primera en enterarte de nuevos lanzamientos, ofertas y más.",
+        "placeholder": "Tu dirección de email",
+        "button_text": "Suscribirme",
+        "button_style": "primary",
+        "background_color": "#f5f0eb"
+      }
+    },
+    "lookbook_BYqcJD": {
+      "type": "lookbook",
+      "blocks": {
+        "image_YmNtdH": {
+          "type": "image",
+          "settings": {
+            "aspect": "portrait",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 50
+          }
+        },
+        "image_G9DVx8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/493A211F-58C1-401C-9F8D-282C60A76BFB.png",
+            "aspect": "auto",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 50
+          }
+        },
+        "image_d43DmB": {
+          "type": "image",
+          "settings": {
+            "aspect": "portrait",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 50
+          }
+        }
+      },
+      "block_order": [
+        "image_YmNtdH",
+        "image_G9DVx8",
+        "image_d43DmB"
+      ],
+      "name": "Lookbook",
+      "settings": {
+        "subheading": "",
+        "heading": "Lookbook",
+        "layout": "trio",
+        "full_width": true,
+        "background_color": "#ffffff"
       }
     }
   },
@@ -45,6 +320,10 @@
     "featured-collection",
     "image-with-text",
     "collection-list",
-    "newsletter"
+    "multicolumn_TK4aff",
+    "gallery_NCRgwK",
+    "gallery_slideshow_EeWXfP",
+    "newsletter",
+    "lookbook_BYqcJD"
   ]
 }

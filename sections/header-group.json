@@ -1,13 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Encabezado",
   "sections": {
     "announcement-bar": {
-      "type": "announcement-bar"
+      "type": "announcement-bar",
+      "settings": {
+        "show_announcement": true,
+        "text": "Envío gratis en pedidos mayores a $999 MXN",
+        "link": "",
+        "bar_color": "#1a1a1a",
+        "text_color": "#ffffff"
+      }
     },
     "header": {
-      "type": "header"
+      "type": "header",
+      "settings": {
+        "logo": "shopify://shop_images/badsisters_logo_horizontal_edb3ea13-5bd2-4ac5-b338-990be121623e.png",
+        "logo_width": 150,
+        "menu": "main-menu",
+        "show_search": true
+      }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }
