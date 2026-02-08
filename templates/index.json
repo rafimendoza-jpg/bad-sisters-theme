@@ -136,7 +136,7 @@
       "settings": {
         "subheading": "",
         "heading": "",
-        "layout": "grid",
+        "layout": "filmstrip",
         "gap": 22,
         "full_width": true,
         "background_color": "#1a1a1a"
