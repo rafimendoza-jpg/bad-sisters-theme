@@ -98,10 +98,18 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/BE3DBF68-9F7F-4E2D-A558-029FC0F65D8A.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
+            "focal_point": "center center",
             "show_overlay": false,
+            "overlay_always": false,
             "caption": "",
             "subtitle": "",
+            "button_text": "",
+            "text_position": "flex-end",
+            "text_size": 1.2,
+            "overlay_opacity": 0.4,
+            "overlay_padding": 25,
             "link": ""
           }
         },
@@ -109,10 +117,18 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/7E5D7443-45F1-4472-A6FA-1D6C9F932D21.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
+            "focal_point": "center center",
             "show_overlay": false,
+            "overlay_always": false,
             "caption": "",
             "subtitle": "",
+            "button_text": "",
+            "text_position": "flex-end",
+            "text_size": 1.2,
+            "overlay_opacity": 0.4,
+            "overlay_padding": 25,
             "link": ""
           }
         },
@@ -120,10 +136,18 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/9C4EA887-1E37-4C2E-ABD3-C76C2291C738.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
+            "focal_point": "center center",
             "show_overlay": false,
+            "overlay_always": false,
             "caption": "",
             "subtitle": "",
+            "button_text": "",
+            "text_position": "flex-end",
+            "text_size": 1.2,
+            "overlay_opacity": 0.4,
+            "overlay_padding": 25,
             "link": ""
           }
         }
@@ -136,10 +160,14 @@
       "settings": {
         "subheading": "",
         "heading": "",
-        "layout": "filmstrip",
-        "gap": 22,
+        "columns": 3,
+        "row_height": 470,
+        "gap": 10,
+        "border_radius": 0,
         "full_width": true,
-        "background_color": "#1a1a1a"
+        "full_height": false,
+        "full_height_value": 70,
+        "background_color": "#690f17"
       }
     },
     "shop_the_look_Gt3etK": {
@@ -221,16 +249,16 @@
       "name": "Multicolumna",
       "settings": {
         "subheading": "",
-        "heading": "Multicolumna",
+        "heading": "",
         "columns": 2,
         "column_ratio": "equal",
-        "gap": 20,
-        "mobile_columns": "1",
+        "gap": 28,
+        "mobile_columns": "2",
         "image_ratio": "auto",
         "image_radius": 0,
-        "full_width": false,
+        "full_width": true,
         "full_height": false,
-        "section_height": 70,
+        "section_height": 65,
         "text_alignment": "center",
         "background_color": "#ffffff"
       }
@@ -377,56 +405,88 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
-            "aspect": "portrait",
-            "custom_height": "",
-            "title": "",
-            "subtitle": "",
-            "link": "",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
             "product": "",
             "tag_x": 50,
-            "tag_y": 50
+            "tag_y": 50,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
           }
         },
         "image_YmNtdH": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
-            "aspect": "portrait",
-            "custom_height": "",
-            "title": "",
-            "subtitle": "",
-            "link": "",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
             "product": "",
             "tag_x": 50,
-            "tag_y": 50
+            "tag_y": 50,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
           }
         },
         "image_G9DVx8": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/493A211F-58C1-401C-9F8D-282C60A76BFB.png",
-            "aspect": "portrait",
-            "custom_height": "",
-            "title": "",
-            "subtitle": "",
-            "link": "",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
             "product": "",
             "tag_x": 50,
-            "tag_y": 50
+            "tag_y": 50,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
           }
         },
         "image_d43DmB": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
-            "aspect": "portrait",
-            "custom_height": "",
-            "title": "",
-            "subtitle": "",
-            "link": "",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
             "product": "top-peplum-floral-geisha-rojo",
             "tag_x": 50,
-            "tag_y": 50
+            "tag_y": 50,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
           }
         }
       },
@@ -439,9 +499,11 @@
       "settings": {
         "subheading": "",
         "heading": "Lookbook",
-        "layout": "duo",
+        "layout": "2-col-right",
+        "gap": 16,
+        "border_radius": 0,
         "full_width": true,
-        "background_color": "#ffffff"
+        "background_color": "#690f17"
       }
     },
     "shop_the_look_zAA7z8": {
@@ -518,10 +580,18 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/9C4EA887-1E37-4C2E-ABD3-C76C2291C738.jpg",
-            "size": "large",
+            "col_span": 1,
+            "row_span": 1,
+            "focal_point": "center center",
             "show_overlay": false,
+            "overlay_always": false,
             "caption": "",
             "subtitle": "",
+            "button_text": "",
+            "text_position": "flex-end",
+            "text_size": 1.2,
+            "overlay_opacity": 0.4,
+            "overlay_padding": 25,
             "link": ""
           }
         },
@@ -529,10 +599,18 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/7E5D7443-45F1-4472-A6FA-1D6C9F932D21.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
+            "focal_point": "center center",
             "show_overlay": false,
+            "overlay_always": false,
             "caption": "",
             "subtitle": "",
+            "button_text": "",
+            "text_position": "flex-end",
+            "text_size": 1.2,
+            "overlay_opacity": 0.4,
+            "overlay_padding": 25,
             "link": ""
           }
         },
@@ -540,10 +618,18 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/BE3DBF68-9F7F-4E2D-A558-029FC0F65D8A.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
+            "focal_point": "center center",
             "show_overlay": false,
+            "overlay_always": false,
             "caption": "",
             "subtitle": "",
+            "button_text": "",
+            "text_position": "flex-end",
+            "text_size": 1.2,
+            "overlay_opacity": 0.4,
+            "overlay_padding": 25,
             "link": ""
           }
         }
@@ -557,9 +643,13 @@
       "settings": {
         "subheading": "",
         "heading": "Galería",
-        "layout": "filmstrip",
+        "columns": 4,
+        "row_height": 280,
         "gap": 4,
+        "border_radius": 0,
         "full_width": false,
+        "full_height": false,
+        "full_height_value": 80,
         "background_color": "#1a1a1a"
       }
     }
