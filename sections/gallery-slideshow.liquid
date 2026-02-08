@@ -1,6 +1,17 @@
 {%- comment -%} Section: Gallery Slideshow — Slider visual a pantalla completa {%- endcomment -%}
 
-<section class="gallery-slideshow gallery-slideshow--{{ section.settings.height }}" data-section-id="{{ section.id }}" data-animate>
+<style>
+  #GS-{{ section.id }} {
+    {%- case section.settings.height -%}
+      {%- when 'small' -%}  height: 50vh;
+      {%- when 'medium' -%} height: 70vh;
+      {%- when 'large' -%}  height: 85vh;
+      {%- when 'full' -%}   height: 100vh;
+    {%- endcase -%}
+  }
+</style>
+
+<section id="GS-{{ section.id }}" class="gallery-slideshow gallery-slideshow--{{ section.settings.height }}" data-section-id="{{ section.id }}" data-animate>
   <div class="gallery-slideshow__track" id="GallerySlideshow-{{ section.id }}">
     {%- for block in section.blocks -%}
       <div class="gallery-slideshow__slide{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
