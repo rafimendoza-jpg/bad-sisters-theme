@@ -29,8 +29,8 @@
       "type": "product-carousel",
       "name": "Carrusel de Productos",
       "settings": {
-        "heading": "Todo lo nuevo para este verano",
-        "subheading": "No te quedes sin el tuyo",
+        "heading": "Todo lo que necesitas para este verano",
+        "subheading": "No digas que no lo advertimos...",
         "products": [],
         "collection": "summer-basics",
         "products_to_show": 8,
@@ -42,42 +42,25 @@
         "text_color": ""
       }
     },
-    "gallery_slideshow_EeWXfP": {
-      "type": "gallery-slideshow",
-      "blocks": {
-        "slide_Y4mj9f": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "slide_BdJAyw": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/0CE252E3-1702-43B4-A5B0-933348F6064D.jpg",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_Y4mj9f",
-        "slide_BdJAyw"
-      ],
-      "name": "Galería slideshow",
+    "parallax_section_gYcHGF": {
+      "type": "parallax-section",
+      "name": "Parallax",
       "settings": {
-        "height": "small",
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "show_counter": true
+        "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
+        "video_url": "",
+        "focal_point": "center center",
+        "subheading": "",
+        "heading": "",
+        "text": "",
+        "text_align": "center",
+        "button_label": "",
+        "button_link": "",
+        "parallax_speed": 0.9,
+        "section_height": 80,
+        "overlay_style": "vignette",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.3,
+        "text_color": "#ffffff"
       }
     },
     "gallery_NCRgwK": {
@@ -209,52 +192,42 @@
         "text_color": ""
       }
     },
-    "multicolumn_TK4aff": {
-      "type": "multicolumn",
+    "gallery_slideshow_w6zFXM": {
+      "type": "gallery-slideshow",
       "blocks": {
-        "column_yPKkKL": {
-          "type": "column",
+        "slide_twcF8F": {
+          "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/IMG_1978_a59e985f-d056-4eb9-91e0-468e36b0c1d9.jpg",
-            "icon": "",
-            "heading": "Alta costura",
-            "text": "<p>Nuestro concepto es dar valor a cada prenda como lo que es, una obra de arte. Cada prenda se caracteriza por la disposición exclusiva de sus diseños, lo que las hace únicas.</p><p>Además, nuestras prendas son atemporales, lo que significa que no pasan de moda y puedenperdurar en el tiempo.</p>",
+            "image": "shopify://shop_images/373781FA-A5E9-4F3A-82C3-62BECB861C18.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
             "button_label": "",
             "button_link": ""
           }
         },
-        "column_8ddYJx": {
-          "type": "column",
+        "slide_KGj8MM": {
+          "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/6F541B87-0AAB-4616-BB1D-84182D518970.jpg",
-            "icon": "",
-            "heading": "arte en nuestras telas",
-            "text": "<p>Nuestros diseños estan inspirados en la flora y fauna de nuestro planeta, rescatando la belleza de la naturaleza.</p><p>Todo representado con dibujos y pinturas hechas a mano alzada como una expresión de arte.</p>",
+            "image": "shopify://shop_images/F15DD655-47BB-44BF-9A2A-72289367567D.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
             "button_label": "",
             "button_link": ""
           }
         }
       },
       "block_order": [
-        "column_yPKkKL",
-        "column_8ddYJx"
+        "slide_twcF8F",
+        "slide_KGj8MM"
       ],
-      "name": "Multicolumna",
+      "name": "Galería slideshow",
       "settings": {
-        "subheading": "",
-        "heading": "",
-        "columns": 2,
-        "column_ratio": "equal",
-        "gap": 28,
-        "mobile_columns": "2",
-        "image_ratio": "auto",
-        "image_radius": 0,
-        "full_width": true,
-        "full_height": false,
-        "section_height": 65,
-        "text_alignment": "center",
-        "background_color": "#ffffff",
-        "text_color": ""
+        "height": "medium",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_counter": true
       }
     },
     "featured_product_PjjFwN": {
@@ -282,7 +255,7 @@
       "name": "Producto Destacado",
       "settings": {
         "product": "vestido-ibiza-mesh-pre-orden-entrega-30-01",
-        "heading": "PRODUCTO DESTACADO",
+        "heading": "DESTACADO",
         "subheading": "",
         "image_position": "right",
         "full_width": false,
@@ -306,56 +279,6 @@
         "show_vendor": false,
         "show_view_all": true,
         "view_all_text": "Ver todos"
-      }
-    },
-    "gallery_slideshow_w6zFXM": {
-      "type": "gallery-slideshow",
-      "blocks": {
-        "slide_twcF8F": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "slide_KGj8MM": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/EC9AA589-3C44-40BC-B690-17002A2A323F.jpg",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "slide_JQxMHU": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/0CE252E3-1702-43B4-A5B0-933348F6064D.jpg",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_twcF8F",
-        "slide_KGj8MM",
-        "slide_JQxMHU"
-      ],
-      "name": "Galería slideshow",
-      "settings": {
-        "height": "small",
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "show_counter": true
       }
     },
     "image-with-text": {
@@ -528,30 +451,15 @@
       ],
       "name": "Shop the Look",
       "settings": {
-        "heading": "SHOP THE LOOK",
-        "subheading": "Haz clic en los puntos para descubrir cada pieza",
+        "heading": "ALL IN RED",
+        "subheading": "shop the look",
         "image": "shopify://shop_images/81D82C0C-71CA-4C8C-A434-B96DA98409EB.jpg",
         "layout": "image-left",
-        "image_size": 55,
+        "image_size": 30,
         "full_width": false,
-        "text_content": "",
-        "button_label": "",
-        "button_link": "",
-        "text_color": ""
-      }
-    },
-    "shop_the_look_RJptKF": {
-      "type": "shop-the-look",
-      "name": "Shop the Look",
-      "settings": {
-        "heading": "SHOP THE LOOK",
-        "subheading": "Haz clic en los puntos para descubrir cada pieza",
-        "layout": "image-left",
-        "image_size": 55,
-        "full_width": false,
-        "text_content": "",
-        "button_label": "",
-        "button_link": "",
+        "text_content": "<p>ESTAMPADO ESTRELLA - <strong>CANNES EDITION</strong> <strong>2025</strong></p><p></p><p></p>",
+        "button_label": "Shop all",
+        "button_link": "shopify://collections/family-rose",
         "text_color": ""
       }
     },
@@ -729,25 +637,52 @@
         "background_color": ""
       }
     },
-    "parallax_section_gYcHGF": {
-      "type": "parallax-section",
-      "name": "Parallax",
+    "multicolumn_TK4aff": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_yPKkKL": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/IMG_1978_a59e985f-d056-4eb9-91e0-468e36b0c1d9.jpg",
+            "icon": "",
+            "heading": "Alta costura",
+            "text": "<p>Nuestro concepto es dar valor a cada prenda como lo que es, una obra de arte. Cada prenda se caracteriza por la disposición exclusiva de sus diseños, lo que las hace únicas.</p><p>Además, nuestras prendas son atemporales, lo que significa que no pasan de moda y puedenperdurar en el tiempo.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_8ddYJx": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/6F541B87-0AAB-4616-BB1D-84182D518970.jpg",
+            "icon": "",
+            "heading": "arte en nuestras telas",
+            "text": "<p>Nuestros diseños estan inspirados en la flora y fauna de nuestro planeta, rescatando la belleza de la naturaleza.</p><p>Todo representado con dibujos y pinturas hechas a mano alzada como una expresión de arte.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_yPKkKL",
+        "column_8ddYJx"
+      ],
+      "name": "Multicolumna",
       "settings": {
-        "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
-        "video_url": "",
-        "focal_point": "center center",
         "subheading": "",
-        "heading": "NUEVA COLECCIÓN",
-        "text": "",
-        "text_align": "center",
-        "button_label": "",
-        "button_link": "",
-        "parallax_speed": 0.9,
-        "section_height": 80,
-        "overlay_style": "vignette",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0.3,
-        "text_color": "#ffffff"
+        "heading": "",
+        "columns": 2,
+        "column_ratio": "equal",
+        "gap": 28,
+        "mobile_columns": "2",
+        "image_ratio": "auto",
+        "image_radius": 0,
+        "full_width": true,
+        "full_height": false,
+        "section_height": 65,
+        "text_alignment": "center",
+        "background_color": "#ffffff",
+        "text_color": ""
       }
     },
     "staggered_gallery_tGR9Ux": {
@@ -868,24 +803,22 @@
   "order": [
     "hero",
     "product_carousel_37FEFD",
-    "gallery_slideshow_EeWXfP",
+    "parallax_section_gYcHGF",
     "gallery_NCRgwK",
     "shop_the_look_Gt3etK",
-    "multicolumn_TK4aff",
+    "gallery_slideshow_w6zFXM",
     "featured_product_PjjFwN",
     "featured-collection",
-    "gallery_slideshow_w6zFXM",
     "image-with-text",
     "collection-list",
     "newsletter",
     "lookbook_BYqcJD",
     "shop_the_look_zAA7z8",
-    "shop_the_look_RJptKF",
     "product_carousel_c98Px8",
     "gallery_FJ6cDb",
     "scroll_reveal_WByax6",
     "image_crossfade_7XqPER",
-    "parallax_section_gYcHGF",
+    "multicolumn_TK4aff",
     "staggered_gallery_tGR9Ux",
     "before_after_iCjxgh"
   ]
