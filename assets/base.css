@@ -321,6 +321,20 @@ p {
   display: flex;
   align-items: center;
 }
+/* Invisible hover bridge between nav link and mega panel to prevent close on gap */
+.mega-trigger::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 0;
+  pointer-events: none;
+}
+.mega-trigger.is-active::before {
+  height: 20px;
+  pointer-events: all;
+}
 .mega-trigger.is-active > .header__nav-link { opacity: 1; }
 .mega-trigger.is-active > .header__nav-link::after { width: 100%; }
 
@@ -395,41 +409,51 @@ p {
   margin: 0 auto;
 }
 
-/* Left side: text columns */
+/* Left side: vertical link list */
 .mega-panel__menus {
   display: flex;
-  gap: 3rem;
+  flex-direction: column;
+  gap: 0;
   flex: 1;
   min-width: 0;
+  max-width: 320px;
 }
 
 .mega-panel__col {
-  min-width: 140px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
+.mega-panel__col:last-child { border-bottom: none; }
 
 .mega-panel__col-title {
   display: block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-text);
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 0 0.25rem;
+  border-bottom: none;
 }
 
 .mega-panel__col-title--link {
   text-decoration: none;
-  border-bottom: none;
-  padding-bottom: 0;
-  transition: opacity 0.3s;
+  padding: 0.7rem 0;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  transition: opacity 0.3s, padding-left 0.3s;
+  cursor: pointer;
 }
-.mega-panel__col-title--link:hover { opacity: 0.6; }
+.mega-panel__col-title--link:hover {
+  opacity: 0.6;
+  padding-left: 0.5rem;
+}
 
 .mega-panel__list {
   list-style: none;
-  padding: 0;
+  padding: 0 0 0.5rem 0.75rem;
   margin: 0;
 }
 
@@ -445,21 +469,22 @@ p {
 }
 .mega-panel__link:hover {
   color: var(--color-text);
-  padding-left: 0.3rem;
+  padding-left: 0.4rem;
   opacity: 1;
 }
 
 /* Right side: featured image cards */
 .mega-panel__featured {
   display: flex;
-  gap: 1.25rem;
+  gap: 1.5rem;
   flex-shrink: 0;
+  align-items: flex-start;
 }
 
 .mega-featured {
   display: block;
   text-decoration: none;
-  width: 200px;
+  width: 220px;
   transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 .mega-featured:hover { opacity: 1; }

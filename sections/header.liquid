@@ -230,7 +230,7 @@
     }
 
     function scheduleClose() {
-      closeTimer = setTimeout(closeAll, 200);
+      closeTimer = setTimeout(closeAll, 400);
     }
 
     function cancelClose() {
@@ -238,12 +238,24 @@
     }
 
     triggers.forEach(trigger => {
+      const panel = trigger.querySelector('[data-mega-panel]');
+
       trigger.addEventListener('mouseenter', () => {
         if (window.innerWidth > 989) openPanel(trigger);
       });
       trigger.addEventListener('mouseleave', () => {
         if (window.innerWidth > 989) scheduleClose();
       });
+
+      /* Keep panel open while mouse is inside the panel */
+      if (panel) {
+        panel.addEventListener('mouseenter', () => {
+          cancelClose();
+        });
+        panel.addEventListener('mouseleave', () => {
+          if (window.innerWidth > 989) scheduleClose();
+        });
+      }
 
       /* Prevent default on link click on desktop — let hover handle it */
       const link = trigger.querySelector('[data-mega-toggle]');
