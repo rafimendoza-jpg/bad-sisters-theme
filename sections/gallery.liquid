@@ -11,11 +11,18 @@
 {%- assign row_height = section.settings.row_height -%}
 
 <style>
-  .main-content > .shopify-section:has(#GAL-{{ section.id }}) {
-    background-color: {{ section.settings.bg_color }} !important;
+  /* bg color — triple override to beat alternating section tones + any cache */
+  .shopify-section:has(#GAL-{{ section.id }}),
+  .main-content > .shopify-section:has(#GAL-{{ section.id }}),
+  .main-content > *:has(#GAL-{{ section.id }}) {
+    background-color: {{ section.settings.background_color }} !important;
+    background: {{ section.settings.background_color }} !important;
   }
-  #GAL-{{ section.id }} {
-    background-color: {{ section.settings.bg_color }} !important;
+  #GAL-{{ section.id }},
+  #GAL-{{ section.id }}.gal,
+  section.gal[id="GAL-{{ section.id }}"] {
+    background-color: {{ section.settings.background_color }} !important;
+    background: {{ section.settings.background_color }} !important;
   }
   {%- if section.settings.full_height -%}
     #GAL-{{ section.id }} .gal__grid {
@@ -29,7 +36,7 @@
 </style>
 
 <section id="GAL-{{ section.id }}" class="gal section-padding" data-section-id="{{ section.id }}"
-  style="background-color: {{ section.settings.bg_color }} !important;">
+  style="background-color: {{ section.settings.background_color }} !important;">
 
   <div class="{% if section.settings.full_width %}gal--full{% else %}page-width{% endif %}">
 
@@ -139,6 +146,10 @@
 </section>
 
 <style>
+  /* Ensure bg_color applies regardless of external overrides */
+  .gal[data-section-id="{{ section.id }}"] {
+    background: {{ section.settings.background_color }} !important;
+  }
   .gal--full { width: 100%; padding: 0; }
   .gal__header { text-align: center; margin-bottom: 2rem; }
   .gal__sub { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-light); margin: 0 0 0.5rem; }
@@ -242,14 +253,14 @@
     },
     {
       "type": "color",
-      "id": "bg_color",
+      "id": "background_color",
       "label": "Color de fondo",
       "default": "#ffffff"
     }
   ],
   "blocks": [
     {
-      "type": "photo",
+      "type": "image",
       "name": "Foto",
       "settings": [
         {
@@ -391,12 +402,12 @@
         "gap": 4
       },
       "blocks": [
-        { "type": "photo", "settings": { "col_span": 2, "row_span": 2 } },
-        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
-        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
-        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
-        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
-        { "type": "photo", "settings": { "col_span": 2, "row_span": 1 } }
+        { "type": "image", "settings": { "col_span": 2, "row_span": 2 } },
+        { "type": "image", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "image", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "image", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "image", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "image", "settings": { "col_span": 2, "row_span": 1 } }
       ]
     }
   ]

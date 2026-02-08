@@ -98,7 +98,8 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/BE3DBF68-9F7F-4E2D-A558-029FC0F65D8A.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
             "show_overlay": false,
             "caption": "",
             "subtitle": "",
@@ -109,7 +110,8 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/7E5D7443-45F1-4472-A6FA-1D6C9F932D21.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
             "show_overlay": false,
             "caption": "",
             "subtitle": "",
@@ -120,7 +122,8 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/9C4EA887-1E37-4C2E-ABD3-C76C2291C738.jpg",
-            "size": "small",
+            "col_span": 1,
+            "row_span": 1,
             "show_overlay": false,
             "caption": "",
             "subtitle": "",
@@ -133,13 +136,16 @@
         "image_jPpEp8",
         "image_WgMNTd"
       ],
-      "name": "Galería de fotos",
       "settings": {
         "subheading": "",
         "heading": "",
-        "layout": "filmstrip",
+        "columns": 3,
+        "row_height": 280,
         "gap": 22,
+        "border_radius": 0,
         "full_width": true,
+        "full_height": false,
+        "full_height_value": 80,
         "background_color": "#1a1a1a"
       }
     },
