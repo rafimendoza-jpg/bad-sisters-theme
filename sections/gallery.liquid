@@ -10,8 +10,14 @@
 {%- assign grid_cols = section.settings.columns -%}
 {%- assign row_height = section.settings.row_height -%}
 
-<section class="gal section-padding" data-section-id="{{ section.id }}"
-  style="background: {{ section.settings.bg_color }};">
+<style>
+  #GAL-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+</style>
+
+<section id="GAL-{{ section.id }}" class="gal section-padding" data-section-id="{{ section.id }}"
+  style="background-color: {{ section.settings.bg_color }};">
 
   <div class="{% if section.settings.full_width %}gal--full{% else %}page-width{% endif %}">
 
@@ -30,8 +36,11 @@
       style="
         display: grid;
         grid-template-columns: repeat({{ grid_cols }}, 1fr);
-        grid-auto-rows: {{ row_height }}px;
+        grid-auto-rows: {% if section.settings.full_height %}1fr{% else %}{{ row_height }}px{% endif %};
         gap: {{ section.settings.gap }}px;
+        {%- if section.settings.full_height -%}
+          min-height: {{ section.settings.full_height_value }}vh;
+        {%- endif -%}
       ">
 
       {%- for block in section.blocks -%}
@@ -200,6 +209,24 @@
       "id": "full_width",
       "label": "Ancho completo (sin márgenes)",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_height",
+      "label": "Alto completo (imágenes llenan la sección)",
+      "default": false,
+      "info": "Las imágenes se estiran para llenar toda la altura disponible"
+    },
+    {
+      "type": "range",
+      "id": "full_height_value",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Altura de la sección",
+      "default": 80,
+      "info": "Solo aplica cuando 'Alto completo' está activado"
     },
     {
       "type": "color",
