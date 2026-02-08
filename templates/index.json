@@ -850,9 +850,28 @@
         "border_radius": 0,
         "full_width": false,
         "animation_duration": 700,
-        "stagger_delay": 100,
+        "stagger_delay": 75,
         "slide_distance": 50,
         "caption_style": "hover",
+        "background_color": "",
+        "text_color": ""
+      }
+    },
+    "before_after_iCjxgh": {
+      "type": "before-after",
+      "name": "Before / After",
+      "settings": {
+        "subheading": "",
+        "heading": "",
+        "image_before": "shopify://shop_images/IMG-9635.png",
+        "image_after": "shopify://shop_images/IMG-9638.png",
+        "show_labels": true,
+        "label_before": "Antes",
+        "label_after": "Después",
+        "initial_position": 50,
+        "max_width": 1000,
+        "border_radius": 0,
+        "full_width": false,
         "background_color": "",
         "text_color": ""
       }
@@ -879,6 +898,7 @@
     "scroll_reveal_WByax6",
     "image_crossfade_7XqPER",
     "parallax_section_gYcHGF",
-    "staggered_gallery_tGR9Ux"
+    "staggered_gallery_tGR9Ux",
+    "before_after_iCjxgh"
   ]
 }
