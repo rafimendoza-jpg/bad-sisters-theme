@@ -9,9 +9,33 @@
   Cada imagen tiene tamaño configurable (aspect ratio), overlay de texto, hotspot
 {%- endcomment -%}
 
-{%- assign layout = section.settings.layout -%}
+{%- assign layout = section.settings.layout | default: '2-col' -%}
+
+{%- comment -%} Map old layout values to new ones {%- endcomment -%}
+{%- case layout -%}
+  {%- when 'duo' -%}{%- assign layout = '2-col' -%}
+  {%- when 'trio' -%}{%- assign layout = '3-col' -%}
+  {%- when 'solo' -%}{%- assign layout = '1-col' -%}
+  {%- when 'left' -%}{%- assign layout = '2-col-left' -%}
+  {%- when 'right' -%}{%- assign layout = '2-col-right' -%}
+{%- endcase -%}
 
 <style>
+  /* Background override — beat alternating section tones */
+  .shopify-section:has(#LBK-{{ section.id }}),
+  .main-content > .shopify-section:has(#LBK-{{ section.id }}),
+  .main-content > *:has(#LBK-{{ section.id }}) {
+    background-color: {{ section.settings.background_color }} !important;
+    background: {{ section.settings.background_color }} !important;
+  }
+  #LBK-{{ section.id }},
+  #LBK-{{ section.id }}.lbk,
+  section.lbk[id="LBK-{{ section.id }}"] {
+    background-color: {{ section.settings.background_color }} !important;
+    background: {{ section.settings.background_color }} !important;
+  }
+
+  /* Grid layout */
   #LBK-{{ section.id }} .lbk__grid {
     display: grid;
     {%- case layout -%}
@@ -21,6 +45,7 @@
       {%- when '2-col-right' -%} grid-template-columns: 1fr 2fr;
       {%- when '3-col' -%}  grid-template-columns: repeat(3, 1fr);
       {%- when 'masonry' -%} grid-template-columns: 1fr 1fr;
+      {%- else -%} grid-template-columns: 1fr 1fr;
     {%- endcase -%}
     gap: {{ section.settings.gap }}px;
   }
@@ -36,7 +61,7 @@
 </style>
 
 <section id="LBK-{{ section.id }}" class="lbk section-padding" data-section-id="{{ section.id }}"
-  style="background: {{ section.settings.background_color }};">
+  style="background-color: {{ section.settings.background_color }} !important;">
 
   <div class="{% if section.settings.full_width %}lbk--full{% else %}page-width{% endif %}">
 
@@ -60,6 +85,7 @@
         {%- when '2-col-right' -%} grid-template-columns: 1fr 2fr;
         {%- when '3-col' -%}  grid-template-columns: repeat(3, 1fr);
         {%- when 'masonry' -%} grid-template-columns: 1fr 1fr;
+        {%- else -%} grid-template-columns: 1fr 1fr;
       {%- endcase -%}
       gap: {{ section.settings.gap }}px;
     ">

@@ -128,7 +128,6 @@ p {
 /* Override for sections that define their own background */
 .hero-banner,
 .gallery-section,
-.lbk,
 .gallery-slideshow,
 .zara-collection {
   background-color: transparent !important;
