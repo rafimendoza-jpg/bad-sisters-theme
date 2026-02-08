@@ -189,6 +189,45 @@
         "button_link": "shopify://collections/family-rose"
       }
     },
+    "multicolumn_TK4aff": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_yPKkKL": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/IMG_1978_a59e985f-d056-4eb9-91e0-468e36b0c1d9.jpg",
+            "icon": "",
+            "heading": "Alta costura",
+            "text": "<p>Nuestro concepto es dar valor a cada prenda como lo que es, una obra de arte. Cada prenda se caracteriza por la disposición exclusiva de sus diseños, lo que las hace únicas.</p><p>Además, nuestras prendas son atemporales, lo que significa que no pasan de moda y puedenperdurar en el tiempo.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_8ddYJx": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/6F541B87-0AAB-4616-BB1D-84182D518970.jpg",
+            "icon": "",
+            "heading": "arte en nuestras telas",
+            "text": "<p>Nuestros diseños estan inspirados en la flora y fauna de nuestro planeta, rescatando la belleza de la naturaleza.</p><p>Todo representado con dibujos y pinturas hechas a mano alzada como una expresión de arte.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_yPKkKL",
+        "column_8ddYJx"
+      ],
+      "name": "Multicolumna",
+      "settings": {
+        "subheading": "",
+        "heading": "Multicolumna",
+        "columns": "2",
+        "text_alignment": "center",
+        "background_color": "#ffffff"
+      }
+    },
     "featured_product_PjjFwN": {
       "type": "featured-product",
       "blocks": {
@@ -310,54 +349,6 @@
         "subheading": "Explora",
         "heading": "Nuestras colecciones",
         "columns": "3"
-      }
-    },
-    "multicolumn_TK4aff": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_yPKkKL": {
-          "type": "column",
-          "settings": {
-            "icon": "",
-            "heading": "Columna",
-            "text": "<p>Describe una característica, un beneficio o un paso.</p>",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "column_8ddYJx": {
-          "type": "column",
-          "settings": {
-            "icon": "",
-            "heading": "Columna",
-            "text": "<p>Describe una característica, un beneficio o un paso.</p>",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "column_cBQndp": {
-          "type": "column",
-          "settings": {
-            "icon": "",
-            "heading": "Columna",
-            "text": "<p>Describe una característica, un beneficio o un paso.</p>",
-            "button_label": "",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_yPKkKL",
-        "column_8ddYJx",
-        "column_cBQndp"
-      ],
-      "name": "Multicolumna",
-      "settings": {
-        "subheading": "",
-        "heading": "Multicolumna",
-        "columns": "3",
-        "text_alignment": "center",
-        "background_color": "#ffffff"
       }
     },
     "newsletter": {
@@ -521,12 +512,12 @@
     "gallery_slideshow_EeWXfP",
     "gallery_NCRgwK",
     "shop_the_look_Gt3etK",
+    "multicolumn_TK4aff",
     "featured_product_PjjFwN",
     "featured-collection",
     "gallery_slideshow_w6zFXM",
     "image-with-text",
     "collection-list",
-    "multicolumn_TK4aff",
     "newsletter",
     "lookbook_BYqcJD",
     "shop_the_look_zAA7z8",
