@@ -344,6 +344,25 @@
         "view_all_text": "Ver todos"
       }
     },
+    "before_after_iCjxgh": {
+      "type": "before-after",
+      "name": "Before / After",
+      "settings": {
+        "subheading": "",
+        "heading": "Antifaces Reversibles",
+        "image_before": "shopify://shop_images/Photoroom_20251219_111621.jpg",
+        "image_after": "shopify://shop_images/Photoroom_20251219_111642.jpg",
+        "show_labels": true,
+        "label_before": "Front",
+        "label_after": "Back",
+        "initial_position": 50,
+        "max_width": 1000,
+        "border_radius": 0,
+        "full_width": false,
+        "background_color": "#ffffff",
+        "text_color": ""
+      }
+    },
     "shop_the_look_zAA7z8": {
       "type": "shop-the-look",
       "blocks": {
@@ -385,42 +404,66 @@
     "multicolumn_TK4aff": {
       "type": "multicolumn",
       "blocks": {
+        "column_FVx7BW": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A.png",
+            "icon": "",
+            "heading": "¿Día largo de verano?",
+            "text": "<p>Prendas que te acompañan de la playa a la fiesta sin pensarlo</p>",
+            "button_label": "Verano",
+            "button_link": "shopify://collections/summer-basics"
+          }
+        },
+        "column_F6XAQB": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/IMG-20190405-WA0004.jpg",
+            "icon": "",
+            "heading": "¿Día intenso en la oficina?",
+            "text": "<p>Para regalonear a nuestras bad-girls corporativas</p>",
+            "button_label": "Tops / Blusas",
+            "button_link": "shopify://collections/blusas-kimonos"
+          }
+        },
         "column_yPKkKL": {
           "type": "column",
           "settings": {
             "image": "shopify://shop_images/IMG_1978_a59e985f-d056-4eb9-91e0-468e36b0c1d9.jpg",
             "icon": "",
-            "heading": "Alta costura",
-            "text": "<p>Nuestro concepto es dar valor a cada prenda como lo que es, una obra de arte. Cada prenda se caracteriza por la disposición exclusiva de sus diseños, lo que las hace únicas.</p><p>Además, nuestras prendas son atemporales, lo que significa que no pasan de moda y puedenperdurar en el tiempo.</p>",
-            "button_label": "",
-            "button_link": ""
+            "heading": "¿Te invitaron a un matrimonio?",
+            "text": "<p>Encuentra tu look ideal</p>",
+            "button_label": "Vestidos / enteritos",
+            "button_link": "shopify://collections/vestidos-jumpsuits"
           }
         },
         "column_8ddYJx": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/6F541B87-0AAB-4616-BB1D-84182D518970.jpg",
+            "image": "shopify://shop_images/PanueloRosasRosado.jpg",
             "icon": "",
-            "heading": "arte en nuestras telas",
-            "text": "<p>Nuestros diseños estan inspirados en la flora y fauna de nuestro planeta, rescatando la belleza de la naturaleza.</p><p>Todo representado con dibujos y pinturas hechas a mano alzada como una expresión de arte.</p>",
-            "button_label": "",
-            "button_link": ""
+            "heading": "¿un total look estampado no es lo tuyo?",
+            "text": "<p>Estos detalles te harán sentir única</p>",
+            "button_label": "Accesorios",
+            "button_link": "shopify://collections/accesorios"
           }
         }
       },
       "block_order": [
+        "column_FVx7BW",
+        "column_F6XAQB",
         "column_yPKkKL",
         "column_8ddYJx"
       ],
       "name": "Multicolumna",
       "settings": {
-        "subheading": "",
-        "heading": "",
-        "columns": 2,
+        "subheading": "Te ayudamos a escoger tu look",
+        "heading": "compra por ocasión",
+        "columns": 4,
         "column_ratio": "equal",
         "gap": 28,
         "mobile_columns": "2",
-        "image_ratio": "auto",
+        "image_ratio": "4/5",
         "image_radius": 0,
         "full_width": true,
         "full_height": false,
@@ -525,25 +568,6 @@
         "text_color": ""
       }
     },
-    "before_after_iCjxgh": {
-      "type": "before-after",
-      "name": "Before / After",
-      "settings": {
-        "subheading": "",
-        "heading": "",
-        "image_before": "shopify://shop_images/Photoroom_20251219_111621.jpg",
-        "image_after": "shopify://shop_images/Photoroom_20251219_111642.jpg",
-        "show_labels": true,
-        "label_before": "Antes",
-        "label_after": "Después",
-        "initial_position": 50,
-        "max_width": 1000,
-        "border_radius": 0,
-        "full_width": false,
-        "background_color": "",
-        "text_color": ""
-      }
-    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -567,10 +591,10 @@
     "featured_product_PjjFwN",
     "lookbook_BYqcJD",
     "featured-collection",
+    "before_after_iCjxgh",
     "shop_the_look_zAA7z8",
     "multicolumn_TK4aff",
     "staggered_gallery_tGR9Ux",
-    "before_after_iCjxgh",
     "newsletter"
   ]
 }
