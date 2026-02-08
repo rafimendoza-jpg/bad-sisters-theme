@@ -473,6 +473,214 @@
         "text_color": ""
       }
     },
+    "looks_carousel_CVGgrx": {
+      "type": "looks-carousel",
+      "blocks": {
+        "look_yDU6k4": {
+          "type": "look",
+          "settings": {
+            "video": "shopify://files/videos/4DA694FF-F8D2-44F2-9637-AB5249F4DC5C.MP4",
+            "caption": "",
+            "subtitle": "",
+            "link": "shopify://products/top-halter",
+            "link_text": ""
+          }
+        },
+        "look_Vkf7Up": {
+          "type": "look",
+          "settings": {
+            "video": "shopify://files/videos/39CE9C44-3F26-423A-B3D5-06FCE7EAEEB6.MOV",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "link_text": ""
+          }
+        },
+        "look_RQYFML": {
+          "type": "look",
+          "settings": {
+            "video": "shopify://files/videos/copy-96EE41DA-B09B-447E-86B4-847558A65F05.mov",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "link_text": ""
+          }
+        },
+        "look_fyfDYC": {
+          "type": "look",
+          "settings": {
+            "video": "shopify://files/videos/A83A791B-7AF7-47D7-830C-CACF2713D018.mp4",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "link_text": ""
+          }
+        },
+        "look_PfVNg8": {
+          "type": "look",
+          "settings": {
+            "video": "shopify://files/videos/copy-B1EE7525-FCA5-47A0-8DD1-6BC0EA165D5D.mov",
+            "caption": "",
+            "subtitle": "",
+            "link": "",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "look_yDU6k4",
+        "look_Vkf7Up",
+        "look_RQYFML",
+        "look_fyfDYC",
+        "look_PfVNg8"
+      ],
+      "name": "Ideas de Looks",
+      "settings": {
+        "heading": "IDEAS DE LOOKS",
+        "subheading": "Inspírate con los últimos looks de @bad_sisters",
+        "button_label": "VER TODOS",
+        "button_link": "https://www.instagram.com/bad_sisters/",
+        "card_width": 300,
+        "gap": 12,
+        "border_radius": 4,
+        "scroll_count": 3,
+        "background_color": "",
+        "text_color": ""
+      }
+    },
+    "lookbook_WJJhHP": {
+      "type": "lookbook",
+      "blocks": {
+        "image_tT3ar8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/0014BF1B-367A-4F9A-B0AC-649393C75AE9.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_BpYeeP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG-9835.png",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_pL6Bze": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG-9635.png",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_WDPe8y": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/155124D5-792F-4283-AD73-DD5F2FB7D436.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_y3yiQc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG-9409.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_tT3ar8",
+        "image_BpYeeP",
+        "image_pL6Bze",
+        "image_WDPe8y",
+        "image_y3yiQc"
+      ],
+      "name": "Lookbook",
+      "settings": {
+        "subheading": "",
+        "heading": "Lookbook",
+        "layout": "masonry",
+        "gap": 4,
+        "border_radius": 0,
+        "full_width": true,
+        "background_color": "#ffffff",
+        "text_color": ""
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -499,6 +707,8 @@
     "before_after_iCjxgh",
     "shop_the_look_zAA7z8",
     "multicolumn_TK4aff",
+    "looks_carousel_CVGgrx",
+    "lookbook_WJJhHP",
     "newsletter"
   ]
 }
