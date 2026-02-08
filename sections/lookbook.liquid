@@ -1,0 +1,200 @@
+{%- comment -%} Section: Lookbook — Galería estilo editorial/moda {%- endcomment -%}
+
+<section class="lookbook section-padding" data-section-id="{{ section.id }}" data-animate
+  style="background-color: {{ section.settings.background_color }};">
+  <div class="{% if section.settings.full_width %}gallery--full-width{% else %}page-width{% endif %}">
+
+    {%- if section.settings.heading != blank -%}
+      <div class="gallery__header text-center mb-4">
+        {%- if section.settings.subheading != blank -%}
+          <p class="gallery__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        <h2 class="gallery__heading">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="lookbook__grid lookbook__grid--{{ section.settings.layout }}">
+      {%- for block in section.blocks -%}
+        <div class="lookbook__item lookbook__item--{{ block.settings.aspect }}" {{ block.shopify_attributes }}
+          style="{% if block.settings.custom_height != blank %}--item-height: {{ block.settings.custom_height }};{% endif %}">
+
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 1400 }}"
+              alt="{{ block.settings.image.alt | default: block.settings.title | default: 'Lookbook' }}"
+              loading="lazy"
+              class="lookbook__image"
+            >
+          {%- else -%}
+            <div class="gallery-grid__placeholder">
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} Hotspots / Product tags en la imagen {%- endcomment -%}
+          {%- if block.settings.product != blank -%}
+            <div class="lookbook__tag" style="top: {{ block.settings.tag_y | default: 50 }}%; left: {{ block.settings.tag_x | default: 50 }}%;">
+              <button class="lookbook__tag-dot" aria-label="Ver producto">
+                <span class="lookbook__tag-pulse"></span>
+              </button>
+              <div class="lookbook__tag-card">
+                {%- assign tagged_product = block.settings.product -%}
+                <a href="{{ tagged_product.url }}" class="lookbook__tag-product">
+                  {%- if tagged_product.featured_image -%}
+                    <img src="{{ tagged_product.featured_image | image_url: width: 100 }}" alt="{{ tagged_product.title }}" class="lookbook__tag-image">
+                  {%- endif -%}
+                  <div class="lookbook__tag-info">
+                    <p class="lookbook__tag-title">{{ tagged_product.title }}</p>
+                    <p class="lookbook__tag-price">{{ tagged_product.price | money }}</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.title != blank -%}
+            <div class="lookbook__item-overlay">
+              <h3 class="lookbook__item-title">{{ block.settings.title }}</h3>
+              {%- if block.settings.subtitle != blank -%}
+                <p class="lookbook__item-subtitle">{{ block.settings.subtitle }}</p>
+              {%- endif -%}
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="lookbook__item-link">Descubrir →</a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lookbook",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Lookbook"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "duo", "label": "Dos columnas (50/50)" },
+        { "value": "trio", "label": "1 grande + 2 apiladas" },
+        { "value": "asymmetric", "label": "Asimétrico libre" },
+        { "value": "stacked", "label": "Apilado vertical" }
+      ],
+      "default": "trio"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Imagen",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "select",
+          "id": "aspect",
+          "label": "Proporción",
+          "options": [
+            { "value": "portrait", "label": "Vertical (3:4)" },
+            { "value": "landscape", "label": "Horizontal (4:3)" },
+            { "value": "square", "label": "Cuadrada (1:1)" },
+            { "value": "tall", "label": "Muy alta (2:3)" },
+            { "value": "wide", "label": "Panorámica (16:9)" },
+            { "value": "auto", "label": "Automática" }
+          ],
+          "default": "portrait"
+        },
+        {
+          "type": "text",
+          "id": "custom_height",
+          "label": "Altura personalizada (ej: 500px, 80vh)",
+          "info": "Deja vacío para usar la proporción seleccionada"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título sobre imagen"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        },
+        {
+          "type": "header",
+          "content": "Producto en la imagen (hotspot)"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto vinculado"
+        },
+        {
+          "type": "range",
+          "id": "tag_x",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Posición horizontal del punto",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "tag_y",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Posición vertical del punto",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook",
+      "blocks": [
+        { "type": "image", "settings": { "aspect": "portrait" } },
+        { "type": "image", "settings": { "aspect": "landscape" } },
+        { "type": "image", "settings": { "aspect": "portrait" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

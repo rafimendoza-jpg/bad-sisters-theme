@@ -1,0 +1,63 @@
+{%- comment -%} Section: Main Search {%- endcomment -%}
+
+<section class="search-page" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="text-center mb-4">
+      <h1>Buscar</h1>
+    </div>
+
+    <form action="/search" method="get" class="search-form" role="search">
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="¿Qué estás buscando?"
+        aria-label="Buscar"
+      >
+      <button type="submit" class="btn btn--primary">Buscar</button>
+    </form>
+
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="text-center mb-3" style="color: var(--color-text-light);">
+          {{ search.results_count }} resultados para "{{ search.terms }}"
+        </p>
+        <div class="grid grid--4">
+          {%- for result in search.results -%}
+            {%- if result.object_type == 'product' -%}
+              {% render 'product-card', product: result %}
+            {%- else -%}
+              <div class="product-card">
+                {%- if result.image -%}
+                  <a href="{{ result.url }}" class="product-card__media" style="aspect-ratio: 16/10;">
+                    <img src="{{ result.image | image_url: width: 400 }}" alt="{{ result.title }}" loading="lazy">
+                  </a>
+                {%- endif -%}
+                <div class="product-card__info">
+                  <p class="product-card__vendor">{{ result.object_type }}</p>
+                  <h3 class="product-card__title">
+                    <a href="{{ result.url }}">{{ result.title }}</a>
+                  </h3>
+                  <p style="font-size: 0.85rem; color: var(--color-text-light);">
+                    {{ result.content | strip_html | truncatewords: 20 }}
+                  </p>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div class="text-center" style="padding: 3rem 0;">
+          <p>No se encontraron resultados para "{{ search.terms }}"</p>
+          <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">Intenta con otro término de búsqueda.</p>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Búsqueda"
+}
+{% endschema %}

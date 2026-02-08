@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_vendor": true,
+        "show_details_tab": true,
+        "show_share": true,
+        "show_trust_badges": true,
+        "show_size_guide": true
+      }
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {
+        "title": "Reseñas de clientes",
+        "show_native_reviews": true,
+        "show_write_review": true
+      }
+    },
+    "related": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "También te puede gustar",
+        "products_to_show": 4,
+        "columns": "4"
+      }
+    }
+  },
+  "order": ["main", "reviews", "related"]
+}

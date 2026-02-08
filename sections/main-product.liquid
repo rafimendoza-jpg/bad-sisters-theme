@@ -1,0 +1,563 @@
+{%- comment -%}
+  Section: Main Product — Rediseñado
+  - Galería sticky a la izquierda (scroll vertical de imágenes)
+  - Info a la derecha: título, estrellas, precio, tallas prominent, add to cart
+  - Tabs: Descripción | Detalles | Reseñas (reseñas NO enterradas al fondo)
+{%- endcomment -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign review_rating = product.metafields.reviews.rating.value | default: 0 -%}
+{%- assign review_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+
+<section class="pp" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <nav class="pp-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Inicio</a>
+      <span>/</span>
+      {%- if collection -%}
+        <a href="{{ collection.url }}">{{ collection.title }}</a>
+        <span>/</span>
+      {%- endif -%}
+      <span>{{ product.title }}</span>
+    </nav>
+
+    {%- if product != blank -%}
+      <div class="pp-layout">
+
+        {%- comment -%} ===== GALLERY (Left, Sticky) ===== {%- endcomment -%}
+        <div class="pp-gallery">
+          <div class="pp-gallery__grid" id="ProductGallery">
+            {%- for image in product.images -%}
+              <div class="pp-gallery__item{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}">
+                <img
+                  src="{{ image | image_url: width: 1200 }}"
+                  alt="{{ image.alt | default: product.title }}"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  class="pp-gallery__img"
+                  data-zoom-src="{{ image | image_url: width: 2048 }}"
+                  onclick="openProductZoom(this)"
+                >
+              </div>
+            {%- endfor -%}
+            {%- if product.images.size == 0 -%}
+              <div class="pp-gallery__item">
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if product.images.size > 1 -%}
+            <div class="pp-gallery__thumbs">
+              {%- for image in product.images -%}
+                <button
+                  class="pp-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                  data-index="{{ forloop.index0 }}"
+                  onclick="scrollToProductImage({{ forloop.index0 }})"
+                  aria-label="Imagen {{ forloop.index }}"
+                >
+                  <img src="{{ image | image_url: width: 100 }}" alt="{{ image.alt | default: product.title }}" loading="lazy">
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} ===== PRODUCT INFO (Right, Sticky) ===== {%- endcomment -%}
+        <div class="pp-info">
+          {%- if section.settings.show_vendor and product.vendor != blank -%}
+            <p class="pp-info__vendor">{{ product.vendor }}</p>
+          {%- endif -%}
+
+          <h1 class="pp-info__title">{{ product.title }}</h1>
+
+          {%- comment -%} ★★★★★ STAR RATING — Prominente, justo debajo del título {%- endcomment -%}
+          <div class="pp-info__rating" id="ProductRating">
+            {% render 'star-rating', rating: review_rating, count: review_count, show_count: true, size: 'medium' %}
+            {%- if review_count > 0 -%}
+              <a href="#ProductReviewsTab" class="pp-info__rating-link" onclick="openProductTab('reviews')">
+                Ver {{ review_count }} {% if review_count == 1 %}reseña{% else %}reseñas{% endif %}
+              </a>
+            {%- else -%}
+              <a href="#ProductReviewsTab" class="pp-info__rating-link" onclick="openProductTab('reviews')">
+                Escribir reseña
+              </a>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} PRICE {%- endcomment -%}
+          <div class="pp-info__price">
+            {%- if product.compare_at_price > product.price -%}
+              <span class="pp-info__price-current pp-info__price-current--sale">{{ product.price | money }}</span>
+              <span class="pp-info__price-compare">{{ product.compare_at_price | money }}</span>
+              <span class="pp-info__price-badge">
+                -{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
+              </span>
+            {%- else -%}
+              <span class="pp-info__price-current">{{ product.price | money }}</span>
+            {%- endif -%}
+            {%- if current_variant.unit_price -%}
+              <span class="pp-info__unit-price">
+                {{ current_variant.unit_price | money }} / {{ current_variant.unit_price_measurement.reference_value }}{{ current_variant.unit_price_measurement.reference_unit }}
+              </span>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} PRODUCT FORM {%- endcomment -%}
+          {%- form 'product', product -%}
+
+            {%- comment -%} VARIANT OPTIONS — Tallas prominentes {%- endcomment -%}
+            {%- unless product.has_only_default_variant -%}
+              {%- for option in product.options_with_values -%}
+                {%- assign option_name_lower = option.name | downcase -%}
+                <div class="pp-option">
+                  <div class="pp-option__header">
+                    <span class="pp-option__label">{{ option.name }}</span>
+                    <span class="pp-option__selected" id="OptionSelected{{ forloop.index0 }}">{{ option.selected_value }}</span>
+                  </div>
+
+                  {%- if option_name_lower == 'color' or option_name_lower == 'colour' -%}
+                    {%- comment -%} Color swatches {%- endcomment -%}
+                    <div class="pp-option__colors">
+                      {%- for value in option.values -%}
+                        <button
+                          type="button"
+                          class="pp-color-swatch{% if forloop.first %} is-selected{% endif %}"
+                          data-option-index="{{ forloop.parentloop.index0 }}"
+                          data-value="{{ value }}"
+                          title="{{ value }}"
+                          style="background-color: {{ value | handleize }};"
+                          onclick="selectProductOption(this)"
+                        >
+                          <span class="visually-hidden">{{ value }}</span>
+                        </button>
+                      {%- endfor -%}
+                    </div>
+                  {%- elsif option_name_lower == 'size' or option_name_lower == 'talla' or option_name_lower == 'tamaño' -%}
+                    {%- comment -%} Size buttons — BIG and prominent {%- endcomment -%}
+                    <div class="pp-option__sizes">
+                      {%- for value in option.values -%}
+                        {%- assign size_available = true -%}
+                        {%- for variant in product.variants -%}
+                          {%- if variant.option1 == value or variant.option2 == value or variant.option3 == value -%}
+                            {%- unless variant.available -%}{%- assign size_available = false -%}{%- endunless -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                        <button
+                          type="button"
+                          class="pp-size-btn{% if forloop.first %} is-selected{% endif %}{% unless size_available %} is-disabled{% endunless %}"
+                          data-option-index="{{ forloop.parentloop.index0 }}"
+                          data-value="{{ value }}"
+                          onclick="selectProductOption(this)"
+                          {% unless size_available %}aria-disabled="true"{% endunless %}
+                        >
+                          {{ value }}
+                        </button>
+                      {%- endfor -%}
+                    </div>
+                    {%- if section.settings.show_size_guide -%}
+                      <a href="#" class="pp-size-guide" onclick="event.preventDefault(); document.getElementById('SizeGuideModal').classList.add('is-open');">
+                        Guía de tallas
+                      </a>
+                    {%- endif -%}
+                  {%- else -%}
+                    {%- comment -%} Generic options {%- endcomment -%}
+                    <div class="pp-option__buttons">
+                      {%- for value in option.values -%}
+                        <button
+                          type="button"
+                          class="pp-option-btn{% if forloop.first %} is-selected{% endif %}"
+                          data-option-index="{{ forloop.parentloop.index0 }}"
+                          data-value="{{ value }}"
+                          onclick="selectProductOption(this)"
+                        >
+                          {{ value }}
+                        </button>
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            {%- endunless -%}
+
+            <select name="id" class="visually-hidden" id="ProductVariantSelect" aria-label="Variante">
+              {%- for variant in product.variants -%}
+                <option
+                  value="{{ variant.id }}"
+                  {% if variant == current_variant %}selected{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                  data-price="{{ variant.price | money }}"
+                  data-compare-price="{{ variant.compare_at_price | money }}"
+                  data-available="{{ variant.available }}"
+                >
+                  {{ variant.title }} - {{ variant.price | money }}
+                </option>
+              {%- endfor -%}
+            </select>
+
+            {%- comment -%} ADD TO CART {%- endcomment -%}
+            <div class="pp-add-row">
+              <div class="pp-quantity">
+                <button type="button" class="pp-quantity__btn" data-action="decrease" aria-label="Menos">−</button>
+                <input type="number" name="quantity" value="1" min="1" class="pp-quantity__input" aria-label="Cantidad">
+                <button type="button" class="pp-quantity__btn" data-action="increase" aria-label="Más">+</button>
+              </div>
+              <button type="submit" class="pp-add-btn"
+                {% unless product.available %}disabled{% endunless %}
+                id="ProductAddToCart">
+                {%- if product.available -%}
+                  Agregar al carrito — {{ current_variant.price | money }}
+                {%- else -%}
+                  Agotado
+                {%- endif -%}
+              </button>
+            </div>
+
+          {%- endform -%}
+
+          {%- comment -%} TRUST BADGES {%- endcomment -%}
+          {%- if section.settings.show_trust_badges -%}
+            <div class="pp-trust">
+              <div class="pp-trust__item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Compra segura</span>
+              </div>
+              <div class="pp-trust__item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                <span>Envío rápido</span>
+              </div>
+              <div class="pp-trust__item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                <span>Devoluciones fáciles</span>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} ===== TABS: Descripción | Detalles | Reseñas ===== {%- endcomment -%}
+          <div class="pp-tabs" id="ProductTabs">
+            <div class="pp-tabs__nav">
+              <button class="pp-tab-btn is-active" onclick="openProductTab('description')" data-tab="description">
+                Descripción
+              </button>
+              {%- if section.settings.show_details_tab -%}
+                <button class="pp-tab-btn" onclick="openProductTab('details')" data-tab="details">
+                  Detalles
+                </button>
+              {%- endif -%}
+              <button class="pp-tab-btn" onclick="openProductTab('reviews')" data-tab="reviews">
+                Reseñas
+                {%- if review_count > 0 -%}
+                  <span class="pp-tab-count">{{ review_count }}</span>
+                {%- endif -%}
+              </button>
+              {%- if section.settings.show_share -%}
+                <button class="pp-tab-btn" onclick="openProductTab('share')" data-tab="share">
+                  Compartir
+                </button>
+              {%- endif -%}
+            </div>
+
+            <div class="pp-tabs__content">
+              {%- comment -%} Tab: Descripción {%- endcomment -%}
+              <div class="pp-tab-panel is-active" data-panel="description">
+                {%- if product.description != blank -%}
+                  <div class="rte">{{ product.description }}</div>
+                {%- else -%}
+                  <p>No hay descripción disponible.</p>
+                {%- endif -%}
+              </div>
+
+              {%- comment -%} Tab: Detalles {%- endcomment -%}
+              {%- if section.settings.show_details_tab -%}
+                <div class="pp-tab-panel" data-panel="details">
+                  <table class="pp-details-table">
+                    {%- if product.type != blank -%}
+                      <tr><th>Tipo</th><td>{{ product.type }}</td></tr>
+                    {%- endif -%}
+                    {%- if product.vendor != blank -%}
+                      <tr><th>Marca</th><td>{{ product.vendor }}</td></tr>
+                    {%- endif -%}
+                    {%- if current_variant.sku != blank -%}
+                      <tr><th>SKU</th><td>{{ current_variant.sku }}</td></tr>
+                    {%- endif -%}
+                    {%- if current_variant.barcode != blank -%}
+                      <tr><th>Código de barras</th><td>{{ current_variant.barcode }}</td></tr>
+                    {%- endif -%}
+                    {%- if current_variant.weight > 0 -%}
+                      <tr><th>Peso</th><td>{{ current_variant.weight | weight_with_unit: current_variant.weight_unit }}</td></tr>
+                    {%- endif -%}
+                    {%- for tag in product.tags -%}
+                      {%- if tag contains 'Material:' -%}
+                        <tr><th>Material</th><td>{{ tag | split: ':' | last | strip }}</td></tr>
+                      {%- endif -%}
+                      {%- if tag contains 'Cuidado:' -%}
+                        <tr><th>Cuidado</th><td>{{ tag | split: ':' | last | strip }}</td></tr>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </table>
+                </div>
+              {%- endif -%}
+
+              {%- comment -%} Tab: Reseñas — ¡AQUÍ SE VEN! No están enterradas {%- endcomment -%}
+              <div class="pp-tab-panel" data-panel="reviews" id="ProductReviewsTab">
+                {%- if review_count > 0 -%}
+                  <div class="pp-reviews-summary">
+                    <div class="pp-reviews-summary__stars">
+                      <span class="pp-reviews-big-number">{{ review_rating | round: 1 }}</span>
+                      {% render 'star-rating', rating: review_rating, count: review_count, show_count: false, size: 'large' %}
+                    </div>
+                    <p>Basado en {{ review_count }} {% if review_count == 1 %}reseña{% else %}reseñas{% endif %}</p>
+                  </div>
+                {%- endif -%}
+
+                {%- comment -%} Review app hooks — Judge.me, Loox, Yotpo, etc. inject here {%- endcomment -%}
+                <div id="shopify-product-reviews" data-id="{{ product.id }}">
+                  {{ product.metafields.reviews.rating_html | default: '' }}
+                  {{ product.metafields.judgeme.widget | default: '' }}
+                  {{ product.metafields.loox.reviews_widget | default: '' }}
+                </div>
+
+                {%- comment -%} If no review app, show native prompt {%- endcomment -%}
+                <div class="pp-reviews-native">
+                  {%- if review_count == 0 -%}
+                    <div class="pp-reviews-empty">
+                      <p>Aún no hay reseñas para este producto.</p>
+                      <p class="pp-reviews-empty__cta">¡Sé el primero en dejar tu opinión!</p>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+
+              {%- comment -%} Tab: Compartir {%- endcomment -%}
+              {%- if section.settings.show_share -%}
+                <div class="pp-tab-panel" data-panel="share">
+                  <div class="pp-share">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ product.url }}" target="_blank" rel="noopener" class="pp-share__link">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                      Facebook
+                    </a>
+                    <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ product.url }}&text={{ product.title | url_encode }}" target="_blank" rel="noopener" class="pp-share__link">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                      Twitter / X
+                    </a>
+                    <a href="https://pinterest.com/pin/create/button/?url={{ shop.url }}{{ product.url }}&media={{ product.featured_image | image_url: width: 1024 }}&description={{ product.title | url_encode }}" target="_blank" rel="noopener" class="pp-share__link">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
+                      Pinterest
+                    </a>
+                    <button onclick="navigator.clipboard.writeText('{{ shop.url }}{{ product.url }}').then(() => this.textContent = '¡Copiado!')" class="pp-share__link pp-share__copy">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      Copiar enlace
+                    </button>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Zoom Modal {%- endcomment -%}
+<div class="pp-zoom-modal" id="ProductZoomModal" onclick="if(event.target === this) closeProductZoom();">
+  <button class="pp-zoom-modal__close" onclick="closeProductZoom()" aria-label="Cerrar">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img class="pp-zoom-modal__img" id="ProductZoomImage" src="" alt="">
+</div>
+
+{%- comment -%} Size Guide Modal {%- endcomment -%}
+{%- if section.settings.show_size_guide -%}
+  <div class="pp-modal" id="SizeGuideModal" onclick="if(event.target === this) this.classList.remove('is-open');">
+    <div class="pp-modal__content">
+      <button class="pp-modal__close" onclick="document.getElementById('SizeGuideModal').classList.remove('is-open');" aria-label="Cerrar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <h3>Guía de tallas</h3>
+      {%- if section.settings.size_guide_image != blank -%}
+        <img src="{{ section.settings.size_guide_image | image_url: width: 800 }}" alt="Guía de tallas">
+      {%- else -%}
+        <p>Consulta nuestra guía de tallas para encontrar tu talla perfecta. Si tienes dudas, contáctanos.</p>
+        <table class="pp-size-table">
+          <thead><tr><th>Talla</th><th>Pecho (cm)</th><th>Cintura (cm)</th><th>Cadera (cm)</th></tr></thead>
+          <tbody>
+            <tr><td>XS</td><td>80-84</td><td>60-64</td><td>86-90</td></tr>
+            <tr><td>S</td><td>84-88</td><td>64-68</td><td>90-94</td></tr>
+            <tr><td>M</td><td>88-92</td><td>68-72</td><td>94-98</td></tr>
+            <tr><td>L</td><td>92-96</td><td>72-76</td><td>98-102</td></tr>
+            <tr><td>XL</td><td>96-100</td><td>76-80</td><td>102-106</td></tr>
+          </tbody>
+        </table>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+  /* ===== Product Tabs ===== */
+  function openProductTab(tab) {
+    document.querySelectorAll('.pp-tab-btn').forEach(b => b.classList.remove('is-active'));
+    document.querySelectorAll('.pp-tab-panel').forEach(p => p.classList.remove('is-active'));
+    const btn = document.querySelector(`.pp-tab-btn[data-tab="${tab}"]`);
+    const panel = document.querySelector(`.pp-tab-panel[data-panel="${tab}"]`);
+    if (btn) btn.classList.add('is-active');
+    if (panel) panel.classList.add('is-active');
+  }
+
+  /* ===== Variant Selector ===== */
+  function selectProductOption(btn) {
+    const idx = btn.dataset.optionIndex;
+    const value = btn.dataset.value;
+
+    /* Update UI */
+    btn.closest('.pp-option').querySelectorAll('button[data-option-index]').forEach(b => b.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+
+    const selectedLabel = document.getElementById('OptionSelected' + idx);
+    if (selectedLabel) selectedLabel.textContent = value;
+
+    /* Find matching variant */
+    const select = document.getElementById('ProductVariantSelect');
+    const options = select.querySelectorAll('option');
+    const selectedValues = [];
+    document.querySelectorAll('button.is-selected[data-option-index]').forEach(b => {
+      selectedValues[parseInt(b.dataset.optionIndex)] = b.dataset.value;
+    });
+
+    const variantTitle = selectedValues.filter(Boolean).join(' / ');
+    for (const opt of options) {
+      if (opt.textContent.trim().startsWith(variantTitle)) {
+        select.value = opt.value;
+        const addBtn = document.getElementById('ProductAddToCart');
+        if (opt.disabled) {
+          addBtn.disabled = true;
+          addBtn.textContent = 'Agotado';
+        } else {
+          addBtn.disabled = false;
+          addBtn.textContent = 'Agregar al carrito — ' + opt.dataset.price;
+        }
+        break;
+      }
+    }
+  }
+
+  /* ===== Gallery Scroll ===== */
+  function scrollToProductImage(index) {
+    const items = document.querySelectorAll('.pp-gallery__item');
+    if (items[index]) {
+      items[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    document.querySelectorAll('.pp-gallery__thumb').forEach(t => t.classList.remove('is-active'));
+    const thumbs = document.querySelectorAll('.pp-gallery__thumb');
+    if (thumbs[index]) thumbs[index].classList.add('is-active');
+  }
+
+  /* ===== Zoom ===== */
+  function openProductZoom(img) {
+    const modal = document.getElementById('ProductZoomModal');
+    const zoomImg = document.getElementById('ProductZoomImage');
+    zoomImg.src = img.dataset.zoomSrc || img.src;
+    zoomImg.alt = img.alt;
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProductZoom() {
+    const modal = document.getElementById('ProductZoomModal');
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  /* ===== Quantity ===== */
+  document.querySelectorAll('.pp-quantity__btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = btn.parentElement.querySelector('.pp-quantity__input');
+      let val = parseInt(input.value) || 1;
+      if (btn.dataset.action === 'increase') val++;
+      else if (btn.dataset.action === 'decrease' && val > 1) val--;
+      input.value = val;
+    });
+  });
+
+  /* Gallery intersection observer for thumb highlighting */
+  if ('IntersectionObserver' in window) {
+    const galleryObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = entry.target.dataset.index;
+          document.querySelectorAll('.pp-gallery__thumb').forEach(t => t.classList.remove('is-active'));
+          const thumb = document.querySelector(`.pp-gallery__thumb[data-index="${idx}"]`);
+          if (thumb) thumb.classList.add('is-active');
+        }
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.pp-gallery__item').forEach(item => {
+      galleryObserver.observe(item);
+    });
+  }
+
+  /* Escape key closes modals */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeProductZoom();
+      const sizeGuide = document.getElementById('SizeGuideModal');
+      if (sizeGuide) sizeGuide.classList.remove('is-open');
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Producto principal",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Información del producto"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Mostrar marca",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_details_tab",
+      "label": "Mostrar pestaña 'Detalles'",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Mostrar pestaña 'Compartir'",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Mostrar insignias de confianza",
+      "default": true,
+      "info": "Compra segura, envío rápido, devoluciones"
+    },
+    {
+      "type": "header",
+      "content": "Guía de tallas"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_size_guide",
+      "label": "Mostrar 'Guía de tallas'",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "size_guide_image",
+      "label": "Imagen de guía de tallas",
+      "info": "Sube tu propia guía de tallas"
+    }
+  ]
+}
+{% endschema %}

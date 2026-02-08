@@ -1,0 +1,177 @@
+{%- comment -%} Section: Gallery Grid — Galería de fotos en cuadrícula editable {%- endcomment -%}
+
+<section class="section-padding gallery-section" data-section-id="{{ section.id }}" data-animate
+  style="background-color: {{ section.settings.background_color }};">
+  <div class="{% if section.settings.full_width %}gallery--full-width{% else %}page-width{% endif %}">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="gallery__header text-center mb-4">
+        {%- if section.settings.subheading != blank -%}
+          <p class="gallery__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="gallery__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="gallery-grid gallery-grid--{{ section.settings.layout }}" style="gap: {{ section.settings.gap }}px;">
+      {%- for block in section.blocks -%}
+        <div class="gallery-grid__item gallery-grid__item--{{ block.settings.size }}" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: '#' }}"
+            class="gallery-grid__link"
+            {% if block.settings.link == blank %}onclick="event.preventDefault(); this.closest('.gallery-grid__item').querySelector('img') && openLightbox(this);"{% endif %}
+            aria-label="{{ block.settings.caption | default: 'Ver imagen' }}">
+
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 1200 }}"
+                alt="{{ block.settings.image.alt | default: block.settings.caption | default: 'Galería' }}"
+                loading="lazy"
+                width="1200"
+                height="{{ 1200 | divided_by: block.settings.image.aspect_ratio | round }}"
+                class="gallery-grid__image"
+              >
+            {%- elsif block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'gallery-grid__image' }}
+            {%- else -%}
+              <div class="gallery-grid__placeholder">
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.show_overlay -%}
+              <div class="gallery-grid__overlay">
+                {%- if block.settings.caption != blank -%}
+                  <h3 class="gallery-grid__caption">{{ block.settings.caption }}</h3>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                  <p class="gallery-grid__subtitle">{{ block.settings.subtitle }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Galería de fotos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Galería"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Estilo de galería",
+      "options": [
+        { "value": "grid", "label": "Cuadrícula uniforme" },
+        { "value": "masonry", "label": "Masonry (Pinterest)" },
+        { "value": "editorial", "label": "Editorial (mixto)" },
+        { "value": "filmstrip", "label": "Tira de film horizontal" }
+      ],
+      "default": "masonry"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Espacio entre imágenes",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Imagen",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (en vez de imagen)"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Tamaño",
+          "options": [
+            { "value": "small", "label": "Pequeño (1x)" },
+            { "value": "medium", "label": "Mediano (2x)" },
+            { "value": "large", "label": "Grande (3x)" },
+            { "value": "tall", "label": "Alto (vertical)" },
+            { "value": "wide", "label": "Ancho (horizontal)" }
+          ],
+          "default": "small",
+          "info": "En layout masonry/editorial, controla el tamaño relativo del bloque"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_overlay",
+          "label": "Mostrar overlay con texto",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Título sobre imagen"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo sobre imagen"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace (opcional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Galería de fotos",
+      "blocks": [
+        { "type": "image", "settings": { "size": "large" } },
+        { "type": "image", "settings": { "size": "small" } },
+        { "type": "image", "settings": { "size": "small" } },
+        { "type": "image", "settings": { "size": "small" } },
+        { "type": "image", "settings": { "size": "medium" } },
+        { "type": "image", "settings": { "size": "small" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

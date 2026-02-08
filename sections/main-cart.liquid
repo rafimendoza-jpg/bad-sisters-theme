@@ -1,0 +1,114 @@
+{%- comment -%} Section: Main Cart {%- endcomment -%}
+
+<section class="cart-page" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <div class="cart__header">
+      <h1>Tu carrito</h1>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="/cart" method="post">
+        <table class="cart__table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for item in cart.items -%}
+              <tr>
+                <td>
+                  <div class="cart__item">
+                    <div class="cart__item-image">
+                      <a href="{{ item.url }}">
+                        {%- if item.image -%}
+                          <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title }}" loading="lazy">
+                        {%- endif -%}
+                      </a>
+                    </div>
+                    <div>
+                      <p class="cart__item-title">
+                        <a href="{{ item.url }}">{{ item.product.title }}</a>
+                      </p>
+                      {%- unless item.product.has_only_default_variant -%}
+                        <p class="cart__item-variant">{{ item.variant.title }}</p>
+                      {%- endunless -%}
+                      <button type="button" class="cart__item-remove" data-line="{{ forloop.index }}">
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ item.price | money }}</td>
+                <td>
+                  <div class="product__quantity" style="justify-content: flex-start;">
+                    <button type="button" class="product__quantity-btn" data-action="decrease" aria-label="Menos">−</button>
+                    <input
+                      type="number"
+                      class="cart__quantity-input"
+                      name="updates[]"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      data-line="{{ forloop.index }}"
+                      aria-label="Cantidad"
+                    >
+                    <button type="button" class="product__quantity-btn" data-action="increase" aria-label="Más">+</button>
+                  </div>
+                </td>
+                <td>
+                  <strong>{{ item.line_price | money }}</strong>
+                </td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+
+        <div class="cart__footer">
+          <div class="cart__summary">
+            <div class="cart__subtotal">
+              <span>Subtotal</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <p class="cart__note">Impuestos y envío calculados al finalizar la compra.</p>
+
+            {%- if section.settings.show_cart_note -%}
+              <div style="margin-bottom: 1rem;">
+                <label for="CartNote" style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.5rem;">Nota del pedido</label>
+                <textarea id="CartNote" name="note" rows="3" placeholder="Instrucciones especiales...">{{ cart.note }}</textarea>
+              </div>
+            {%- endif -%}
+
+            <a href="/checkout" class="btn btn--primary btn--full">
+              Proceder al pago
+            </a>
+            <a href="/collections/all" style="display: block; text-align: center; margin-top: 1rem; font-size: 0.85rem; color: var(--color-text-light);">
+              Seguir comprando
+            </a>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="cart__empty">
+        <p>Tu carrito está vacío</p>
+        <a href="/collections/all" class="btn btn--primary">Empezar a comprar</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrito",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "Mostrar nota del carrito",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,61 @@
+{%- comment -%} Customer: Account {%- endcomment -%}
+
+<section class="section-padding">
+  <div class="page-width">
+    <div class="flex flex--between mb-4" style="flex-wrap: wrap; gap: 1rem;">
+      <h1>Mi cuenta</h1>
+      <a href="/account/logout" class="btn btn--secondary btn--small">Cerrar sesión</a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+      {%- comment -%} Orders {%- endcomment -%}
+      <div>
+        <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Historial de pedidos</h2>
+
+        {%- if customer.orders.size > 0 -%}
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th style="text-align: left; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Pedido</th>
+                <th style="text-align: left; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Fecha</th>
+                <th style="text-align: left; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Estado</th>
+                <th style="text-align: right; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border);">
+                    <a href="{{ order.customer_url }}" style="color: var(--color-accent); font-weight: 500;">{{ order.name }}</a>
+                  </td>
+                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem;">{{ order.created_at | date: '%d/%m/%Y' }}</td>
+                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem;">{{ order.financial_status_label }}</td>
+                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); text-align: right; font-weight: 500;">{{ order.total_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- else -%}
+          <p style="color: var(--color-text-light);">No tienes pedidos aún.</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Addresses {%- endcomment -%}
+      <div>
+        <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Dirección predeterminada</h2>
+        {%- if customer.default_address -%}
+          <div style="padding: 1.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+            <p>{{ customer.default_address.name }}</p>
+            <p style="color: var(--color-text-light); font-size: 0.9rem; margin-top: 0.5rem;">
+              {{ customer.default_address | format_address }}
+            </p>
+          </div>
+          <a href="/account/addresses" class="btn btn--secondary btn--small" style="margin-top: 1rem;">Gestionar direcciones</a>
+        {%- else -%}
+          <p style="color: var(--color-text-light);">No tienes direcciones guardadas.</p>
+          <a href="/account/addresses" class="btn btn--secondary btn--small" style="margin-top: 1rem;">Agregar dirección</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>

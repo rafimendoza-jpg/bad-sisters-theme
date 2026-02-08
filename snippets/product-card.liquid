@@ -1,0 +1,60 @@
+{%- comment -%}
+  Snippet: Product Card
+  Usage: {% render 'product-card', product: product, show_vendor: true %}
+{%- endcomment -%}
+
+<div class="product-card">
+  <a href="{{ product.url }}" class="product-card__media">
+    {%- if product.compare_at_price > product.price -%}
+      <span class="product-card__badge">
+        -{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
+      </span>
+    {%- elsif product.available == false -%}
+      <span class="product-card__badge" style="background-color: var(--color-text-light);">Agotado</span>
+    {%- endif -%}
+
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 500 }}"
+        alt="{{ product.featured_image.alt | default: product.title }}"
+        loading="lazy"
+        width="500"
+        height="500"
+      >
+      {%- if product.images[1] != blank -%}
+        <img
+          src="{{ product.images[1] | image_url: width: 500 }}"
+          alt="{{ product.title }}"
+          loading="lazy"
+          width="500"
+          height="500"
+        >
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+
+    {%- if product.available -%}
+      <span class="product-card__quick-add">Ver producto</span>
+    {%- endif -%}
+  </a>
+
+  <div class="product-card__info">
+    {%- if show_vendor and product.vendor != blank -%}
+      <p class="product-card__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+
+    <h3 class="product-card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    <div class="product-card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product-card__price--sale">{{ product.price | money }}</span>
+        <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+      {%- else -%}
+        <span>{{ product.price | money }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

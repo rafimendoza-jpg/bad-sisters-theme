@@ -1,0 +1,156 @@
+{%- comment -%} Section: Hero Banner — Editable desde Shopify {%- endcomment -%}
+
+<section class="hero-banner hero-banner--{{ section.settings.height }}" data-section-id="{{ section.id }}" style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};">
+  <div class="hero-banner__media">
+    {%- if section.settings.video != blank -%}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true }}
+    {%- elsif section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 1920 }}"
+        alt="{{ section.settings.image.alt | default: section.settings.heading }}"
+        loading="eager"
+        fetchpriority="high"
+        width="1920"
+        height="{{ 1920 | divided_by: section.settings.image.aspect_ratio | round }}"
+      >
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  <div class="hero-banner__overlay"></div>
+
+  <div class="hero-banner__content {{ section.settings.text_alignment }}">
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero-banner__subheading" style="order: -1; margin-bottom: 0.5rem; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase;">
+        {{ section.settings.subheading }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="hero-banner__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.text != blank -%}
+      <p class="hero-banner__subheading">{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    <div class="hero-banner__buttons">
+      {%- if section.settings.button_label_1 != blank -%}
+        <a href="{{ section.settings.button_link_1 }}" class="btn btn--primary" style="background-color: #fff; color: #1a1a1a; border-color: #fff;">
+          {{ section.settings.button_label_1 }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button_label_2 != blank -%}
+        <a href="{{ section.settings.button_link_2 }}" class="btn btn--secondary" style="border-color: #fff; color: #fff;">
+          {{ section.settings.button_label_2 }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner principal",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video de fondo (opcional)"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Altura del banner",
+      "options": [
+        { "value": "small", "label": "Pequeño" },
+        { "value": "medium", "label": "Mediano" },
+        { "value": "large", "label": "Grande" },
+        { "value": "full", "label": "Pantalla completa" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad del overlay",
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo superior",
+      "default": "Nueva colección"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Bad Sisters Design"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto",
+      "default": "Diseño con actitud. Descubre nuestra nueva colección."
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Alineación del texto",
+      "options": [
+        { "value": "text-left", "label": "Izquierda" },
+        { "value": "text-center", "label": "Centro" },
+        { "value": "text-right", "label": "Derecha" }
+      ],
+      "default": "text-center"
+    },
+    {
+      "type": "header",
+      "content": "Botón 1"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "Texto del botón 1",
+      "default": "Comprar ahora"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Enlace del botón 1"
+    },
+    {
+      "type": "header",
+      "content": "Botón 2"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Texto del botón 2",
+      "default": "Ver colecciones"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Enlace del botón 2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner principal"
+    }
+  ]
+}
+{% endschema %}

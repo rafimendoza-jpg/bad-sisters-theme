@@ -1,0 +1,46 @@
+{%- comment -%}
+  Snippet: Star Rating Display
+  Usage: {% render 'star-rating', rating: 4.5, count: 12, show_count: true, size: 'small' %}
+  Params:
+    - rating (number): 0-5 rating value
+    - count (number): number of reviews
+    - show_count (boolean): show review count text
+    - size (string): 'small' | 'medium' | 'large'
+{%- endcomment -%}
+
+{%- assign star_size = size | default: 'medium' -%}
+{%- assign star_rating = rating | default: 0 | times: 1.0 -%}
+{%- assign review_count = count | default: 0 -%}
+
+<div class="star-rating star-rating--{{ star_size }}">
+  <div class="star-rating__stars" role="img" aria-label="{{ star_rating }} de 5 estrellas">
+    {%- for i in (1..5) -%}
+      {%- assign star_val = i | times: 1.0 -%}
+      {%- if star_rating >= star_val -%}
+        {%- comment -%} Full star {%- endcomment -%}
+        <svg class="star-rating__star star-rating__star--full" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="10,1 12.59,7.36 19.51,7.64 14,12.14 15.82,18.86 10,15.2 4.18,18.86 6,12.14 0.49,7.64 7.41,7.36" fill="currentColor"/>
+        </svg>
+      {%- elsif star_rating >= star_val | minus: 0.5 -%}
+        {%- comment -%} Half star {%- endcomment -%}
+        <svg class="star-rating__star star-rating__star--half" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="halfStar{{ i }}{{ section.id | default: '' }}">
+              <stop offset="50%" stop-color="currentColor"/>
+              <stop offset="50%" stop-color="transparent"/>
+            </linearGradient>
+          </defs>
+          <polygon points="10,1 12.59,7.36 19.51,7.64 14,12.14 15.82,18.86 10,15.2 4.18,18.86 6,12.14 0.49,7.64 7.41,7.36" fill="url(#halfStar{{ i }}{{ section.id | default: '' }})" stroke="currentColor" stroke-width="0.5"/>
+        </svg>
+      {%- else -%}
+        {%- comment -%} Empty star {%- endcomment -%}
+        <svg class="star-rating__star star-rating__star--empty" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="10,1 12.59,7.36 19.51,7.64 14,12.14 15.82,18.86 10,15.2 4.18,18.86 6,12.14 0.49,7.64 7.41,7.36" fill="none" stroke="currentColor" stroke-width="0.5"/>
+        </svg>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if show_count and review_count > 0 -%}
+    <span class="star-rating__count">({{ review_count }})</span>
+  {%- endif -%}
+</div>

@@ -1,0 +1,50 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Bad Sisters Design",
+        "text": "Diseño con actitud. Descubre nuestra nueva colección.",
+        "height": "large"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Productos destacados",
+        "products_to_show": 4,
+        "columns": "4"
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "heading": "Nuestra historia",
+        "text": "<p>Bad Sisters Design nació con la idea de crear productos con personalidad. Cada pieza está diseñada con atención al detalle.</p>",
+        "button_label": "Conocer más",
+        "layout": "image_left"
+      }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "settings": {
+        "heading": "Nuestras colecciones",
+        "columns": "3"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Únete a la familia",
+        "text": "Sé la primera en enterarte de nuevos lanzamientos, ofertas y más."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured-collection",
+    "image-with-text",
+    "collection-list",
+    "newsletter"
+  ]
+}

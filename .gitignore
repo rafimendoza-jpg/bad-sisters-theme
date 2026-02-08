@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Preview (not part of theme)
+preview.html
+
+# Node
+node_modules/
+
+# Logs
+*.log

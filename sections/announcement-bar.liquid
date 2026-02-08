@@ -1,0 +1,50 @@
+{%- comment -%} Section: Announcement Bar {%- endcomment -%}
+
+{%- if section.settings.show_announcement -%}
+  <div class="announcement-bar" style="background-color: {{ section.settings.bar_color }}; color: {{ section.settings.text_color }};">
+    <div class="page-width">
+      {%- if section.settings.link != blank -%}
+        <a href="{{ section.settings.link }}">{{ section.settings.text }}</a>
+      {%- else -%}
+        <p>{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Barra de anuncios",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Mostrar barra de anuncios",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texto del anuncio",
+      "default": "Envío gratis en pedidos mayores a $999 MXN"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Enlace (opcional)"
+    },
+    {
+      "type": "color",
+      "id": "bar_color",
+      "label": "Color de fondo",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

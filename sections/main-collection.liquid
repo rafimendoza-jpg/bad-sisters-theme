@@ -1,0 +1,361 @@
+{%- comment -%}
+  Section: Main Collection — Rediseñada estilo Zara
+  - Header hero con imagen de colección
+  - Filtros por tags
+  - Layout limpio y elegante
+  - Hover reveal segundo imagen + tallas
+{%- endcomment -%}
+
+{%- paginate collection.products by section.settings.products_per_page -%}
+
+<section class="zara-collection" data-section-id="{{ section.id }}">
+
+  {%- comment -%} ===== HERO HEADER ===== {%- endcomment -%}
+  <div class="zc-hero{% if collection.image %} zc-hero--has-image{% endif %}">
+    {%- if collection.image and section.settings.show_hero_image -%}
+      <div class="zc-hero__media">
+        <img
+          src="{{ collection.image | image_url: width: 1920 }}"
+          alt="{{ collection.title }}"
+          loading="eager"
+          fetchpriority="high"
+          class="zc-hero__img"
+        >
+        <div class="zc-hero__overlay"></div>
+      </div>
+    {%- endif -%}
+    <div class="zc-hero__content page-width">
+      <h1 class="zc-hero__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank and section.settings.show_description -%}
+        <p class="zc-hero__desc">{{ collection.description | strip_html | truncatewords: 30 }}</p>
+      {%- endif -%}
+      <span class="zc-hero__count">{{ collection.products_count }} {% if collection.products_count == 1 %}producto{% else %}productos{% endif %}</span>
+    </div>
+  </div>
+
+  <div class="page-width">
+
+    {%- comment -%} ===== FILTER + SORT BAR ===== {%- endcomment -%}
+    <div class="zc-toolbar">
+      <div class="zc-toolbar__left">
+        <button class="zc-filter-toggle" onclick="document.querySelector('.zc-filters').classList.toggle('is-open'); this.classList.toggle('is-active');">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
+          <span>Filtros</span>
+          {%- if current_tags.size > 0 -%}
+            <span class="zc-filter-count">{{ current_tags.size }}</span>
+          {%- endif -%}
+        </button>
+      </div>
+
+      <div class="zc-toolbar__right">
+        {%- comment -%} View Toggle {%- endcomment -%}
+        <div class="zc-view-toggle">
+          <button class="zc-view-btn{% if section.settings.default_columns == '2' %} is-active{% endif %}" onclick="setCollectionView(2, this)" aria-label="2 columnas">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="7" height="16" rx="1" fill="currentColor"/><rect x="9" y="0" width="7" height="16" rx="1" fill="currentColor"/></svg>
+          </button>
+          <button class="zc-view-btn{% if section.settings.default_columns == '3' %} is-active{% endif %}" onclick="setCollectionView(3, this)" aria-label="3 columnas">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="4.5" height="16" rx="1" fill="currentColor"/><rect x="5.75" y="0" width="4.5" height="16" rx="1" fill="currentColor"/><rect x="11.5" y="0" width="4.5" height="16" rx="1" fill="currentColor"/></svg>
+          </button>
+          <button class="zc-view-btn{% if section.settings.default_columns == '4' %} is-active{% endif %}" onclick="setCollectionView(4, this)" aria-label="4 columnas">
+            <svg width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="3" height="16" rx="0.5" fill="currentColor"/><rect x="4.33" y="0" width="3" height="16" rx="0.5" fill="currentColor"/><rect x="8.67" y="0" width="3" height="16" rx="0.5" fill="currentColor"/><rect x="13" y="0" width="3" height="16" rx="0.5" fill="currentColor"/></svg>
+          </button>
+        </div>
+
+        {%- comment -%} Sort {%- endcomment -%}
+        <div class="zc-sort">
+          <select id="ZaraCollectionSort" onchange="window.location.href = this.value;" aria-label="Ordenar por">
+            {%- for option in collection.sort_options -%}
+              <option
+                value="{{ collection.url }}?sort_by={{ option.value }}"
+                {% if collection.sort_by == option.value %}selected{% endif %}
+              >
+                {{ option.name }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} ===== TAG FILTERS ===== {%- endcomment -%}
+    <div class="zc-filters">
+      {%- if collection.all_tags.size > 0 -%}
+
+        {%- assign tag_groups = '' -%}
+        {%- assign ungrouped_tags = '' -%}
+
+        {%- for tag in collection.all_tags -%}
+          {%- if tag contains ':' -%}
+            {%- assign tag_group_name = tag | split: ':' | first | strip -%}
+            {%- unless tag_groups contains tag_group_name -%}
+              {%- if tag_groups != '' -%}{%- assign tag_groups = tag_groups | append: '|||' -%}{%- endif -%}
+              {%- assign tag_groups = tag_groups | append: tag_group_name -%}
+            {%- endunless -%}
+          {%- else -%}
+            {%- if ungrouped_tags != '' -%}{%- assign ungrouped_tags = ungrouped_tags | append: '|||' -%}{%- endif -%}
+            {%- assign ungrouped_tags = ungrouped_tags | append: tag -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- assign tag_groups_arr = tag_groups | split: '|||' -%}
+        {%- assign ungrouped_tags_arr = ungrouped_tags | split: '|||' -%}
+
+        {%- comment -%} Active filters strip {%- endcomment -%}
+        {%- if current_tags.size > 0 -%}
+          <div class="zc-active-filters">
+            {%- for tag in current_tags -%}
+              <a href="{{ collection.url }}" class="zc-active-tag">
+                {{ tag }}
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </a>
+            {%- endfor -%}
+            <a href="{{ collection.url }}" class="zc-clear-filters">Limpiar todo</a>
+          </div>
+        {%- endif -%}
+
+        <div class="zc-filter-groups">
+          {%- for group_name in tag_groups_arr -%}
+            {%- if group_name != '' -%}
+              <div class="zc-filter-group">
+                <button class="zc-filter-group__toggle" onclick="this.parentElement.classList.toggle('is-open')">
+                  {{ group_name }}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="zc-filter-group__options">
+                  {%- for tag in collection.all_tags -%}
+                    {%- if tag contains ':' -%}
+                      {%- assign this_group = tag | split: ':' | first | strip -%}
+                      {%- if this_group == group_name -%}
+                        {%- assign tag_value = tag | split: ':' | last | strip -%}
+                        {%- if current_tags contains tag -%}
+                          <a href="{{ collection.url }}" class="zc-filter-tag is-active">
+                            <span class="zc-filter-check">✓</span> {{ tag_value }}
+                          </a>
+                        {%- else -%}
+                          <a href="{{ collection.url }}/{{ tag | handleize }}" class="zc-filter-tag">
+                            {{ tag_value }}
+                          </a>
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if ungrouped_tags_arr.size > 0 -%}
+            <div class="zc-filter-group">
+              <button class="zc-filter-group__toggle" onclick="this.parentElement.classList.toggle('is-open')">
+                Categoría
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="zc-filter-group__options">
+                {%- for tag in ungrouped_tags_arr -%}
+                  {%- if tag != '' -%}
+                    {%- if current_tags contains tag -%}
+                      <a href="{{ collection.url }}" class="zc-filter-tag is-active">
+                        <span class="zc-filter-check">✓</span> {{ tag }}
+                      </a>
+                    {%- else -%}
+                      <a href="{{ collection.url }}/{{ tag | handleize }}" class="zc-filter-tag">
+                        {{ tag }}
+                      </a>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ===== PRODUCT GRID ===== {%- endcomment -%}
+    {%- if collection.products.size > 0 -%}
+      <div class="zc-products zc-products--{{ section.settings.default_columns }}" id="ZaraProductGrid">
+        {%- for product in collection.products -%}
+          <div class="zc-product" data-animate style="animation-delay: {{ forloop.index | times: 0.05 }}s;">
+            <a href="{{ product.url }}" class="zc-product__link">
+              <div class="zc-product__media">
+                {%- if product.featured_image -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 800 }}"
+                    alt="{{ product.featured_image.alt | default: product.title }}"
+                    loading="lazy"
+                    class="zc-product__img zc-product__img--primary"
+                  >
+                  {%- if product.images[1] != blank -%}
+                    <img
+                      src="{{ product.images[1] | image_url: width: 800 }}"
+                      alt="{{ product.title }}"
+                      loading="lazy"
+                      class="zc-product__img zc-product__img--hover"
+                    >
+                  {%- endif -%}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="zc-product__badge zc-product__badge--sale">
+                    -{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
+                  </span>
+                {%- endif -%}
+
+                {%- unless product.available -%}
+                  <span class="zc-product__badge zc-product__badge--sold">Agotado</span>
+                {%- endunless -%}
+
+                {%- if product.tags contains 'new' or product.tags contains 'nuevo' -%}
+                  <span class="zc-product__badge zc-product__badge--new">New</span>
+                {%- endif -%}
+
+                {%- if product.available and section.settings.show_quick_sizes -%}
+                  {%- for option in product.options_with_values -%}
+                    {%- assign option_name_lower = option.name | downcase -%}
+                    {%- if option_name_lower == 'size' or option_name_lower == 'talla' or option_name_lower == 'tamaño' -%}
+                      <div class="zc-product__sizes">
+                        {%- for value in option.values -%}
+                          {%- assign variant_available = true -%}
+                          {%- for variant in product.variants -%}
+                            {%- if variant.option1 == value or variant.option2 == value or variant.option3 == value -%}
+                              {%- unless variant.available -%}{%- assign variant_available = false -%}{%- endunless -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                          <span class="zc-product__size{% unless variant_available %} zc-product__size--disabled{% endunless %}">
+                            {{ value }}
+                          </span>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+
+              <div class="zc-product__info">
+                <h3 class="zc-product__title">{{ product.title }}</h3>
+                <div class="zc-product__price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="zc-product__price--current zc-product__price--on-sale">{{ product.price | money }}</span>
+                    <span class="zc-product__price--compare">{{ product.compare_at_price | money }}</span>
+                  {%- else -%}
+                    <span class="zc-product__price--current">{{ product.price | money }}</span>
+                  {%- endif -%}
+                </div>
+
+                {%- if section.settings.show_color_swatches -%}
+                  {%- for option in product.options_with_values -%}
+                    {%- assign option_name_lower = option.name | downcase -%}
+                    {%- if option_name_lower == 'color' or option_name_lower == 'colour' -%}
+                      <div class="zc-product__colors">
+                        {%- for value in option.values -%}
+                          <span class="zc-product__color-swatch" title="{{ value }}" style="background-color: {{ value | handleize }};">
+                            <span class="visually-hidden">{{ value }}</span>
+                          </span>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        {% render 'pagination', paginate: paginate %}
+      {%- endif -%}
+    {%- else -%}
+      <div class="zc-empty">
+        <p>No se encontraron productos con estos filtros.</p>
+        <a href="{{ collection.url }}" class="btn btn--secondary">Limpiar filtros</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- endpaginate -%}
+
+<script>
+  function setCollectionView(cols, btn) {
+    const grid = document.getElementById('ZaraProductGrid');
+    grid.className = grid.className.replace(/zc-products--\d/, 'zc-products--' + cols);
+    document.querySelectorAll('.zc-view-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    localStorage.setItem('bs_collection_view', cols);
+  }
+  (function() {
+    const saved = localStorage.getItem('bs_collection_view');
+    if (saved) {
+      const grid = document.getElementById('ZaraProductGrid');
+      if (grid) grid.className = grid.className.replace(/zc-products--\d/, 'zc-products--' + saved);
+      document.querySelectorAll('.zc-view-btn').forEach(b => b.classList.remove('is-active'));
+      const idx = parseInt(saved) - 1;
+      const btns = document.querySelectorAll('.zc-view-btn');
+      if (btns[idx - 1]) btns[idx - 1].classList.add('is-active');
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Colección (Zara style)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero de colección"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero_image",
+      "label": "Mostrar imagen hero de colección",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Mostrar descripción",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Productos"
+    },
+    {
+      "type": "select",
+      "id": "default_columns",
+      "label": "Columnas por defecto",
+      "options": [
+        { "value": "2", "label": "2 columnas" },
+        { "value": "3", "label": "3 columnas" },
+        { "value": "4", "label": "4 columnas" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "label": "Productos por página",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_sizes",
+      "label": "Mostrar tallas en hover",
+      "default": true,
+      "info": "Muestra las tallas disponibles al pasar el cursor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_swatches",
+      "label": "Mostrar swatches de color",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

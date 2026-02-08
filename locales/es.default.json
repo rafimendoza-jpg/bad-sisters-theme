@@ -1,0 +1,98 @@
+{
+  "general": {
+    "404": {
+      "title": "Página no encontrada",
+      "subtext": "La página que buscas no existe."
+    },
+    "password_page": {
+      "title": "Próximamente"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "¿Qué estás buscando?",
+      "no_results": "No se encontraron resultados para"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Ir al contenido",
+    "close": "Cerrar"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Agregar al carrito",
+      "sold_out": "Agotado",
+      "quantity": "Cantidad",
+      "price": "Precio"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Tu carrito",
+      "empty": "Tu carrito está vacío",
+      "subtotal": "Subtotal",
+      "continue_shopping": "Seguir comprando",
+      "checkout": "Proceder al pago",
+      "remove": "Eliminar",
+      "note": "Nota del pedido",
+      "shipping_note": "Impuestos y envío calculados al finalizar la compra."
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "Colecciones",
+      "no_products": "No hay productos en esta colección."
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Leer más",
+      "tags": "Etiquetas",
+      "share": "Compartir",
+      "comments": "Comentarios"
+    }
+  },
+  "newsletter": {
+    "label": "Email",
+    "success": "¡Gracias por suscribirte!",
+    "button_label": "Suscribirme"
+  },
+  "customer": {
+    "account": {
+      "title": "Mi cuenta",
+      "orders": "Historial de pedidos",
+      "addresses": "Direcciones",
+      "logout": "Cerrar sesión"
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "email": "Email",
+      "password": "Contraseña",
+      "sign_in": "Iniciar sesión",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "create_account": "Crear cuenta"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Email",
+      "password": "Contraseña",
+      "submit": "Crear cuenta"
+    },
+    "orders": {
+      "title": "Mis pedidos",
+      "order_number": "Pedido",
+      "date": "Fecha",
+      "payment_status": "Estado de pago",
+      "fulfillment_status": "Estado de envío",
+      "total": "Total"
+    },
+    "addresses": {
+      "title": "Mis direcciones",
+      "add_new": "Agregar dirección",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "default": "Predeterminada"
+    }
+  }
+}

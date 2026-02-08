@@ -1,0 +1,62 @@
+{%- comment -%} Customer: Order {%- endcomment -%}
+
+<section class="section-padding">
+  <div class="page-width">
+    <div class="mb-4">
+      <a href="/account" style="font-size: 0.9rem; color: var(--color-accent);">← Volver a mi cuenta</a>
+      <h1 style="margin-top: 1rem;">Pedido {{ order.name }}</h1>
+      <p style="color: var(--color-text-light); font-size: 0.9rem;">
+        Realizado el {{ order.created_at | date: '%d de %B, %Y' }}
+      </p>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+      <thead>
+        <tr>
+          <th style="text-align: left; padding: 0.75rem 0; border-bottom: 2px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Producto</th>
+          <th style="text-align: center; padding: 0.75rem 0; border-bottom: 2px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Cantidad</th>
+          <th style="text-align: right; padding: 0.75rem 0; border-bottom: 2px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for line_item in order.line_items -%}
+          <tr>
+            <td style="padding: 1rem 0; border-bottom: 1px solid var(--color-border);">
+              <p style="font-weight: 500;">{{ line_item.title }}</p>
+              {%- if line_item.sku != blank -%}
+                <p style="font-size: 0.8rem; color: var(--color-text-light);">SKU: {{ line_item.sku }}</p>
+              {%- endif -%}
+            </td>
+            <td style="padding: 1rem 0; border-bottom: 1px solid var(--color-border); text-align: center;">{{ line_item.quantity }}</td>
+            <td style="padding: 1rem 0; border-bottom: 1px solid var(--color-border); text-align: right;">{{ line_item.line_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+
+    <div style="display: flex; justify-content: flex-end;">
+      <div style="width: 300px;">
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
+          <span>Subtotal</span>
+          <span>{{ order.subtotal_price | money }}</span>
+        </div>
+        {%- for shipping_method in order.shipping_methods -%}
+          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.9rem; color: var(--color-text-light);">
+            <span>Envío ({{ shipping_method.title }})</span>
+            <span>{{ shipping_method.price | money }}</span>
+          </div>
+        {%- endfor -%}
+        {%- for tax_line in order.tax_lines -%}
+          <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.9rem; color: var(--color-text-light);">
+            <span>Impuestos ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</span>
+            <span>{{ tax_line.price | money }}</span>
+          </div>
+        {%- endfor -%}
+        <div style="display: flex; justify-content: space-between; padding: 1rem 0; border-top: 2px solid var(--color-border); font-weight: 700; font-size: 1.1rem; margin-top: 0.5rem;">
+          <span>Total</span>
+          <span>{{ order.total_price | money }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

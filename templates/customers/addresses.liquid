@@ -1,0 +1,105 @@
+{%- comment -%} Customer: Addresses {%- endcomment -%}
+
+<section class="section-padding">
+  <div class="page-width" style="max-width: 800px;">
+    <div class="flex flex--between mb-4">
+      <h1>Mis direcciones</h1>
+      <button type="button" class="btn btn--primary btn--small" onclick="document.getElementById('AddressNewForm').style.display = 'block'">
+        Agregar dirección
+      </button>
+    </div>
+
+    {%- comment -%} New Address Form {%- endcomment -%}
+    <div id="AddressNewForm" style="display: none; margin-bottom: 2rem; padding: 2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+      <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Nueva dirección</h2>
+      {%- form 'customer_address', customer.new_address -%}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label for="AddressFirstNameNew" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Nombre</label>
+            <input type="text" id="AddressFirstNameNew" name="address[first_name]" autocomplete="given-name">
+          </div>
+          <div>
+            <label for="AddressLastNameNew" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Apellido</label>
+            <input type="text" id="AddressLastNameNew" name="address[last_name]" autocomplete="family-name">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label for="AddressAddress1New" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Dirección</label>
+          <input type="text" id="AddressAddress1New" name="address[address1]" autocomplete="address-line1">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label for="AddressAddress2New" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Apartamento, suite, etc. (opcional)</label>
+          <input type="text" id="AddressAddress2New" name="address[address2]" autocomplete="address-line2">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label for="AddressCityNew" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Ciudad</label>
+            <input type="text" id="AddressCityNew" name="address[city]" autocomplete="address-level2">
+          </div>
+          <div>
+            <label for="AddressProvinceNew" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Estado/Provincia</label>
+            <input type="text" id="AddressProvinceNew" name="address[province]">
+          </div>
+          <div>
+            <label for="AddressZipNew" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Código postal</label>
+            <input type="text" id="AddressZipNew" name="address[zip]" autocomplete="postal-code">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label for="AddressCountryNew" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">País</label>
+          <select id="AddressCountryNew" name="address[country]">
+            {{ all_country_option_tags }}
+          </select>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label for="AddressPhoneNew" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Teléfono</label>
+          <input type="tel" id="AddressPhoneNew" name="address[phone]" autocomplete="tel">
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label>
+            <input type="checkbox" name="address[default]" value="1"> Establecer como dirección predeterminada
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button type="submit" class="btn btn--primary">Guardar</button>
+          <button type="button" class="btn btn--secondary" onclick="document.getElementById('AddressNewForm').style.display = 'none'">Cancelar</button>
+        </div>
+      {%- endform -%}
+    </div>
+
+    {%- comment -%} Existing Addresses {%- endcomment -%}
+    {%- for address in customer.addresses -%}
+      <div style="padding: 1.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius); margin-bottom: 1rem;">
+        <div class="flex flex--between" style="align-items: flex-start;">
+          <div>
+            {%- if address == customer.default_address -%}
+              <span style="font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); margin-bottom: 0.5rem; display: block;">Predeterminada</span>
+            {%- endif -%}
+            <p style="font-weight: 500;">{{ address.name }}</p>
+            <p style="color: var(--color-text-light); font-size: 0.9rem; margin-top: 0.5rem;">
+              {{ address | format_address }}
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <a href="/account/addresses/{{ address.id }}" class="btn btn--secondary btn--small">Editar</a>
+            {%- form 'customer_address', address -%}
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="btn btn--small" style="color: var(--color-sale); border: 1px solid var(--color-sale);">Eliminar</button>
+            {%- endform -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <div style="margin-top: 1.5rem;">
+      <a href="/account" style="font-size: 0.9rem; color: var(--color-accent);">← Volver a mi cuenta</a>
+    </div>
+  </div>
+</section>

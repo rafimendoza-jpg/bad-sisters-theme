@@ -1,0 +1,191 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Bad Sisters Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Bad Sisters Design",
+    "theme_documentation_url": "https://badsistersdesign.com",
+    "theme_support_url": "https://badsistersdesign.com"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colores principales"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Color primario",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Color secundario",
+        "default": "#f5f0eb"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Color de acento",
+        "default": "#c9a87c"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Color de fondo",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Color de texto",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "color",
+        "id": "color_text_light",
+        "label": "Color de texto claro",
+        "default": "#6b6b6b"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Color de bordes",
+        "default": "#e0e0e0"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Color de oferta",
+        "default": "#c1272d"
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "label": "Fuente de encabezados",
+        "default": "playfair_display_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Fuente del cuerpo",
+        "default": "assistant_n4"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 100,
+        "unit": "px",
+        "label": "Ancho máximo de página",
+        "default": 1200
+      },
+      {
+        "type": "range",
+        "id": "border_radius",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Bordes redondeados general",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "button_border_radius",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Bordes redondeados de botones",
+        "default": 4
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Cuentas de redes sociales"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "info": "https://instagram.com/tu-cuenta"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "info": "https://facebook.com/tu-pagina"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@tu-cuenta"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest",
+        "info": "https://pinterest.com/tu-cuenta"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "X (Twitter)",
+        "info": "https://x.com/tu-cuenta"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube",
+        "info": "https://youtube.com/tu-canal"
+      }
+    ]
+  },
+  {
+    "name": "Código personalizado",
+    "settings": [
+      {
+        "type": "liquid",
+        "id": "custom_css",
+        "label": "CSS personalizado",
+        "info": "Agrega CSS personalizado aquí"
+      },
+      {
+        "type": "liquid",
+        "id": "custom_js",
+        "label": "JavaScript personalizado",
+        "info": "Agrega JavaScript personalizado aquí"
+      }
+    ]
+  }
+]

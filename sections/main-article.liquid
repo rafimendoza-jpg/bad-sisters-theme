@@ -1,0 +1,105 @@
+{%- comment -%} Section: Main Article {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <article style="max-width: 800px; margin: 0 auto;">
+      {%- if article.image -%}
+        <div style="border-radius: var(--border-radius); overflow: hidden; margin-bottom: 2rem;">
+          <img
+            src="{{ article.image | image_url: width: 1200 }}"
+            alt="{{ article.image.alt | default: article.title }}"
+            loading="eager"
+            style="width: 100%;"
+          >
+        </div>
+      {%- endif -%}
+
+      <header style="margin-bottom: 2rem; text-align: center;">
+        <p style="font-size: 0.85rem; color: var(--color-text-light); margin-bottom: 0.5rem;">
+          {{ article.published_at | date: '%d de %B, %Y' }}
+          {%- if article.author != blank %} · {{ article.author }}{% endif -%}
+        </p>
+        <h1>{{ article.title }}</h1>
+      </header>
+
+      <div class="rte">
+        {{ article.content }}
+      </div>
+
+      {%- if section.settings.show_tags and article.tags.size > 0 -%}
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border);">
+          <p style="font-size: 0.85rem; color: var(--color-text-light);">
+            Etiquetas:
+            {%- for tag in article.tags -%}
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" style="color: var(--color-accent);">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+            {%- endfor -%}
+          </p>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_share -%}
+        <div style="margin-top: 1rem; padding-top: 1rem;">
+          <p style="font-size: 0.85rem; color: var(--color-text-light);">
+            Compartir:
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ article.url }}" target="_blank" rel="noopener" style="margin-left: 0.5rem;">Facebook</a>
+            <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ article.url }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener" style="margin-left: 0.5rem;">Twitter</a>
+          </p>
+        </div>
+      {%- endif -%}
+
+      {%- if blog.comments_enabled? and section.settings.show_comments -%}
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border);">
+          <h3 style="margin-bottom: 1.5rem;">Comentarios ({{ article.comments_count }})</h3>
+
+          {%- for comment in article.comments -%}
+            <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border);">
+              <p style="font-weight: 600; margin-bottom: 0.25rem;">{{ comment.author }}</p>
+              <p style="font-size: 0.8rem; color: var(--color-text-light); margin-bottom: 0.5rem;">{{ comment.created_at | date: '%d %b %Y' }}</p>
+              <div class="rte">{{ comment.content }}</div>
+            </div>
+          {%- endfor -%}
+
+          {%- form 'new_comment', article -%}
+            <h4 style="margin-bottom: 1rem;">Deja un comentario</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <input type="text" name="comment[author]" placeholder="Nombre" required>
+              <input type="email" name="comment[email]" placeholder="Email" required>
+            </div>
+            <textarea name="comment[body]" placeholder="Tu comentario" rows="5" required style="margin-bottom: 1rem;"></textarea>
+            <button type="submit" class="btn btn--primary">Enviar comentario</button>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+
+      <div style="margin-top: 2rem;">
+        <a href="{{ blog.url }}" style="font-size: 0.9rem; color: var(--color-accent);">← Volver al blog</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Artículo",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Mostrar etiquetas",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Mostrar compartir",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments",
+      "label": "Mostrar comentarios",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

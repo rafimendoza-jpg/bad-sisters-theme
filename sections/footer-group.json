@@ -1,0 +1,10 @@
+{
+  "type": "footer",
+  "name": "Pie de página",
+  "sections": {
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": ["footer"]
+}

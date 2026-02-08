@@ -1,0 +1,22 @@
+{%- comment -%} Customer: Activate Account {%- endcomment -%}
+
+<section class="section-padding">
+  <div class="page-width" style="max-width: 500px;">
+    <h1 class="text-center mb-4">Activar cuenta</h1>
+    <p class="text-center mb-3" style="color: var(--color-text-light);">Crea tu contraseña para activar tu cuenta.</p>
+
+    {%- form 'activate_customer_password' -%}
+      <div style="margin-bottom: 1rem;">
+        <label for="ActivatePassword" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Contraseña</label>
+        <input type="password" id="ActivatePassword" name="customer[password]" autocomplete="new-password" required>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <label for="ActivatePasswordConfirm" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Confirmar contraseña</label>
+        <input type="password" id="ActivatePasswordConfirm" name="customer[password_confirmation]" autocomplete="new-password" required>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--full">Activar cuenta</button>
+    {%- endform -%}
+  </div>
+</section>

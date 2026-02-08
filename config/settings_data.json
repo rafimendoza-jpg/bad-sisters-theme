@@ -1,0 +1,26 @@
+{
+  "current": {
+    "color_primary": "#1a1a1a",
+    "color_secondary": "#f5f0eb",
+    "color_accent": "#c9a87c",
+    "color_background": "#ffffff",
+    "color_text": "#1a1a1a",
+    "color_text_light": "#6b6b6b",
+    "color_border": "#e0e0e0",
+    "color_sale": "#c1272d",
+    "page_width": 1200,
+    "border_radius": 4,
+    "button_border_radius": 4,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  }
+}

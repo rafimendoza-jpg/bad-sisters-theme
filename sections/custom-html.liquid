@@ -1,0 +1,55 @@
+{%- comment -%} Section: Custom HTML — Para diseñar desde 0 {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}" data-animate style="background-color: {{ section.settings.background_color }};">
+  {%- if section.settings.use_page_width -%}
+    <div class="page-width">
+  {%- endif -%}
+
+  {%- if section.settings.custom_html != blank -%}
+    {{ section.settings.custom_html }}
+  {%- endif -%}
+
+  {%- if section.settings.custom_css != blank -%}
+    <style>{{ section.settings.custom_css }}</style>
+  {%- endif -%}
+
+  {%- if section.settings.use_page_width -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "HTML personalizado",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_html",
+      "label": "HTML/Liquid personalizado",
+      "info": "Puedes usar HTML, CSS y Liquid aquí para crear secciones completamente personalizadas."
+    },
+    {
+      "type": "liquid",
+      "id": "custom_css",
+      "label": "CSS de esta sección"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_page_width",
+      "label": "Usar ancho de página",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "HTML personalizado"
+    }
+  ]
+}
+{% endschema %}

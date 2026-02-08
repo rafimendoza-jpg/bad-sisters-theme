@@ -1,0 +1,37 @@
+{%- comment -%} Section: Main Page {%- endcomment -%}
+
+<section class="section-padding" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.show_title -%}
+      <h1 class="text-center mb-4">{{ page.title }}</h1>
+    {%- endif -%}
+
+    <div class="rte" style="max-width: {{ section.settings.max_width }}px; margin: 0 auto;">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Página",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Mostrar título",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Ancho máximo del contenido",
+      "default": 800
+    }
+  ]
+}
+{% endschema %}
