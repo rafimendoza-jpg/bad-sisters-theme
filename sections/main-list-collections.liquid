@@ -13,14 +13,24 @@
             {%- if collection.image -%}
               <img
                 src="{{ collection.image | image_url: width: 600 }}"
+                srcset="{{ collection.image | image_url: width: 300 }} 300w, {{ collection.image | image_url: width: 450 }} 450w, {{ collection.image | image_url: width: 600 }} 600w"
+                sizes="(max-width: 767px) 50vw, 33vw"
                 alt="{{ collection.title }}"
                 loading="lazy"
+                decoding="async"
+                width="{{ collection.image.width }}"
+                height="{{ collection.image.height }}"
               >
             {%- elsif collection.products.first.featured_image -%}
               <img
                 src="{{ collection.products.first.featured_image | image_url: width: 600 }}"
+                srcset="{{ collection.products.first.featured_image | image_url: width: 300 }} 300w, {{ collection.products.first.featured_image | image_url: width: 450 }} 450w, {{ collection.products.first.featured_image | image_url: width: 600 }} 600w"
+                sizes="(max-width: 767px) 50vw, 33vw"
                 alt="{{ collection.title }}"
                 loading="lazy"
+                decoding="async"
+                width="{{ collection.products.first.featured_image.width }}"
+                height="{{ collection.products.first.featured_image.height }}"
               >
             {%- else -%}
               {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}

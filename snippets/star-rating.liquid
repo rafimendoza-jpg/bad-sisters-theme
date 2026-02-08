@@ -16,12 +16,13 @@
   <div class="star-rating__stars" role="img" aria-label="{{ star_rating }} de 5 estrellas">
     {%- for i in (1..5) -%}
       {%- assign star_val = i | times: 1.0 -%}
+      {%- assign half_val = star_val | minus: 0.5 -%}
       {%- if star_rating >= star_val -%}
         {%- comment -%} Full star {%- endcomment -%}
         <svg class="star-rating__star star-rating__star--full" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <polygon points="10,1 12.59,7.36 19.51,7.64 14,12.14 15.82,18.86 10,15.2 4.18,18.86 6,12.14 0.49,7.64 7.41,7.36" fill="currentColor"/>
         </svg>
-      {%- elsif star_rating >= star_val | minus: 0.5 -%}
+      {%- elsif star_rating >= half_val -%}
         {%- comment -%} Half star {%- endcomment -%}
         <svg class="star-rating__star star-rating__star--half" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <defs>

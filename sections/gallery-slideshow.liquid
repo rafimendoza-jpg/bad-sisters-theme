@@ -7,8 +7,14 @@
         {%- if block.settings.image != blank -%}
           <img
             src="{{ block.settings.image | image_url: width: 1920 }}"
+            srcset="{{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 1000 }} 1000w, {{ block.settings.image | image_url: width: 1400 }} 1400w, {{ block.settings.image | image_url: width: 1920 }} 1920w"
+            sizes="100vw"
             alt="{{ block.settings.image.alt | default: block.settings.heading | default: 'Slide' }}"
             loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            {% if forloop.first %}fetchpriority="high"{% endif %}
+            decoding="async"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
             class="gallery-slideshow__image"
           >
         {%- else -%}

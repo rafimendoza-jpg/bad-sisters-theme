@@ -16,9 +16,14 @@
       <div class="zc-hero__media">
         <img
           src="{{ collection.image | image_url: width: 1920 }}"
+          srcset="{{ collection.image | image_url: width: 600 }} 600w, {{ collection.image | image_url: width: 1000 }} 1000w, {{ collection.image | image_url: width: 1400 }} 1400w, {{ collection.image | image_url: width: 1920 }} 1920w"
+          sizes="100vw"
           alt="{{ collection.title }}"
           loading="eager"
           fetchpriority="high"
+          decoding="async"
+          width="{{ collection.image.width }}"
+          height="{{ collection.image.height }}"
           class="zc-hero__img"
         >
         <div class="zc-hero__overlay"></div>
@@ -181,15 +186,25 @@
                 {%- if product.featured_image -%}
                   <img
                     src="{{ product.featured_image | image_url: width: 800 }}"
+                    srcset="{{ product.featured_image | image_url: width: 300 }} 300w, {{ product.featured_image | image_url: width: 500 }} 500w, {{ product.featured_image | image_url: width: 800 }} 800w"
+                    sizes="(max-width: 480px) 50vw, (max-width: 767px) 33vw, 25vw"
                     alt="{{ product.featured_image.alt | default: product.title }}"
                     loading="lazy"
+                    decoding="async"
+                    width="{{ product.featured_image.width }}"
+                    height="{{ product.featured_image.height }}"
                     class="zc-product__img zc-product__img--primary"
                   >
                   {%- if product.images[1] != blank -%}
                     <img
                       src="{{ product.images[1] | image_url: width: 800 }}"
+                      srcset="{{ product.images[1] | image_url: width: 300 }} 300w, {{ product.images[1] | image_url: width: 500 }} 500w, {{ product.images[1] | image_url: width: 800 }} 800w"
+                      sizes="(max-width: 480px) 50vw, (max-width: 767px) 33vw, 25vw"
                       alt="{{ product.title }}"
                       loading="lazy"
+                      decoding="async"
+                      width="{{ product.images[1].width }}"
+                      height="{{ product.images[1].height }}"
                       class="zc-product__img zc-product__img--hover"
                     >
                   {%- endif -%}

@@ -16,10 +16,14 @@
           {%- if section.settings.logo != blank -%}
             <img
               src="{{ section.settings.logo | image_url: width: 300 }}"
+              srcset="{{ section.settings.logo | image_url: width: 150 }} 150w, {{ section.settings.logo | image_url: width: 300 }} 300w"
+              sizes="{{ section.settings.logo_width }}px"
               alt="{{ shop.name }}"
-              width="{{ section.settings.logo_width }}"
-              height="auto"
+              width="{{ section.settings.logo.width }}"
+              height="{{ section.settings.logo.height }}"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
               style="max-width: {{ section.settings.logo_width }}px;"
             >
           {%- else -%}

@@ -1,0 +1,59 @@
+{%- comment -%}
+  Snippet: Responsive Image — Optimización automática
+  Shopify CDN sirve WebP/AVIF automáticamente según el navegador.
+  Este snippet genera srcset + sizes para que el navegador descargue
+  solo el tamaño que necesita.
+
+  Params:
+    - image (image object): La imagen de Shopify
+    - alt (string): Texto alt (fallback al alt de la imagen)
+    - max_width (number): Ancho máximo en px (default 1600)
+    - sizes (string): Atributo sizes CSS (default "100vw")
+    - loading (string): "lazy" | "eager" (default "lazy")
+    - fetchpriority (string): "high" | "low" | "auto" (default "auto")
+    - class (string): Clases CSS adicionales
+    - style (string): Estilos inline adicionales
+    - aspect_ratio (string): e.g. "3/4" para aspect-ratio CSS
+    - quality (number): Calidad de imagen 1-100 (default: Shopify auto)
+{%- endcomment -%}
+
+{%- assign img_max = max_width | default: 1600 -%}
+{%- assign img_loading = loading | default: 'lazy' -%}
+{%- assign img_priority = fetchpriority | default: 'auto' -%}
+{%- assign img_alt = alt | default: image.alt -%}
+{%- assign img_sizes = sizes | default: '100vw' -%}
+
+{%- if image != blank -%}
+  {%- comment -%} Calcular el ancho natural de la imagen (no sobrepasar) {%- endcomment -%}
+  {%- assign natural_w = image.width -%}
+  {%- if natural_w > img_max -%}
+    {%- assign effective_max = img_max -%}
+  {%- else -%}
+    {%- assign effective_max = natural_w -%}
+  {%- endif -%}
+
+  <img
+    src="{{ image | image_url: width: effective_max }}"
+    srcset="
+      {%- if effective_max >= 200 -%}{{ image | image_url: width: 200 }} 200w,{%- endif -%}
+      {%- if effective_max >= 400 -%}{{ image | image_url: width: 400 }} 400w,{%- endif -%}
+      {%- if effective_max >= 600 -%}{{ image | image_url: width: 600 }} 600w,{%- endif -%}
+      {%- if effective_max >= 800 -%}{{ image | image_url: width: 800 }} 800w,{%- endif -%}
+      {%- if effective_max >= 1000 -%}{{ image | image_url: width: 1000 }} 1000w,{%- endif -%}
+      {%- if effective_max >= 1200 -%}{{ image | image_url: width: 1200 }} 1200w,{%- endif -%}
+      {%- if effective_max >= 1600 -%}{{ image | image_url: width: 1600 }} 1600w,{%- endif -%}
+      {{ image | image_url: width: effective_max }} {{ effective_max }}w
+    "
+    sizes="{{ img_sizes }}"
+    alt="{{ img_alt | escape }}"
+    loading="{{ img_loading }}"
+    fetchpriority="{{ img_priority }}"
+    decoding="async"
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+    {%- if class %} class="{{ class }}"{% endif -%}
+    {%- if style %} style="{{ style }}"{% endif -%}
+  >
+{%- else -%}
+  {{ placeholder | default: 'image' | placeholder_svg_tag: class | default: 'placeholder-svg' }}
+{%- endif -%}

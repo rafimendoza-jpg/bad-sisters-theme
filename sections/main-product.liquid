@@ -31,8 +31,14 @@
               <div class="pp-gallery__item{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}">
                 <img
                   src="{{ image | image_url: width: 1200 }}"
+                  srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1000 }} 1000w, {{ image | image_url: width: 1200 }} 1200w"
+                  sizes="(max-width: 767px) 100vw, 50vw"
                   alt="{{ image.alt | default: product.title }}"
                   loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  {% if forloop.first %}fetchpriority="high"{% endif %}
+                  decoding="async"
+                  width="{{ image.width }}"
+                  height="{{ image.height }}"
                   class="pp-gallery__img"
                   data-zoom-src="{{ image | image_url: width: 2048 }}"
                   onclick="openProductZoom(this)"
@@ -376,7 +382,7 @@
       </button>
       <h3>Guía de tallas</h3>
       {%- if section.settings.size_guide_image != blank -%}
-        <img src="{{ section.settings.size_guide_image | image_url: width: 800 }}" alt="Guía de tallas">
+        <img src="{{ section.settings.size_guide_image | image_url: width: 800 }}" srcset="{{ section.settings.size_guide_image | image_url: width: 400 }} 400w, {{ section.settings.size_guide_image | image_url: width: 800 }} 800w" sizes="(max-width: 600px) 90vw, 600px" alt="Guía de tallas" loading="lazy" decoding="async">
       {%- else -%}
         <p>Consulta nuestra guía de tallas para encontrar tu talla perfecta. Si tienes dudas, contáctanos.</p>
         <table class="pp-size-table">

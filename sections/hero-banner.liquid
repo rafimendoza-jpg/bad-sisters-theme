@@ -7,11 +7,14 @@
     {%- elsif section.settings.image != blank -%}
       <img
         src="{{ section.settings.image | image_url: width: 1920 }}"
+        srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1400 }} 1400w, {{ section.settings.image | image_url: width: 1920 }} 1920w"
+        sizes="100vw"
         alt="{{ section.settings.image.alt | default: section.settings.heading }}"
         loading="eager"
         fetchpriority="high"
-        width="1920"
-        height="{{ 1920 | divided_by: section.settings.image.aspect_ratio | round }}"
+        decoding="async"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
       >
     {%- else -%}
       {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}

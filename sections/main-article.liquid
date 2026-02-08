@@ -7,8 +7,14 @@
         <div style="border-radius: var(--border-radius); overflow: hidden; margin-bottom: 2rem;">
           <img
             src="{{ article.image | image_url: width: 1200 }}"
+            srcset="{{ article.image | image_url: width: 400 }} 400w, {{ article.image | image_url: width: 800 }} 800w, {{ article.image | image_url: width: 1200 }} 1200w"
+            sizes="(max-width: 800px) 100vw, 800px"
             alt="{{ article.image.alt | default: article.title }}"
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="{{ article.image.width }}"
+            height="{{ article.image.height }}"
             style="width: 100%;"
           >
         </div>

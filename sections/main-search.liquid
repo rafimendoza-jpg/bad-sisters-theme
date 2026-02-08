@@ -30,7 +30,7 @@
               <div class="product-card">
                 {%- if result.image -%}
                   <a href="{{ result.url }}" class="product-card__media" style="aspect-ratio: 16/10;">
-                    <img src="{{ result.image | image_url: width: 400 }}" alt="{{ result.title }}" loading="lazy">
+                    <img src="{{ result.image | image_url: width: 400 }}" srcset="{{ result.image | image_url: width: 200 }} 200w, {{ result.image | image_url: width: 400 }} 400w" sizes="(max-width: 767px) 50vw, 25vw" alt="{{ result.title }}" loading="lazy" decoding="async">
                   </a>
                 {%- endif -%}
                 <div class="product-card__info">

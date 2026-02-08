@@ -20,18 +20,24 @@
           {%- if block.settings.image != blank -%}
             <img
               src="{{ block.settings.image | image_url: width: 600 }}"
+              srcset="{{ block.settings.image | image_url: width: 300 }} 300w, {{ block.settings.image | image_url: width: 450 }} 450w, {{ block.settings.image | image_url: width: 600 }} 600w"
+              sizes="(max-width: 767px) 50vw, 33vw"
               alt="{{ collection.title | default: block.settings.title }}"
               loading="lazy"
-              width="600"
-              height="800"
+              decoding="async"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
             >
           {%- elsif collection.image != blank -%}
             <img
               src="{{ collection.image | image_url: width: 600 }}"
+              srcset="{{ collection.image | image_url: width: 300 }} 300w, {{ collection.image | image_url: width: 450 }} 450w, {{ collection.image | image_url: width: 600 }} 600w"
+              sizes="(max-width: 767px) 50vw, 33vw"
               alt="{{ collection.title }}"
               loading="lazy"
-              width="600"
-              height="800"
+              decoding="async"
+              width="{{ collection.image.width }}"
+              height="{{ collection.image.height }}"
             >
           {%- else -%}
             {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}

@@ -20,9 +20,13 @@
             <div style="margin-bottom: 1rem;">
               <img
                 src="{{ block.settings.image | image_url: width: 600 }}"
+                srcset="{{ block.settings.image | image_url: width: 300 }} 300w, {{ block.settings.image | image_url: width: 450 }} 450w, {{ block.settings.image | image_url: width: 600 }} 600w"
+                sizes="(max-width: 767px) 100vw, 33vw"
                 alt="{{ block.settings.heading | default: 'Image' }}"
                 loading="lazy"
-                width="600"
+                decoding="async"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
                 style="border-radius: var(--border-radius);"
               >
             </div>

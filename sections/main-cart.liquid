@@ -25,7 +25,7 @@
                     <div class="cart__item-image">
                       <a href="{{ item.url }}">
                         {%- if item.image -%}
-                          <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title }}" loading="lazy">
+                          <img src="{{ item.image | image_url: width: 160 }}" srcset="{{ item.image | image_url: width: 80 }} 80w, {{ item.image | image_url: width: 160 }} 160w" sizes="80px" alt="{{ item.title }}" loading="lazy" decoding="async" width="{{ item.image.width }}" height="{{ item.image.height }}">
                         {%- endif -%}
                       </a>
                     </div>

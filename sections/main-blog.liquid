@@ -14,8 +14,13 @@
               <a href="{{ article.url }}" class="product-card__media" style="aspect-ratio: 16/10;">
                 <img
                   src="{{ article.image | image_url: width: 600 }}"
+                  srcset="{{ article.image | image_url: width: 300 }} 300w, {{ article.image | image_url: width: 450 }} 450w, {{ article.image | image_url: width: 600 }} 600w"
+                  sizes="(max-width: 767px) 100vw, 33vw"
                   alt="{{ article.image.alt | default: article.title }}"
                   loading="lazy"
+                  decoding="async"
+                  width="{{ article.image.width }}"
+                  height="{{ article.image.height }}"
                 >
               </a>
             {%- endif -%}
