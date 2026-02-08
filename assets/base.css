@@ -1243,6 +1243,7 @@ p {
 .zc-filter-tag:hover { color: var(--color-text); opacity: 1; }
 .zc-filter-tag.is-active { color: var(--color-text); font-weight: 500; }
 .zc-filter-check { font-size: 0.6rem; }
+.zc-filters__empty { font-size: 0.75rem; color: var(--color-text-light); letter-spacing: 0.03em; padding: 1rem 0; }
 
 /* Product Grid — Zara: tight grid, no gaps */
 .zc-products { display: grid; gap: 2px; }
