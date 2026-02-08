@@ -439,7 +439,7 @@
       "settings": {
         "subheading": "",
         "heading": "Lookbook",
-        "layout": "2-col",
+        "layout": "trio",
         "full_width": true,
         "background_color": "#ffffff"
       }
