@@ -31,11 +31,13 @@
       "settings": {
         "heading": "Todo lo nuevo para este verano",
         "subheading": "No te quedes sin el tuyo",
+        "products": [],
         "collection": "summer-basics",
         "products_to_show": 8,
         "scroll_count": 3,
         "show_vendor": true,
-        "button_label": "Ver más"
+        "button_label": "Ver más",
+        "button_link": ""
       }
     },
     "featured-collection": {
@@ -422,7 +424,13 @@
       "settings": {
         "heading": "SHOP THE LOOK",
         "subheading": "Haz clic en los puntos para descubrir cada pieza",
-        "image": "shopify://shop_images/81D82C0C-71CA-4C8C-A434-B96DA98409EB.jpg"
+        "image": "shopify://shop_images/81D82C0C-71CA-4C8C-A434-B96DA98409EB.jpg",
+        "layout": "image-left",
+        "image_size": 55,
+        "full_width": false,
+        "text_content": "",
+        "button_label": "",
+        "button_link": ""
       }
     },
     "shop_the_look_RJptKF": {
@@ -430,7 +438,13 @@
       "name": "Shop the Look",
       "settings": {
         "heading": "SHOP THE LOOK",
-        "subheading": "Haz clic en los puntos para descubrir cada pieza"
+        "subheading": "Haz clic en los puntos para descubrir cada pieza",
+        "layout": "image-left",
+        "image_size": 55,
+        "full_width": false,
+        "text_content": "",
+        "button_label": "",
+        "button_link": ""
       }
     },
     "product_carousel_c98Px8": {
@@ -439,11 +453,49 @@
       "settings": {
         "heading": "SUPERVENTAS",
         "subheading": "",
+        "products": [],
         "collection": "summer-basics",
         "products_to_show": 12,
         "scroll_count": 3,
         "show_vendor": true,
-        "button_label": "Comprar todos los más vendidos"
+        "button_label": "Comprar todos los más vendidos",
+        "button_link": ""
+      }
+    },
+    "featured_product_PjjFwN": {
+      "type": "featured-product",
+      "blocks": {
+        "feature_QtxcqK": {
+          "type": "feature",
+          "settings": {
+            "icon": "✦",
+            "text": "Envío gratis"
+          }
+        },
+        "feature_BGUwWU": {
+          "type": "feature",
+          "settings": {
+            "icon": "♡",
+            "text": "Hecho a mano"
+          }
+        }
+      },
+      "block_order": [
+        "feature_QtxcqK",
+        "feature_BGUwWU"
+      ],
+      "name": "Producto Destacado",
+      "settings": {
+        "product": "vestido-ibiza-mesh-pre-orden-entrega-30-01",
+        "heading": "PRODUCTO DESTACADO",
+        "subheading": "",
+        "image_position": "right",
+        "full_width": false,
+        "show_vendor": true,
+        "show_description": true,
+        "description_words": 40,
+        "custom_text": "",
+        "button_label": "Ver producto"
       }
     }
   },
@@ -461,6 +513,7 @@
     "lookbook_BYqcJD",
     "shop_the_look_zAA7z8",
     "shop_the_look_RJptKF",
-    "product_carousel_c98Px8"
+    "product_carousel_c98Px8",
+    "featured_product_PjjFwN"
   ]
 }
