@@ -1,73 +1,214 @@
-{%- comment -%} Section: Lookbook — Galería estilo editorial/moda {%- endcomment -%}
+{%- comment -%}
+  Section: Lookbook — Grid personalizable
+  Cada imagen tiene controles individuales de:
+  - Columnas que ocupa (1-6)
+  - Filas que ocupa (1-3)
+  - Aspect ratio o altura personalizada
+  - Hotspot de producto
+  - Overlay con texto
+{%- endcomment -%}
 
-<section class="lookbook section-padding" data-section-id="{{ section.id }}" data-animate
-  style="background-color: {{ section.settings.background_color }};">
-  <div class="{% if section.settings.full_width %}gallery--full-width{% else %}page-width{% endif %}">
+{%- assign grid_cols = section.settings.columns -%}
 
-    {%- if section.settings.heading != blank -%}
-      <div class="gallery__header text-center mb-4">
+<section class="lbk section-padding" data-section-id="{{ section.id }}"
+  style="background: {{ section.settings.bg_color }};">
+
+  <div class="{% if section.settings.full_width %}lbk--full{% else %}page-width{% endif %}">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="lbk__header">
         {%- if section.settings.subheading != blank -%}
-          <p class="gallery__subheading">{{ section.settings.subheading }}</p>
+          <p class="lbk__sub">{{ section.settings.subheading }}</p>
         {%- endif -%}
-        <h2 class="gallery__heading">{{ section.settings.heading }}</h2>
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lbk__title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
-    <div class="lookbook__grid lookbook__grid--{{ section.settings.layout }}">
-      {%- for block in section.blocks -%}
-        <div class="lookbook__item lookbook__item--{{ block.settings.aspect }}" {{ block.shopify_attributes }}
-          style="{% if block.settings.custom_height != blank %}--item-height: {{ block.settings.custom_height }};{% endif %}">
+    <div class="lbk__grid"
+      style="
+        display: grid;
+        grid-template-columns: repeat({{ grid_cols }}, 1fr);
+        grid-auto-rows: {{ section.settings.row_height }}px;
+        gap: {{ section.settings.gap }}px;
+      ">
 
+      {%- for block in section.blocks -%}
+        {%- assign col_span = block.settings.col_span | default: 1 -%}
+        {%- assign row_span = block.settings.row_span | default: 2 -%}
+
+        <div class="lbk__item" {{ block.shopify_attributes }}
+          style="
+            grid-column: span {{ col_span }};
+            grid-row: span {{ row_span }};
+            position: relative;
+            overflow: hidden;
+            border-radius: {{ section.settings.border_radius }}px;
+          ">
+
+          {%- comment -%} IMAGEN DE FONDO {%- endcomment -%}
           {%- if block.settings.image != blank -%}
             <img
-              src="{{ block.settings.image | image_url: width: 1400 }}"
-              alt="{{ block.settings.image.alt | default: block.settings.title | default: 'Lookbook' }}"
+              src="{{ block.settings.image | image_url: width: 1600 }}"
+              alt="{{ block.settings.image.alt | default: block.settings.overlay_title | default: 'Lookbook' }}"
               loading="lazy"
-              class="lookbook__image"
+              class="lbk__img"
+              style="
+                width: 100%; height: 100%; object-fit: cover; display: block;
+                transition: transform 0.8s ease;
+                {%- if block.settings.focal_point != 'center center' -%}
+                  object-position: {{ block.settings.focal_point }};
+                {%- endif -%}
+              "
             >
           {%- else -%}
-            <div class="gallery-grid__placeholder">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#f5f0eb,#e8ddd3);display:flex;align-items:center;justify-content:center;">
               {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
           {%- endif -%}
 
-          {%- comment -%} Hotspots / Product tags en la imagen {%- endcomment -%}
+          {%- comment -%} HOTSPOT DE PRODUCTO {%- endcomment -%}
           {%- if block.settings.product != blank -%}
-            <div class="lookbook__tag" style="top: {{ block.settings.tag_y | default: 50 }}%; left: {{ block.settings.tag_x | default: 50 }}%;">
-              <button class="lookbook__tag-dot" aria-label="Ver producto">
-                <span class="lookbook__tag-pulse"></span>
+            <div class="lbk__hotspot" style="position:absolute;top:{{ block.settings.tag_y }}%;left:{{ block.settings.tag_x }}%;z-index:3;transform:translate(-50%,-50%);">
+              <button class="lbk__dot" aria-label="Ver producto" type="button"
+                style="
+                  width: 28px; height: 28px; border-radius: 50%;
+                  background: rgba(255,255,255,0.9); border: 2px solid var(--color-primary, #1a1a1a);
+                  cursor: pointer; display: flex; align-items: center; justify-content: center;
+                  animation: lbk-pulse 2s infinite; transition: transform 0.3s;
+                ">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--color-primary,#1a1a1a);"></span>
               </button>
-              <div class="lookbook__tag-card">
-                {%- assign tagged_product = block.settings.product -%}
-                <a href="{{ tagged_product.url }}" class="lookbook__tag-product">
-                  {%- if tagged_product.featured_image -%}
-                    <img src="{{ tagged_product.featured_image | image_url: width: 100 }}" alt="{{ tagged_product.title }}" class="lookbook__tag-image">
+              {%- assign hp = block.settings.product -%}
+              <div class="lbk__card" style="
+                position: absolute; bottom: calc(100% + 12px); left: 50%;
+                transform: translateX(-50%); background: #fff; padding: 0.75rem;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.15); min-width: 200px;
+                opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 4;
+              ">
+                <a href="{{ hp.url }}" style="display:flex;gap:0.75rem;text-decoration:none;color:inherit;" class="lbk__card-link">
+                  {%- if hp.featured_image -%}
+                    <img src="{{ hp.featured_image | image_url: width: 80 }}" alt="{{ hp.title }}" style="width:60px;height:75px;object-fit:cover;">
                   {%- endif -%}
-                  <div class="lookbook__tag-info">
-                    <p class="lookbook__tag-title">{{ tagged_product.title }}</p>
-                    <p class="lookbook__tag-price">{{ tagged_product.price | money }}</p>
+                  <div>
+                    <p style="font-size:0.8rem;font-weight:500;margin:0 0 0.25rem;">{{ hp.title }}</p>
+                    <p style="font-size:0.75rem;color:var(--color-text-light,#888);margin:0;">{{ hp.price | money }}</p>
+                    <span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent,#8b6f47);margin-top:0.25rem;display:block;">Ver producto →</span>
                   </div>
                 </a>
               </div>
             </div>
           {%- endif -%}
 
-          {%- if block.settings.title != blank -%}
-            <div class="lookbook__item-overlay">
-              <h3 class="lookbook__item-title">{{ block.settings.title }}</h3>
-              {%- if block.settings.subtitle != blank -%}
-                <p class="lookbook__item-subtitle">{{ block.settings.subtitle }}</p>
+          {%- comment -%} SEGUNDO HOTSPOT (OPCIONAL) {%- endcomment -%}
+          {%- if block.settings.product_2 != blank -%}
+            <div class="lbk__hotspot" style="position:absolute;top:{{ block.settings.tag_y_2 }}%;left:{{ block.settings.tag_x_2 }}%;z-index:3;transform:translate(-50%,-50%);">
+              <button class="lbk__dot" aria-label="Ver producto" type="button"
+                style="
+                  width: 28px; height: 28px; border-radius: 50%;
+                  background: rgba(255,255,255,0.9); border: 2px solid var(--color-primary, #1a1a1a);
+                  cursor: pointer; display: flex; align-items: center; justify-content: center;
+                  animation: lbk-pulse 2s infinite 0.5s; transition: transform 0.3s;
+                ">
+                <span style="width:8px;height:8px;border-radius:50%;background:var(--color-primary,#1a1a1a);"></span>
+              </button>
+              {%- assign hp2 = block.settings.product_2 -%}
+              <div class="lbk__card" style="
+                position: absolute; bottom: calc(100% + 12px); left: 50%;
+                transform: translateX(-50%); background: #fff; padding: 0.75rem;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.15); min-width: 200px;
+                opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 4;
+              ">
+                <a href="{{ hp2.url }}" style="display:flex;gap:0.75rem;text-decoration:none;color:inherit;" class="lbk__card-link">
+                  {%- if hp2.featured_image -%}
+                    <img src="{{ hp2.featured_image | image_url: width: 80 }}" alt="{{ hp2.title }}" style="width:60px;height:75px;object-fit:cover;">
+                  {%- endif -%}
+                  <div>
+                    <p style="font-size:0.8rem;font-weight:500;margin:0 0 0.25rem;">{{ hp2.title }}</p>
+                    <p style="font-size:0.75rem;color:var(--color-text-light,#888);margin:0;">{{ hp2.price | money }}</p>
+                    <span style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-accent,#8b6f47);margin-top:0.25rem;display:block;">Ver producto →</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} OVERLAY DE TEXTO {%- endcomment -%}
+          {%- if block.settings.overlay_title != blank or block.settings.overlay_subtitle != blank -%}
+            <div class="lbk__overlay" style="
+              position: absolute; inset: 0; display: flex; flex-direction: column;
+              justify-content: {{ block.settings.text_position }};
+              align-items: {{ block.settings.text_align }};
+              padding: {{ block.settings.overlay_padding }}px;
+              background: linear-gradient(
+                {% if block.settings.text_position == 'flex-end' %}0deg{% elsif block.settings.text_position == 'flex-start' %}180deg{% else %}0deg{% endif %},
+                rgba(0,0,0,{{ block.settings.overlay_opacity }}) 0%, transparent 70%
+              );
+              z-index: 2; pointer-events: none;
+            ">
+              {%- if block.settings.overlay_title != blank -%}
+                <h3 style="
+                  color: #fff; margin: 0;
+                  font-size: {{ block.settings.title_size }}rem;
+                  font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase;
+                ">{{ block.settings.overlay_title }}</h3>
               {%- endif -%}
-              {%- if block.settings.link != blank -%}
-                <a href="{{ block.settings.link }}" class="lookbook__item-link">Descubrir →</a>
+              {%- if block.settings.overlay_subtitle != blank -%}
+                <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:0.3rem 0 0;">
+                  {{ block.settings.overlay_subtitle }}
+                </p>
+              {%- endif -%}
+              {%- if block.settings.overlay_link_text != blank and block.settings.overlay_link != blank -%}
+                <a href="{{ block.settings.overlay_link }}" style="
+                  display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1.5rem;
+                  border: 1px solid #fff; color: #fff; font-size: 0.75rem;
+                  letter-spacing: 0.15em; text-transform: uppercase;
+                  text-decoration: none; pointer-events: all; transition: all 0.3s;
+                " onmouseover="this.style.background='#fff';this.style.color='#000';"
+                  onmouseout="this.style.background='transparent';this.style.color='#fff';">
+                  {{ block.settings.overlay_link_text }}
+                </a>
               {%- endif -%}
             </div>
           {%- endif -%}
+
         </div>
       {%- endfor -%}
     </div>
   </div>
 </section>
+
+<style>
+  .lbk--full { width: 100%; padding: 0; }
+  .lbk__header { text-align: center; margin-bottom: 2.5rem; }
+  .lbk__sub { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--color-text-light); margin: 0 0 0.5rem; }
+  .lbk__title { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+
+  .lbk__item:hover .lbk__img { transform: scale(1.02); }
+
+  /* Hotspot hover */
+  .lbk__hotspot:hover .lbk__card { opacity: 1 !important; visibility: visible !important; }
+  .lbk__dot:hover { transform: scale(1.2); }
+
+  @keyframes lbk-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,0,0,0.12); }
+    50% { box-shadow: 0 0 0 10px rgba(0,0,0,0); }
+  }
+
+  /* Responsive: collapse to 2 cols on mobile */
+  @media (max-width: 767px) {
+    .lbk__grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .lbk__item[style*="grid-column: span 3"],
+    .lbk__item[style*="grid-column: span 4"],
+    .lbk__item[style*="grid-column: span 5"],
+    .lbk__item[style*="grid-column: span 6"] { grid-column: span 2 !important; }
+  }
+  @media (max-width: 480px) {
+    .lbk__grid { grid-template-columns: 1fr !important; }
+    .lbk__item { grid-column: span 1 !important; }
+  }
+</style>
 
 {% schema %}
 {
@@ -85,26 +226,59 @@
       "default": "Lookbook"
     },
     {
-      "type": "select",
-      "id": "layout",
-      "label": "Layout",
-      "options": [
-        { "value": "duo", "label": "Dos columnas (50/50)" },
-        { "value": "trio", "label": "1 grande + 2 apiladas" },
-        { "value": "asymmetric", "label": "Asimétrico libre" },
-        { "value": "stacked", "label": "Apilado vertical" }
-      ],
-      "default": "trio"
+      "type": "header",
+      "content": "Grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Columnas del grid",
+      "default": 3,
+      "info": "Cada imagen puede ocupar múltiples columnas"
+    },
+    {
+      "type": "range",
+      "id": "row_height",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Altura base de fila",
+      "default": 200,
+      "info": "Una imagen de 2 filas = doble alto, 3 filas = triple, etc."
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Espacio entre imágenes",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Redondeo de esquinas",
+      "default": 0
     },
     {
       "type": "checkbox",
       "id": "full_width",
-      "label": "Ancho completo",
+      "label": "Ancho completo (sin márgenes)",
       "default": true
     },
     {
       "type": "color",
-      "id": "background_color",
+      "id": "bg_color",
       "label": "Color de fondo",
       "default": "#ffffff"
     }
@@ -120,43 +294,45 @@
           "label": "Imagen"
         },
         {
+          "type": "header",
+          "content": "📐 Tamaño en el grid"
+        },
+        {
+          "type": "range",
+          "id": "col_span",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "label": "Columnas que ocupa",
+          "default": 1,
+          "info": "1 = una columna, 2 = doble ancho, 3 = ocupa 3 columnas..."
+        },
+        {
+          "type": "range",
+          "id": "row_span",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "label": "Filas que ocupa",
+          "default": 2,
+          "info": "Más filas = más alta la imagen"
+        },
+        {
           "type": "select",
-          "id": "aspect",
-          "label": "Proporción",
+          "id": "focal_point",
+          "label": "Punto focal",
           "options": [
-            { "value": "portrait", "label": "Vertical (3:4)" },
-            { "value": "landscape", "label": "Horizontal (4:3)" },
-            { "value": "square", "label": "Cuadrada (1:1)" },
-            { "value": "tall", "label": "Muy alta (2:3)" },
-            { "value": "wide", "label": "Panorámica (16:9)" },
-            { "value": "auto", "label": "Automática" }
+            { "value": "center center", "label": "Centro" },
+            { "value": "top center", "label": "Arriba" },
+            { "value": "bottom center", "label": "Abajo" },
+            { "value": "left center", "label": "Izquierda" },
+            { "value": "right center", "label": "Derecha" }
           ],
-          "default": "portrait"
-        },
-        {
-          "type": "text",
-          "id": "custom_height",
-          "label": "Altura personalizada (ej: 500px, 80vh)",
-          "info": "Deja vacío para usar la proporción seleccionada"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Título sobre imagen"
-        },
-        {
-          "type": "text",
-          "id": "subtitle",
-          "label": "Subtítulo"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Enlace"
+          "default": "center center"
         },
         {
           "type": "header",
-          "content": "Producto en la imagen (hotspot)"
+          "content": "📍 Producto hotspot 1"
         },
         {
           "type": "product",
@@ -170,7 +346,7 @@
           "max": 95,
           "step": 1,
           "unit": "%",
-          "label": "Posición horizontal del punto",
+          "label": "Posición horizontal",
           "default": 50
         },
         {
@@ -180,8 +356,111 @@
           "max": 95,
           "step": 1,
           "unit": "%",
-          "label": "Posición vertical del punto",
-          "default": 50
+          "label": "Posición vertical",
+          "default": 40
+        },
+        {
+          "type": "header",
+          "content": "📍 Producto hotspot 2 (opcional)"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Segundo producto vinculado"
+        },
+        {
+          "type": "range",
+          "id": "tag_x_2",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Posición horizontal",
+          "default": 70
+        },
+        {
+          "type": "range",
+          "id": "tag_y_2",
+          "min": 5,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Posición vertical",
+          "default": 65
+        },
+        {
+          "type": "header",
+          "content": "✍️ Texto overlay"
+        },
+        {
+          "type": "text",
+          "id": "overlay_title",
+          "label": "Título"
+        },
+        {
+          "type": "text",
+          "id": "overlay_subtitle",
+          "label": "Subtítulo"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "min": 1,
+          "max": 4,
+          "step": 0.1,
+          "label": "Tamaño del título (rem)",
+          "default": 1.5
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Posición vertical del texto",
+          "options": [
+            { "value": "flex-start", "label": "Arriba" },
+            { "value": "center", "label": "Centro" },
+            { "value": "flex-end", "label": "Abajo" }
+          ],
+          "default": "flex-end"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Alineación horizontal",
+          "options": [
+            { "value": "flex-start", "label": "Izquierda" },
+            { "value": "center", "label": "Centro" },
+            { "value": "flex-end", "label": "Derecha" }
+          ],
+          "default": "flex-start"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 0.8,
+          "step": 0.05,
+          "label": "Oscurecimiento",
+          "default": 0.4
+        },
+        {
+          "type": "range",
+          "id": "overlay_padding",
+          "min": 10,
+          "max": 60,
+          "step": 5,
+          "unit": "px",
+          "label": "Padding del texto",
+          "default": 30
+        },
+        {
+          "type": "text",
+          "id": "overlay_link_text",
+          "label": "Texto del botón"
+        },
+        {
+          "type": "url",
+          "id": "overlay_link",
+          "label": "Enlace del botón"
         }
       ]
     }
@@ -189,10 +468,16 @@
   "presets": [
     {
       "name": "Lookbook",
+      "settings": {
+        "columns": 3,
+        "row_height": 200,
+        "gap": 4,
+        "full_width": true
+      },
       "blocks": [
-        { "type": "image", "settings": { "aspect": "portrait" } },
-        { "type": "image", "settings": { "aspect": "landscape" } },
-        { "type": "image", "settings": { "aspect": "portrait" } }
+        { "type": "image", "settings": { "col_span": 2, "row_span": 3 } },
+        { "type": "image", "settings": { "col_span": 1, "row_span": 2 } },
+        { "type": "image", "settings": { "col_span": 1, "row_span": 1 } }
       ]
     }
   ]

@@ -1,61 +1,139 @@
-{%- comment -%} Section: Gallery Grid — Galería de fotos en cuadrícula editable {%- endcomment -%}
+{%- comment -%}
+  Section: Galería de Fotos — Completamente personalizable
+  Cada imagen tiene controles individuales de:
+  - Columnas que ocupa (1-6)
+  - Filas que ocupa (1-3)
+  - Proporción (aspect ratio)
+  El grid general controla: columnas totales, altura de fila, gap
+{%- endcomment -%}
 
-<section class="section-padding gallery-section" data-section-id="{{ section.id }}" data-animate
-  style="background-color: {{ section.settings.background_color }};">
-  <div class="{% if section.settings.full_width %}gallery--full-width{% else %}page-width{% endif %}">
+{%- assign grid_cols = section.settings.columns -%}
+{%- assign row_height = section.settings.row_height -%}
+
+<section class="gal section-padding" data-section-id="{{ section.id }}"
+  style="background: {{ section.settings.bg_color }};">
+
+  <div class="{% if section.settings.full_width %}gal--full{% else %}page-width{% endif %}">
 
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="gallery__header text-center mb-4">
+      <div class="gal__header">
         {%- if section.settings.subheading != blank -%}
-          <p class="gallery__subheading">{{ section.settings.subheading }}</p>
+          <p class="gal__sub">{{ section.settings.subheading }}</p>
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="gallery__heading">{{ section.settings.heading }}</h2>
+          <h2 class="gal__title">{{ section.settings.heading }}</h2>
         {%- endif -%}
       </div>
     {%- endif -%}
 
-    <div class="gallery-grid gallery-grid--{{ section.settings.layout }}" style="gap: {{ section.settings.gap }}px;">
+    <div class="gal__grid"
+      style="
+        display: grid;
+        grid-template-columns: repeat({{ grid_cols }}, 1fr);
+        grid-auto-rows: {{ row_height }}px;
+        gap: {{ section.settings.gap }}px;
+      ">
+
       {%- for block in section.blocks -%}
-        <div class="gallery-grid__item gallery-grid__item--{{ block.settings.size }}" {{ block.shopify_attributes }}>
-          <a href="{{ block.settings.link | default: '#' }}"
-            class="gallery-grid__link"
-            {% if block.settings.link == blank %}onclick="event.preventDefault(); this.closest('.gallery-grid__item').querySelector('img') && openLightbox(this);"{% endif %}
-            aria-label="{{ block.settings.caption | default: 'Ver imagen' }}">
+        {%- assign col_span = block.settings.col_span | default: 1 -%}
+        {%- assign row_span = block.settings.row_span | default: 1 -%}
+
+        <div class="gal__item" {{ block.shopify_attributes }}
+          style="
+            grid-column: span {{ col_span }};
+            grid-row: span {{ row_span }};
+            overflow: hidden;
+            position: relative;
+            border-radius: {{ section.settings.border_radius }}px;
+          ">
+
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="gal__link" aria-label="{{ block.settings.caption | default: 'Ver más' }}">
+          {%- else -%}
+            <div class="gal__link">
+          {%- endif -%}
 
             {%- if block.settings.image != blank -%}
               <img
-                src="{{ block.settings.image | image_url: width: 1200 }}"
+                src="{{ block.settings.image | image_url: width: 1600 }}"
                 alt="{{ block.settings.image.alt | default: block.settings.caption | default: 'Galería' }}"
                 loading="lazy"
-                width="1200"
-                height="{{ 1200 | divided_by: block.settings.image.aspect_ratio | round }}"
-                class="gallery-grid__image"
+                class="gal__img"
+                style="
+                  width: 100%; height: 100%; object-fit: cover; display: block;
+                  transition: transform 0.6s ease;
+                  {%- if block.settings.focal_point != 'center center' -%}
+                    object-position: {{ block.settings.focal_point }};
+                  {%- endif -%}
+                "
               >
             {%- elsif block.settings.video != blank -%}
-              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'gallery-grid__image' }}
+              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'gal__img', style: 'width:100%;height:100%;object-fit:cover;' }}
             {%- else -%}
-              <div class="gallery-grid__placeholder">
+              <div style="width:100%;height:100%;background:#f0ebe5;display:flex;align-items:center;justify-content:center;">
                 {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
             {%- endif -%}
 
             {%- if block.settings.show_overlay -%}
-              <div class="gallery-grid__overlay">
+              <div class="gal__overlay" style="
+                position: absolute; inset: 0; display: flex; flex-direction: column;
+                justify-content: {{ block.settings.text_position }};
+                padding: {{ block.settings.overlay_padding }}px;
+                background: linear-gradient(
+                  {% if block.settings.text_position == 'flex-end' %}0deg{% elsif block.settings.text_position == 'flex-start' %}180deg{% else %}0deg{% endif %},
+                  rgba(0,0,0,{{ block.settings.overlay_opacity }}) 0%, transparent 60%
+                );
+                opacity: {% if block.settings.overlay_always %}1{% else %}0{% endif %};
+                transition: opacity 0.4s ease;
+              ">
                 {%- if block.settings.caption != blank -%}
-                  <h3 class="gallery-grid__caption">{{ block.settings.caption }}</h3>
+                  <h3 style="color:#fff;font-size:{{ block.settings.text_size }}rem;font-weight:300;letter-spacing:0.1em;text-transform:uppercase;margin:0;">
+                    {{ block.settings.caption }}
+                  </h3>
                 {%- endif -%}
                 {%- if block.settings.subtitle != blank -%}
-                  <p class="gallery-grid__subtitle">{{ block.settings.subtitle }}</p>
+                  <p style="color:rgba(255,255,255,0.8);font-size:0.85rem;margin:0.25rem 0 0;">
+                    {{ block.settings.subtitle }}
+                  </p>
+                {%- endif -%}
+                {%- if block.settings.button_text != blank -%}
+                  <span style="display:inline-block;margin-top:0.75rem;padding:0.5rem 1.5rem;border:1px solid #fff;color:#fff;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;">
+                    {{ block.settings.button_text }}
+                  </span>
                 {%- endif -%}
               </div>
             {%- endif -%}
-          </a>
+
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+
         </div>
       {%- endfor -%}
     </div>
   </div>
 </section>
+
+<style>
+  .gal--full { width: 100%; padding: 0; }
+  .gal__header { text-align: center; margin-bottom: 2rem; }
+  .gal__sub { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-light); margin: 0 0 0.5rem; }
+  .gal__title { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
+  .gal__link { display: block; width: 100%; height: 100%; text-decoration: none; color: inherit; position: relative; }
+  .gal__item:hover .gal__img { transform: scale(1.03); }
+  .gal__item:hover .gal__overlay { opacity: 1 !important; }
+
+  @media (max-width: 767px) {
+    .gal__grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .gal__item[style*="grid-column: span 3"],
+    .gal__item[style*="grid-column: span 4"],
+    .gal__item[style*="grid-column: span 5"],
+    .gal__item[style*="grid-column: span 6"] { grid-column: span 2 !important; }
+  }
+</style>
 
 {% schema %}
 {
@@ -73,44 +151,67 @@
       "default": "Galería"
     },
     {
-      "type": "select",
-      "id": "layout",
-      "label": "Estilo de galería",
-      "options": [
-        { "value": "grid", "label": "Cuadrícula uniforme" },
-        { "value": "masonry", "label": "Masonry (Pinterest)" },
-        { "value": "editorial", "label": "Editorial (mixto)" },
-        { "value": "filmstrip", "label": "Tira de film horizontal" }
-      ],
-      "default": "masonry"
+      "type": "header",
+      "content": "Grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columnas del grid",
+      "default": 4,
+      "info": "Cada imagen puede ocupar múltiples columnas"
+    },
+    {
+      "type": "range",
+      "id": "row_height",
+      "min": 150,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Altura base de fila",
+      "default": 280,
+      "info": "Una imagen de 2 filas será el doble de esta altura"
     },
     {
       "type": "range",
       "id": "gap",
       "min": 0,
       "max": 30,
-      "step": 2,
+      "step": 1,
       "unit": "px",
       "label": "Espacio entre imágenes",
       "default": 4
     },
     {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Redondeo de esquinas",
+      "default": 0
+    },
+    {
       "type": "checkbox",
       "id": "full_width",
-      "label": "Ancho completo",
+      "label": "Ancho completo (sin márgenes)",
       "default": false
     },
     {
       "type": "color",
-      "id": "background_color",
+      "id": "bg_color",
       "label": "Color de fondo",
       "default": "#ffffff"
     }
   ],
   "blocks": [
     {
-      "type": "image",
-      "name": "Imagen",
+      "type": "photo",
+      "name": "Foto",
       "settings": [
         {
           "type": "image_picker",
@@ -123,34 +224,116 @@
           "label": "Video (en vez de imagen)"
         },
         {
+          "type": "header",
+          "content": "📐 Tamaño en el grid"
+        },
+        {
+          "type": "range",
+          "id": "col_span",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "label": "Columnas que ocupa",
+          "default": 1,
+          "info": "1 = una columna, 2 = doble ancho, etc."
+        },
+        {
+          "type": "range",
+          "id": "row_span",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "label": "Filas que ocupa",
+          "default": 1,
+          "info": "1 = una fila, 2 = doble alto, etc."
+        },
+        {
           "type": "select",
-          "id": "size",
-          "label": "Tamaño",
+          "id": "focal_point",
+          "label": "Punto focal de la imagen",
           "options": [
-            { "value": "small", "label": "Pequeño (1x)" },
-            { "value": "medium", "label": "Mediano (2x)" },
-            { "value": "large", "label": "Grande (3x)" },
-            { "value": "tall", "label": "Alto (vertical)" },
-            { "value": "wide", "label": "Ancho (horizontal)" }
+            { "value": "center center", "label": "Centro" },
+            { "value": "top center", "label": "Arriba" },
+            { "value": "bottom center", "label": "Abajo" },
+            { "value": "left center", "label": "Izquierda" },
+            { "value": "right center", "label": "Derecha" },
+            { "value": "top left", "label": "Arriba izq." },
+            { "value": "top right", "label": "Arriba der." },
+            { "value": "bottom left", "label": "Abajo izq." },
+            { "value": "bottom right", "label": "Abajo der." }
           ],
-          "default": "small",
-          "info": "En layout masonry/editorial, controla el tamaño relativo del bloque"
+          "default": "center center",
+          "info": "Qué parte de la imagen se muestra cuando se recorta"
+        },
+        {
+          "type": "header",
+          "content": "✍️ Texto overlay"
         },
         {
           "type": "checkbox",
           "id": "show_overlay",
-          "label": "Mostrar overlay con texto",
+          "label": "Mostrar texto sobre la imagen",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "overlay_always",
+          "label": "Texto siempre visible (no solo en hover)",
           "default": false
         },
         {
           "type": "text",
           "id": "caption",
-          "label": "Título sobre imagen"
+          "label": "Título"
         },
         {
           "type": "text",
           "id": "subtitle",
-          "label": "Subtítulo sobre imagen"
+          "label": "Subtítulo"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Texto de botón"
+        },
+        {
+          "type": "select",
+          "id": "text_position",
+          "label": "Posición del texto",
+          "options": [
+            { "value": "flex-start", "label": "Arriba" },
+            { "value": "center", "label": "Centro" },
+            { "value": "flex-end", "label": "Abajo" }
+          ],
+          "default": "flex-end"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "min": 0.8,
+          "max": 3,
+          "step": 0.1,
+          "label": "Tamaño del título (rem)",
+          "default": 1.2
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 0.8,
+          "step": 0.05,
+          "label": "Oscurecimiento del overlay",
+          "default": 0.45
+        },
+        {
+          "type": "range",
+          "id": "overlay_padding",
+          "min": 10,
+          "max": 60,
+          "step": 5,
+          "unit": "px",
+          "label": "Padding del overlay",
+          "default": 25
         },
         {
           "type": "url",
@@ -163,13 +346,18 @@
   "presets": [
     {
       "name": "Galería de fotos",
+      "settings": {
+        "columns": 4,
+        "row_height": 280,
+        "gap": 4
+      },
       "blocks": [
-        { "type": "image", "settings": { "size": "large" } },
-        { "type": "image", "settings": { "size": "small" } },
-        { "type": "image", "settings": { "size": "small" } },
-        { "type": "image", "settings": { "size": "small" } },
-        { "type": "image", "settings": { "size": "medium" } },
-        { "type": "image", "settings": { "size": "small" } }
+        { "type": "photo", "settings": { "col_span": 2, "row_span": 2 } },
+        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "photo", "settings": { "col_span": 1, "row_span": 1 } },
+        { "type": "photo", "settings": { "col_span": 2, "row_span": 1 } }
       ]
     }
   ]
