@@ -35,8 +35,8 @@
   {%- endif -%}
 </style>
 
-<section id="GAL-{{ section.id }}" class="gal section-padding" data-section-id="{{ section.id }}"
-  style="background-color: {{ section.settings.background_color }} !important;">
+<section id="GAL-{{ section.id }}" class="gal" data-section-id="{{ section.id }}"
+  style="background-color: {{ section.settings.background_color }} !important; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
 
   <div class="{% if section.settings.full_width %}gal--full{% else %}page-width{% endif %}">
 
@@ -250,6 +250,26 @@
       "label": "Altura de la sección",
       "default": 80,
       "info": "Solo aplica cuando 'Alto completo' está activado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Espacio arriba",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Espacio abajo",
+      "default": 40
     },
     {
       "type": "color",
