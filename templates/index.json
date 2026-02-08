@@ -313,6 +313,37 @@
         "full_width": true,
         "background_color": "#ffffff"
       }
+    },
+    "shop_the_look_zAA7z8": {
+      "type": "shop-the-look",
+      "blocks": {
+        "hotspot_nXcEnF": {
+          "type": "hotspot",
+          "settings": {
+            "product": "catsuit-de-malla-segunda-piel-con-arte-pintado-a-mano-edicion-limitada",
+            "pos_x": 50,
+            "pos_y": 50
+          }
+        },
+        "hotspot_VnrzHA": {
+          "type": "hotspot",
+          "settings": {
+            "product": "abrigo-largo-geisha-rojo-diseno-pintado-a-mano",
+            "pos_x": 44,
+            "pos_y": 50
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_nXcEnF",
+        "hotspot_VnrzHA"
+      ],
+      "name": "Shop the Look",
+      "settings": {
+        "heading": "SHOP THE LOOK",
+        "subheading": "Haz clic en los puntos para descubrir cada pieza",
+        "image": "shopify://shop_images/81D82C0C-71CA-4C8C-A434-B96DA98409EB.jpg"
+      }
     }
   },
   "order": [
@@ -324,6 +355,7 @@
     "gallery_NCRgwK",
     "gallery_slideshow_EeWXfP",
     "newsletter",
-    "lookbook_BYqcJD"
+    "lookbook_BYqcJD",
+    "shop_the_look_zAA7z8"
   ]
 }
