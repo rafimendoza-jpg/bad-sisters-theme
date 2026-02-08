@@ -259,9 +259,24 @@
     "lookbook_BYqcJD": {
       "type": "lookbook",
       "blocks": {
+        "image_NAREM6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
+            "aspect": "portrait",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
+            "product": "",
+            "tag_x": 50,
+            "tag_y": 50
+          }
+        },
         "image_YmNtdH": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
             "aspect": "portrait",
             "custom_height": "",
             "title": "",
@@ -276,7 +291,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/493A211F-58C1-401C-9F8D-282C60A76BFB.png",
-            "aspect": "auto",
+            "aspect": "wide",
             "custom_height": "",
             "title": "",
             "subtitle": "",
@@ -289,18 +304,20 @@
         "image_d43DmB": {
           "type": "image",
           "settings": {
-            "aspect": "portrait",
+            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
+            "aspect": "landscape",
             "custom_height": "",
             "title": "",
             "subtitle": "",
             "link": "",
-            "product": "",
+            "product": "top-peplum-floral-geisha-rojo",
             "tag_x": 50,
             "tag_y": 50
           }
         }
       },
       "block_order": [
+        "image_NAREM6",
         "image_YmNtdH",
         "image_G9DVx8",
         "image_d43DmB"
@@ -309,7 +326,7 @@
       "settings": {
         "subheading": "",
         "heading": "Lookbook",
-        "layout": "trio",
+        "layout": "duo",
         "full_width": true,
         "background_color": "#ffffff"
       }
