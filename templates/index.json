@@ -473,106 +473,11 @@
         "text_color": ""
       }
     },
-    "staggered_gallery_tGR9Ux": {
-      "type": "staggered-gallery",
-      "blocks": {
-        "image_dVF9Pr": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/ABAFBDCE-D643-4AF5-9738-7E3720326317.jpg",
-            "caption": "",
-            "subtitle": "",
-            "link": "",
-            "span_wide": false,
-            "span_tall": false
-          }
-        },
-        "image_nt6nGB": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/493A211F-58C1-401C-9F8D-282C60A76BFB.png",
-            "caption": "",
-            "subtitle": "",
-            "link": "",
-            "span_wide": false,
-            "span_tall": false
-          }
-        },
-        "image_Hdke9T": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/0CE252E3-1702-43B4-A5B0-933348F6064D.jpg",
-            "caption": "",
-            "subtitle": "",
-            "link": "",
-            "span_wide": false,
-            "span_tall": false
-          }
-        },
-        "image_TK68A8": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
-            "caption": "",
-            "subtitle": "",
-            "link": "",
-            "span_wide": false,
-            "span_tall": false
-          }
-        },
-        "image_eVi6Ef": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/E7833128-7405-4F6C-A48F-96FFA2C76486.jpg",
-            "caption": "",
-            "subtitle": "",
-            "link": "",
-            "span_wide": false,
-            "span_tall": false
-          }
-        },
-        "image_rXbTmR": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
-            "caption": "",
-            "subtitle": "",
-            "link": "",
-            "span_wide": false,
-            "span_tall": false
-          }
-        }
-      },
-      "block_order": [
-        "image_dVF9Pr",
-        "image_nt6nGB",
-        "image_Hdke9T",
-        "image_TK68A8",
-        "image_eVi6Ef",
-        "image_rXbTmR"
-      ],
-      "name": "Galería animada",
-      "settings": {
-        "subheading": "",
-        "heading": "",
-        "columns": 3,
-        "gap": 8,
-        "image_ratio": "3/4",
-        "border_radius": 0,
-        "full_width": false,
-        "animation_duration": 700,
-        "stagger_delay": 75,
-        "slide_distance": 50,
-        "caption_style": "hover",
-        "background_color": "",
-        "text_color": ""
-      }
-    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
         "subheading": "",
-        "heading": "Únete a la familia",
+        "heading": "Únete a nuestras bad girls",
         "text": "Sé la primera en enterarte de nuevos lanzamientos, ofertas y más.",
         "placeholder": "Tu dirección de email",
         "button_text": "Suscribirme",
@@ -594,7 +499,6 @@
     "before_after_iCjxgh",
     "shop_the_look_zAA7z8",
     "multicolumn_TK4aff",
-    "staggered_gallery_tGR9Ux",
     "newsletter"
   ]
 }
