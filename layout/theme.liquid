@@ -27,8 +27,10 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    {{ settings.type_header_font | font_face: font_display: 'swap' }}
-    {{ settings.type_body_font | font_face: font_display: 'swap' }}
+    <style>
+      {{ settings.type_header_font | font_face: font_display: 'swap' }}
+      {{ settings.type_body_font | font_face: font_display: 'swap' }}
+    </style>
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
