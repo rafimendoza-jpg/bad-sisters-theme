@@ -2638,6 +2638,58 @@ body.mobile-nav-open::before {
 }
 
 /* ============================================================
+   MULTICOLUMN
+   ============================================================ */
+.mc { background-color: transparent !important; }
+.mc--full { width: 100%; padding: 0; }
+
+.mc__header { text-align: center; margin-bottom: 2.5rem; }
+.mc__sub {
+  font-size: 0.75rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--color-text-light);
+  margin: 0 0 0.5rem;
+}
+.mc__title {
+  font-size: clamp(1.3rem, 2.5vw, 2rem); font-weight: 300;
+  letter-spacing: 0.12em; text-transform: uppercase; margin: 0;
+}
+
+.mc__item { display: flex; flex-direction: column; }
+
+.mc__img-wrap { overflow: hidden; margin-bottom: 1rem; position: relative; }
+.mc__img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; transition: transform 0.6s ease;
+}
+.mc__item:hover .mc__img { transform: scale(1.03); }
+
+.mc__icon {
+  font-size: 2.5rem; margin-bottom: 0.75rem;
+  line-height: 1;
+}
+.mc__content { flex: 1; display: flex; flex-direction: column; }
+.mc__heading {
+  font-size: 0.9rem; font-weight: 400;
+  letter-spacing: 0.05em; margin: 0 0 0.5rem;
+}
+.mc__text {
+  font-size: 0.82rem; font-weight: 300;
+  line-height: 1.7; color: var(--color-text-light);
+}
+.mc__text p { margin: 0 0 0.4rem; }
+
+.mc__cta {
+  display: inline-block; margin-top: auto; padding-top: 0.75rem;
+  font-size: 0.68rem; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; color: var(--color-text);
+  border-bottom: 1px solid var(--color-text);
+  padding-bottom: 2px;
+  transition: opacity 0.3s ease;
+}
+.mc__cta:hover { opacity: 0.6; }
+
+/* ============================================================
    FEATURED PRODUCT
    ============================================================ */
 .fp__header { text-align: center; margin-bottom: 2.5rem; }

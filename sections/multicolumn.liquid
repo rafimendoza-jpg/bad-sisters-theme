@@ -1,56 +1,111 @@
-{%- comment -%} Section: Multi-column / Features {%- endcomment -%}
+{%- comment -%}
+  Section: Multicolumna — Layout flexible
+  - Número de columnas (2-6)
+  - Proporción entre columnas (iguales, primera más grande, última más grande, personalizado)
+  - Separación configurable
+  - Imágenes con aspect ratio seleccionable
+  - Ancho y alto completo opcionales
+{%- endcomment -%}
 
-<section class="section-padding" data-section-id="{{ section.id }}" data-animate style="background-color: {{ section.settings.background_color }};">
-  <div class="page-width">
-    {%- if section.settings.heading != blank -%}
-      <div class="text-center mb-4">
-        {%- if section.settings.subheading != blank -%}
-          <p style="font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 0.5rem;">
-            {{ section.settings.subheading }}
-          </p>
+{%- assign cols = section.settings.columns | default: 3 -%}
+
+<style>
+  #MC-{{ section.id }} {
+    {%- if section.settings.bg_color != blank and section.settings.bg_color != 'rgba(0,0,0,0)' -%}
+      background-color: {{ section.settings.bg_color }};
+    {%- endif -%}
+  }
+  #MC-{{ section.id }} .mc__grid {
+    display: grid;
+    gap: {{ section.settings.gap }}px;
+    {%- case section.settings.column_ratio -%}
+      {%- when 'equal' -%}
+        grid-template-columns: repeat({{ cols }}, 1fr);
+      {%- when 'first-large' -%}
+        grid-template-columns: 2fr {% for i in (2..cols) %}1fr {% endfor %};
+      {%- when 'last-large' -%}
+        grid-template-columns: {% for i in (2..cols) %}1fr {% endfor %}2fr;
+      {%- when 'center-large' -%}
+        {%- if cols == 3 -%}
+          grid-template-columns: 1fr 2fr 1fr;
+        {%- elsif cols == 5 -%}
+          grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+        {%- else -%}
+          grid-template-columns: repeat({{ cols }}, 1fr);
         {%- endif -%}
-        <h2>{{ section.settings.heading }}</h2>
+    {%- endcase -%}
+  }
+  {%- if section.settings.full_height -%}
+    #MC-{{ section.id }} .mc__grid { min-height: {{ section.settings.section_height }}vh; }
+    #MC-{{ section.id }} .mc__item { display: flex; flex-direction: column; }
+    #MC-{{ section.id }} .mc__img-wrap { flex: 1; }
+  {%- endif -%}
+  @media (max-width: 768px) {
+    #MC-{{ section.id }} .mc__grid {
+      grid-template-columns: {% if section.settings.mobile_columns == '1' %}1fr{% else %}1fr 1fr{% endif %} !important;
+    }
+  }
+</style>
+
+<section id="MC-{{ section.id }}" class="mc {% unless section.settings.full_height %}section-padding{% endunless %}" data-section-id="{{ section.id }}" data-animate>
+  <div class="{% if section.settings.full_width %}mc--full{% else %}page-width{% endif %}">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="mc__header">
+        {%- if section.settings.subheading != blank -%}
+          <p class="mc__sub">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="mc__title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
-    <div class="grid grid--{{ section.settings.columns }}">
+    <div class="mc__grid">
       {%- for block in section.blocks -%}
-        <div class="multicolumn__item" style="text-align: {{ section.settings.text_alignment }};" {{ block.shopify_attributes }}>
+        <div class="mc__item" style="text-align: {{ section.settings.text_alignment }};" {{ block.shopify_attributes }}>
+
           {%- if block.settings.image != blank -%}
-            <div style="margin-bottom: 1rem;">
+            <div class="mc__img-wrap" style="
+              {%- if section.settings.image_ratio != 'auto' and section.settings.full_height == false -%}
+                aspect-ratio: {{ section.settings.image_ratio }};
+              {%- endif -%}
+              overflow: hidden;
+              border-radius: {{ section.settings.image_radius }}px;
+            ">
               <img
-                src="{{ block.settings.image | image_url: width: 600 }}"
-                srcset="{{ block.settings.image | image_url: width: 300 }} 300w, {{ block.settings.image | image_url: width: 450 }} 450w, {{ block.settings.image | image_url: width: 600 }} 600w"
-                sizes="(max-width: 767px) 100vw, 33vw"
-                alt="{{ block.settings.heading | default: 'Image' }}"
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                srcset="{{ block.settings.image | image_url: width: 400 }} 400w, {{ block.settings.image | image_url: width: 600 }} 600w, {{ block.settings.image | image_url: width: 800 }} 800w"
+                sizes="(max-width: 767px) 90vw, {{ 100 | divided_by: cols }}vw"
+                alt="{{ block.settings.heading | default: block.settings.image.alt | default: 'Imagen' }}"
                 loading="lazy"
                 decoding="async"
                 width="{{ block.settings.image.width }}"
                 height="{{ block.settings.image.height }}"
-                style="border-radius: var(--border-radius);"
+                class="mc__img"
               >
             </div>
           {%- endif -%}
 
           {%- if block.settings.icon != blank -%}
-            <div style="font-size: 2.5rem; margin-bottom: 1rem;">{{ block.settings.icon }}</div>
+            <div class="mc__icon">{{ block.settings.icon }}</div>
           {%- endif -%}
 
-          {%- if block.settings.heading != blank -%}
-            <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">{{ block.settings.heading }}</h3>
-          {%- endif -%}
+          <div class="mc__content">
+            {%- if block.settings.heading != blank -%}
+              <h3 class="mc__heading">{{ block.settings.heading }}</h3>
+            {%- endif -%}
 
-          {%- if block.settings.text != blank -%}
-            <div class="rte" style="font-size: 0.9rem;">
-              {{ block.settings.text }}
-            </div>
-          {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="mc__text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
 
-          {%- if block.settings.button_label != blank -%}
-            <a href="{{ block.settings.button_link }}" class="btn btn--small btn--secondary" style="margin-top: 1rem;">
-              {{ block.settings.button_label }}
-            </a>
-          {%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="mc__cta">
+                {{ block.settings.button_label }}
+              </a>
+            {%- endif -%}
+          </div>
         </div>
       {%- endfor -%}
     </div>
@@ -73,31 +128,126 @@
       "default": "Multicolumna"
     },
     {
-      "type": "select",
+      "type": "header",
+      "content": "📐 Columnas"
+    },
+    {
+      "type": "range",
       "id": "columns",
-      "label": "Columnas",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Número de columnas",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "column_ratio",
+      "label": "Proporción de columnas",
       "options": [
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" }
+        { "value": "equal", "label": "Iguales" },
+        { "value": "first-large", "label": "Primera más grande" },
+        { "value": "last-large", "label": "Última más grande" },
+        { "value": "center-large", "label": "Centro más grande (3 o 5 cols)" }
       ],
-      "default": "3"
+      "default": "equal"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Separación entre columnas",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Columnas en móvil",
+      "options": [
+        { "value": "1", "label": "1 columna" },
+        { "value": "2", "label": "2 columnas" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "header",
+      "content": "🖼 Imágenes"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Proporción de las fotos",
+      "options": [
+        { "value": "auto", "label": "Automática (tamaño original)" },
+        { "value": "1/1", "label": "Cuadrada (1:1)" },
+        { "value": "3/4", "label": "Vertical (3:4)" },
+        { "value": "4/5", "label": "Instagram (4:5)" },
+        { "value": "2/3", "label": "Vertical alta (2:3)" },
+        { "value": "4/3", "label": "Horizontal (4:3)" },
+        { "value": "16/9", "label": "Panorámica (16:9)" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Redondeo de las fotos",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "📏 Tamaño de la sección"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Ancho completo (sin márgenes)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_height",
+      "label": "Alto completo (imágenes llenan la sección)",
+      "default": false,
+      "info": "Las imágenes se estiran para llenar toda la altura"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Altura de la sección",
+      "default": 70,
+      "info": "Solo aplica cuando 'Alto completo' está activado"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Estilo"
     },
     {
       "type": "select",
       "id": "text_alignment",
-      "label": "Alineación",
+      "label": "Alineación del texto",
       "options": [
         { "value": "left", "label": "Izquierda" },
-        { "value": "center", "label": "Centro" }
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Derecha" }
       ],
       "default": "center"
     },
     {
       "type": "color",
-      "id": "background_color",
-      "label": "Color de fondo",
-      "default": "#ffffff"
+      "id": "bg_color",
+      "label": "Color de fondo"
     }
   ],
   "blocks": [
