@@ -98,8 +98,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/BE3DBF68-9F7F-4E2D-A558-029FC0F65D8A.jpg",
-            "col_span": 1,
-            "row_span": 1,
+            "size": "small",
             "show_overlay": false,
             "caption": "",
             "subtitle": "",
@@ -110,8 +109,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/7E5D7443-45F1-4472-A6FA-1D6C9F932D21.jpg",
-            "col_span": 1,
-            "row_span": 1,
+            "size": "small",
             "show_overlay": false,
             "caption": "",
             "subtitle": "",
@@ -122,8 +120,7 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/9C4EA887-1E37-4C2E-ABD3-C76C2291C738.jpg",
-            "col_span": 1,
-            "row_span": 1,
+            "size": "small",
             "show_overlay": false,
             "caption": "",
             "subtitle": "",
@@ -139,13 +136,9 @@
       "settings": {
         "subheading": "",
         "heading": "",
-        "columns": 3,
-        "row_height": 280,
+        "layout": "grid",
         "gap": 22,
-        "border_radius": 0,
         "full_width": true,
-        "full_height": false,
-        "full_height_value": 80,
         "background_color": "#1a1a1a"
       }
     },
@@ -232,6 +225,7 @@
         "columns": 2,
         "column_ratio": "equal",
         "gap": 20,
+        "mobile_columns": "1",
         "image_ratio": "auto",
         "image_radius": 0,
         "full_width": false,
@@ -383,10 +377,11 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/FFBC3DFB-E972-4AC3-8CF6-8E1952216AE6.jpg",
-            "aspect_ratio": "3/4",
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "overlay_link": "",
+            "aspect": "portrait",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
             "product": "",
             "tag_x": 50,
             "tag_y": 50
@@ -396,10 +391,11 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
-            "aspect_ratio": "3/4",
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "overlay_link": "",
+            "aspect": "portrait",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
             "product": "",
             "tag_x": 50,
             "tag_y": 50
@@ -409,10 +405,11 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/493A211F-58C1-401C-9F8D-282C60A76BFB.png",
-            "aspect_ratio": "16/9",
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "overlay_link": "",
+            "aspect": "portrait",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
             "product": "",
             "tag_x": 50,
             "tag_y": 50
@@ -422,10 +419,11 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
-            "aspect_ratio": "4/3",
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "overlay_link": "",
+            "aspect": "portrait",
+            "custom_height": "",
+            "title": "",
+            "subtitle": "",
+            "link": "",
             "product": "top-peplum-floral-geisha-rojo",
             "tag_x": 50,
             "tag_y": 50
@@ -442,8 +440,6 @@
         "subheading": "",
         "heading": "Lookbook",
         "layout": "2-col",
-        "gap": 4,
-        "border_radius": 0,
         "full_width": true,
         "background_color": "#ffffff"
       }
