@@ -56,17 +56,6 @@
             "button_link": ""
           }
         },
-        "slide_MNbwNH": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/E74CAE49-0A82-41D7-94DE-29FFC7963B2A_4e57e080-7224-42f7-9e08-52cdbdc5a03e.png",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
         "slide_BdJAyw": {
           "type": "slide",
           "settings": {
@@ -81,7 +70,6 @@
       },
       "block_order": [
         "slide_Y4mj9f",
-        "slide_MNbwNH",
         "slide_BdJAyw"
       ],
       "name": "Galería slideshow",
