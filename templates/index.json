@@ -28,15 +28,15 @@
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
-        "subheading": "Lo más nuevo",
-        "heading": "Productos destacados",
+        "subheading": "venecia - bad sisters atelier",
+        "heading": "Accesorios de seda",
         "description": "",
-        "collection": "",
-        "products_to_show": 4,
-        "columns": "4",
+        "collection": "accesorios-de-seda",
+        "products_to_show": 3,
+        "columns": "3",
         "show_vendor": false,
         "show_view_all": true,
-        "view_all_text": "Ver toda la colección"
+        "view_all_text": "Ver todos"
       }
     },
     "image-with-text": {
