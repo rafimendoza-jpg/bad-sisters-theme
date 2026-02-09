@@ -109,14 +109,7 @@
           </div>
 
           {%- comment -%} BSD POINTS ESTIMATE {%- endcomment -%}
-          {%- assign bsd_points = current_variant.price | divided_by: 10000 | floor -%}
-          <div class="pp-info__points" id="BsdPointsEstimate" style="
-            font-size: 0.82rem; color: var(--color-text-light, #666);
-            margin-top: 0.35rem; display: flex; align-items: center; gap: 0.35rem;
-          ">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Ganas <strong id="BsdPointsValue" style="font-weight:600;">{{ bsd_points }}</strong> puntos con esta compra
-          </div>
+          {%- render 'bsd-points-line', cents: current_variant.price -%}
 
           {%- comment -%} PRODUCT FORM {%- endcomment -%}
           {%- form 'product', product -%}
@@ -457,8 +450,10 @@
         /* BSD points update */
         var rawPrice = parseInt(opt.dataset.rawPrice) || 0;
         var pts = Math.floor(rawPrice / 10000);
-        var ptsEl = document.getElementById('BsdPointsValue');
+        var ptsEl = document.querySelector('[data-bsd-points-value]');
+        var ptsLine = document.querySelector('[data-bsd-points-line]');
         if (ptsEl) ptsEl.textContent = pts;
+        if (ptsLine) ptsLine.style.display = pts > 0 ? 'flex' : 'none';
 
         break;
       }

@@ -56,6 +56,7 @@
   /* ---- main ---- */
   // 1. Capture from URL
   var urlRef = getParam('ref');
+  if (urlRef) urlRef = urlRef.trim();
   if (urlRef && isValid(urlRef)) {
     setWithExpiry(urlRef.toUpperCase());
     // Remove ?ref= from URL without reload
