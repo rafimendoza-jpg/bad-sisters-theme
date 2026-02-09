@@ -108,6 +108,16 @@
             {%- endif -%}
           </div>
 
+          {%- comment -%} BSD POINTS ESTIMATE {%- endcomment -%}
+          {%- assign bsd_points = current_variant.price | divided_by: 10000 | floor -%}
+          <div class="pp-info__points" id="BsdPointsEstimate" style="
+            font-size: 0.82rem; color: var(--color-text-light, #666);
+            margin-top: 0.35rem; display: flex; align-items: center; gap: 0.35rem;
+          ">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Ganas <strong id="BsdPointsValue" style="font-weight:600;">{{ bsd_points }}</strong> puntos con esta compra
+          </div>
+
           {%- comment -%} PRODUCT FORM {%- endcomment -%}
           {%- form 'product', product -%}
 
@@ -194,6 +204,7 @@
                   data-price="{{ variant.price | money }}"
                   data-compare-price="{{ variant.compare_at_price | money }}"
                   data-available="{{ variant.available }}"
+                  data-raw-price="{{ variant.price }}"
                 >
                   {{ variant.title }} - {{ variant.price | money }}
                 </option>
@@ -443,6 +454,12 @@
           addBtn.disabled = false;
           addBtn.textContent = 'Agregar al carrito — ' + opt.dataset.price;
         }
+        /* BSD points update */
+        var rawPrice = parseInt(opt.dataset.rawPrice) || 0;
+        var pts = Math.floor(rawPrice / 10000);
+        var ptsEl = document.getElementById('BsdPointsValue');
+        if (ptsEl) ptsEl.textContent = pts;
+
         break;
       }
     }

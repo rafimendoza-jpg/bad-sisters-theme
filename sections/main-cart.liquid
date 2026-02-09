@@ -270,6 +270,18 @@
                 <span>Subtotal</span>
                 <span>{{ cart.total_price | money }}</span>
               </div>
+
+              {%- assign bsd_cart_points = cart.items_subtotal_price | divided_by: 10000 | floor -%}
+              {%- if bsd_cart_points > 0 -%}
+                <div class="cart__points" style="
+                  font-size: 0.82rem; color: var(--color-text-light, #666);
+                  margin-top: 0.5rem; display: flex; align-items: center; gap: 0.35rem;
+                ">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                  Ganas <strong style="font-weight:600;">{{ bsd_cart_points }}</strong> puntos con esta compra
+                </div>
+              {%- endif -%}
+
               <p class="cart__note">Impuestos y envío calculados al finalizar la compra.</p>
 
               {%- if section.settings.show_cart_note -%}
