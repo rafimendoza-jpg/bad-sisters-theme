@@ -360,6 +360,195 @@ p {
   letter-spacing: 0;
 }
 
+/* Account login link (desktop text, mobile icon) */
+.header__account-link {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--color-text);
+  transition: opacity 0.3s ease;
+}
+.header__account-link:hover { opacity: 0.5; }
+.header__account-link svg { width: 18px; height: 18px; }
+.header__account-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Cart dropdown wrapper */
+.header__cart-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 340px;
+  padding-top: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s 0.25s;
+  z-index: 1000;
+  pointer-events: none;
+}
+.cart-dropdown.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s;
+  pointer-events: auto;
+}
+
+.cart-dropdown__inner {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.cart-dropdown__header {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cart-dropdown__items {
+  max-height: 280px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.cart-dropdown__item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.cart-dropdown__item:last-child { border-bottom: none; }
+
+.cart-dropdown__item-img {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: calc(var(--border-radius) / 2);
+  overflow: hidden;
+  background: var(--color-border);
+}
+.cart-dropdown__item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-dropdown__item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-dropdown__item-title {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3;
+}
+.cart-dropdown__item-title:hover { opacity: 0.7; }
+
+.cart-dropdown__item-variant {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--color-text-light);
+  margin-top: 0.15rem;
+}
+
+.cart-dropdown__item-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  margin-top: 0.3rem;
+}
+.cart-dropdown__item-meta span:last-child {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.cart-dropdown__footer {
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--color-border);
+  background: rgba(0,0,0,0.015);
+}
+
+.cart-dropdown__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-bottom: 0.65rem;
+}
+.cart-dropdown__total strong { font-weight: 600; }
+
+.cart-dropdown__btn {
+  display: block;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  background: var(--color-text);
+  color: var(--color-background);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--button-border-radius);
+  transition: opacity 0.3s ease;
+}
+.cart-dropdown__btn:hover { opacity: 0.85; }
+
+.cart-dropdown__empty {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.cart-dropdown__empty p {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-top: 0.75rem;
+}
+
+/* Mobile nav account */
+.mobile-nav__account {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+.mobile-nav__account .mobile-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive: hide dropdown + collapse login text on mobile */
+@media (max-width: 989px) {
+  .cart-dropdown { display: none; }
+  .header__account-text { display: none; }
+  .header__account-link {
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+  }
+}
+
 /* === MEGA MENU PANEL === */
 .mega-panel {
   position: absolute;

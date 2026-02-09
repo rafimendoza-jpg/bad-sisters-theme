@@ -1,61 +1,300 @@
-{%- comment -%} Customer: Account {%- endcomment -%}
+{%- comment -%} Customer: Account — Portal BSD {%- endcomment -%}
+
+{%- comment -%} Calculate points from orders {%- endcomment -%}
+{%- assign bsd_total_points = 0 -%}
+{%- for order in customer.orders -%}
+  {%- assign _op = order.total_price | divided_by: 10000 | floor -%}
+  {%- assign bsd_total_points = bsd_total_points | plus: _op -%}
+{%- endfor -%}
 
 <section class="section-padding">
   <div class="page-width">
-    <div class="flex flex--between mb-4" style="flex-wrap: wrap; gap: 1rem;">
-      <h1>Mi cuenta</h1>
+
+    {%- comment -%} Account Header {%- endcomment -%}
+    <div class="account-header">
+      <div class="account-header__welcome">
+        <div class="account-header__avatar">
+          {{ customer.first_name | slice: 0 | upcase }}{{ customer.last_name | slice: 0 | upcase }}
+        </div>
+        <div>
+          <h1 class="account-header__name">Hola, {{ customer.first_name }}</h1>
+          <p class="account-header__email">{{ customer.email }}</p>
+        </div>
+      </div>
       <a href="/account/logout" class="btn btn--secondary btn--small">Cerrar sesión</a>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-      {%- comment -%} Orders {%- endcomment -%}
-      <div>
-        <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Historial de pedidos</h2>
-
-        {%- if customer.orders.size > 0 -%}
-          <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-              <tr>
-                <th style="text-align: left; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Pedido</th>
-                <th style="text-align: left; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Fecha</th>
-                <th style="text-align: left; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Estado</th>
-                <th style="text-align: right; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light);">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {%- for order in customer.orders -%}
-                <tr>
-                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border);">
-                    <a href="{{ order.customer_url }}" style="color: var(--color-accent); font-weight: 500;">{{ order.name }}</a>
-                  </td>
-                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem;">{{ order.created_at | date: '%d/%m/%Y' }}</td>
-                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem;">{{ order.financial_status_label }}</td>
-                  <td style="padding: 0.75rem 0; border-bottom: 1px solid var(--color-border); text-align: right; font-weight: 500;">{{ order.total_price | money }}</td>
-                </tr>
-              {%- endfor -%}
-            </tbody>
-          </table>
-        {%- else -%}
-          <p style="color: var(--color-text-light);">No tienes pedidos aún.</p>
-        {%- endif -%}
+    {%- comment -%} Points Summary Card {%- endcomment -%}
+    <div class="account-points-card">
+      <div class="account-points-card__total">
+        <span class="account-points-card__label">Tus puntos acumulados</span>
+        <span class="account-points-card__value">{{ bsd_total_points }}</span>
+        <span class="account-points-card__sub">puntos</span>
       </div>
-
-      {%- comment -%} Addresses {%- endcomment -%}
-      <div>
-        <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem;">Dirección predeterminada</h2>
-        {%- if customer.default_address -%}
-          <div style="padding: 1.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
-            <p>{{ customer.default_address.name }}</p>
-            <p style="color: var(--color-text-light); font-size: 0.9rem; margin-top: 0.5rem;">
-              {{ customer.default_address | format_address }}
-            </p>
-          </div>
-          <a href="/account/addresses" class="btn btn--secondary btn--small" style="margin-top: 1rem;">Gestionar direcciones</a>
-        {%- else -%}
-          <p style="color: var(--color-text-light);">No tienes direcciones guardadas.</p>
-          <a href="/account/addresses" class="btn btn--secondary btn--small" style="margin-top: 1rem;">Agregar dirección</a>
-        {%- endif -%}
+      <div class="account-points-card__info">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Ganas 1 punto por cada $10.000 CLP en compras</span>
       </div>
     </div>
+
+    {%- comment -%} Dashboard Grid {%- endcomment -%}
+    <div class="account-grid">
+
+      {%- comment -%} Points Breakdown {%- endcomment -%}
+      <div class="account-card">
+        <h2 class="account-card__title">Desglose de puntos</h2>
+
+        {%- if customer.orders.size > 0 -%}
+          <div class="account-table-wrap">
+            <table class="account-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Motivo</th>
+                  <th>Detalle</th>
+                  <th style="text-align: right;">Puntos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for order in customer.orders -%}
+                  {%- assign _op = order.total_price | divided_by: 10000 | floor -%}
+                  {%- if _op > 0 -%}
+                    <tr>
+                      <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
+                      <td>Compra</td>
+                      <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                      <td style="text-align: right; font-weight: 600; color: var(--color-accent);">+{{ _op }}</td>
+                    </tr>
+                  {%- endif -%}
+                {%- endfor -%}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3" style="text-align: right; font-weight: 600;">Total</td>
+                  <td style="text-align: right; font-weight: 700; font-size: 1.05rem;">{{ bsd_total_points }}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        {%- else -%}
+          <p class="account-card__empty">Aún no tienes puntos. ¡Haz tu primera compra!</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Order History {%- endcomment -%}
+      <div class="account-card">
+        <h2 class="account-card__title">Historial de pedidos</h2>
+
+        {%- if customer.orders.size > 0 -%}
+          <div class="account-table-wrap">
+            <table class="account-table">
+              <thead>
+                <tr>
+                  <th>Pedido</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th style="text-align: right;">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for order in customer.orders -%}
+                  <tr>
+                    <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                    <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
+                    <td>
+                      <span class="account-badge account-badge--{{ order.fulfillment_status | default: 'unfulfilled' }}">
+                        {{ order.fulfillment_status_label | default: 'Pendiente' }}
+                      </span>
+                    </td>
+                    <td style="text-align: right; font-weight: 500;">{{ order.total_price | money }}</td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- else -%}
+          <p class="account-card__empty">No tienes pedidos aún.</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    {%- comment -%} Address {%- endcomment -%}
+    <div class="account-card" style="margin-top: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <h2 class="account-card__title" style="margin-bottom: 0;">Dirección predeterminada</h2>
+        <a href="/account/addresses" class="btn btn--secondary btn--small">Gestionar direcciones</a>
+      </div>
+      {%- if customer.default_address -%}
+        <div style="margin-top: 1rem; padding: 1rem; border: 1px solid var(--color-border); border-radius: var(--border-radius);">
+          <p style="font-weight: 500;">{{ customer.default_address.name }}</p>
+          <p style="color: var(--color-text-light); font-size: 0.9rem; margin-top: 0.35rem;">
+            {{ customer.default_address | format_address }}
+          </p>
+        </div>
+      {%- else -%}
+        <p class="account-card__empty" style="margin-top: 1rem;">No tienes direcciones guardadas.</p>
+      {%- endif -%}
+    </div>
+
   </div>
 </section>
+
+<style>
+  /* Account Header */
+  .account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .account-header__welcome {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .account-header__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-text);
+    color: var(--color-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .account-header__name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+  }
+  .account-header__email {
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    margin: 0.15rem 0 0;
+  }
+
+  /* Points Summary Card */
+  .account-points-card {
+    background: var(--color-text);
+    color: var(--color-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .account-points-card__label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .account-points-card__value {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+  .account-points-card__sub {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-top: 0.25rem;
+  }
+  .account-points-card__info {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.78rem;
+    opacity: 0.65;
+  }
+
+  /* Dashboard Grid */
+  .account-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 768px) {
+    .account-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Account Card */
+  .account-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+  }
+  .account-card__title {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+  }
+  .account-card__empty {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+  }
+
+  /* Account Table */
+  .account-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .account-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  .account-table th {
+    text-align: left;
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-light);
+  }
+  .account-table td {
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+  }
+  .account-table tbody tr:hover { background: rgba(0,0,0,0.015); }
+  .account-table tfoot td {
+    border-bottom: none;
+    border-top: 2px solid var(--color-text);
+    padding-top: 0.75rem;
+  }
+  .account-table a {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+  .account-table a:hover { text-decoration: underline; }
+
+  /* Status badges */
+  .account-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  .account-badge--fulfilled { background: #e8f5e9; color: #2e7d32; }
+  .account-badge--unfulfilled { background: #fff3e0; color: #e65100; }
+  .account-badge--partial { background: #e3f2fd; color: #1565c0; }
+</style>

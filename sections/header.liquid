@@ -123,7 +123,7 @@
         {%- endfor -%}
       </nav>
 
-      {%- comment -%} Icons: Search + Cart {%- endcomment -%}
+      {%- comment -%} Icons: Search + Account + Cart {%- endcomment -%}
       <div class="header__icons">
         {%- if section.settings.show_search -%}
           <a href="/search" class="header__icon header__search-toggle" aria-label="Buscar">
@@ -131,18 +131,72 @@
           </a>
         {%- endif -%}
 
-        <a href="/cart" class="header__icon" aria-label="Carrito">
-          {% render 'icon-cart' %}
-          <span class="header__cart-count" style="{% if cart.item_count == 0 %}display:none{% endif %}">
-            {{ cart.item_count }}
-          </span>
-        </a>
-
+        {%- comment -%} Account / Login {%- endcomment -%}
         {%- if shop.customer_accounts_enabled -%}
-          <a href="{%- if customer -%}/account{%- else -%}/account/login{%- endif -%}" class="header__icon" aria-label="Cuenta">
-            {% render 'icon-account' %}
-          </a>
+          {%- if customer -%}
+            <a href="/account" class="header__icon" aria-label="Mi cuenta" title="Mi cuenta">
+              {% render 'icon-account' %}
+            </a>
+          {%- else -%}
+            <a href="/account/login" class="header__account-link" aria-label="Iniciar sesión">
+              {% render 'icon-account' %}
+              <span class="header__account-text">Iniciar sesión</span>
+            </a>
+          {%- endif -%}
         {%- endif -%}
+
+        {%- comment -%} Cart with hover dropdown {%- endcomment -%}
+        <div class="header__cart-wrap" data-cart-drawer>
+          <a href="/cart" class="header__icon" aria-label="Carrito">
+            {% render 'icon-cart' %}
+            <span class="header__cart-count" data-cart-count style="{% if cart.item_count == 0 %}display:none{% endif %}">
+              {{ cart.item_count }}
+            </span>
+          </a>
+
+          <div class="cart-dropdown" data-cart-dropdown>
+            <div class="cart-dropdown__inner">
+              {%- if cart.item_count > 0 -%}
+                <div class="cart-dropdown__header">
+                  <span>Carrito ({{ cart.item_count }})</span>
+                </div>
+                <div class="cart-dropdown__items" data-cart-items>
+                  {%- for item in cart.items -%}
+                    <div class="cart-dropdown__item">
+                      <div class="cart-dropdown__item-img">
+                        {%- if item.image -%}
+                          <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title | escape }}" loading="lazy" width="60" height="60">
+                        {%- endif -%}
+                      </div>
+                      <div class="cart-dropdown__item-info">
+                        <a href="{{ item.url }}" class="cart-dropdown__item-title">{{ item.product.title }}</a>
+                        {%- unless item.product.has_only_default_variant -%}
+                          <span class="cart-dropdown__item-variant">{{ item.variant.title }}</span>
+                        {%- endunless -%}
+                        <div class="cart-dropdown__item-meta">
+                          <span>Cant: {{ item.quantity }}</span>
+                          <span>{{ item.final_line_price | money }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                </div>
+                <div class="cart-dropdown__footer">
+                  <div class="cart-dropdown__total">
+                    <span>Total</span>
+                    <strong data-cart-total>{{ cart.total_price | money }}</strong>
+                  </div>
+                  <a href="/cart" class="cart-dropdown__btn">Ver carrito</a>
+                </div>
+              {%- else -%}
+                <div class="cart-dropdown__empty" data-cart-empty>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  <p>Tu carrito está vacío</p>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -198,6 +252,25 @@
         <a href="{{ link.url }}" class="mobile-nav__link mobile-nav__link--top">{{ link.title }}</a>
       {%- endif -%}
     {%- endfor -%}
+
+    {%- comment -%} Account link in mobile nav {%- endcomment -%}
+    {%- if shop.customer_accounts_enabled -%}
+      <div class="mobile-nav__account">
+        {%- if customer -%}
+          <a href="/account" class="mobile-nav__link mobile-nav__link--top">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Mi cuenta
+          </a>
+          <a href="/account/logout" class="mobile-nav__link" style="font-size: 0.8rem; opacity: 0.6; padding-left: 1.5rem;">Cerrar sesión</a>
+        {%- else -%}
+          <a href="/account/login" class="mobile-nav__link mobile-nav__link--top">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Iniciar sesión
+          </a>
+          <a href="/account/register" class="mobile-nav__link" style="font-size: 0.8rem; opacity: 0.6; padding-left: 1.5rem;">Crear cuenta</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -324,6 +397,29 @@
       header.classList.toggle('scrolled', scroll > 20);
       lastScroll = scroll;
     }, { passive: true });
+  })();
+
+  /* === Cart Dropdown: hover show/hide === */
+  (function() {
+    var wrap = document.querySelector('[data-cart-drawer]');
+    if (!wrap) return;
+    var dd = wrap.querySelector('[data-cart-dropdown]');
+    if (!dd) return;
+    var timer = null;
+
+    function show() {
+      if (window.innerWidth <= 989) return;
+      clearTimeout(timer);
+      dd.classList.add('is-open');
+    }
+    function scheduleHide() {
+      timer = setTimeout(function() { dd.classList.remove('is-open'); }, 300);
+    }
+
+    wrap.addEventListener('mouseenter', show);
+    wrap.addEventListener('mouseleave', scheduleHide);
+    dd.addEventListener('mouseenter', function() { clearTimeout(timer); });
+    dd.addEventListener('mouseleave', scheduleHide);
   })();
 </script>
 
