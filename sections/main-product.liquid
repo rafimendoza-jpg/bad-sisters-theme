@@ -198,11 +198,19 @@
                   data-compare-price="{{ variant.compare_at_price | money }}"
                   data-available="{{ variant.available }}"
                   data-raw-price="{{ variant.price }}"
+                  data-inventory="{{ variant.inventory_quantity | default: 0 }}"
                 >
                   {{ variant.title }} - {{ variant.price | money }}
                 </option>
               {%- endfor -%}
             </select>
+
+            {%- comment -%} LOW STOCK WARNING {%- endcomment -%}
+            {%- assign cv_qty = current_variant.inventory_quantity | default: 0 -%}
+            <div class="pp-low-stock" data-low-stock style="{% if cv_qty >= 3 or cv_qty <= 0 %}display:none{% endif %}">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Solo {%- if cv_qty == 1 -%} queda <strong>1</strong> unidad{%- else -%} quedan <strong data-low-stock-qty>{{ cv_qty }}</strong> unidades{%- endif -%}
+            </div>
 
             {%- comment -%} ADD TO CART {%- endcomment -%}
             <div class="pp-add-row">
@@ -497,6 +505,23 @@
         var ptsLine = document.querySelector('[data-bsd-points-line]');
         if (ptsEl) ptsEl.textContent = pts;
         if (ptsLine) ptsLine.style.display = pts > 0 ? 'flex' : 'none';
+
+        /* Low stock update */
+        var inv = parseInt(opt.dataset.inventory) || 0;
+        var lsEl = document.querySelector('[data-low-stock]');
+        if (lsEl) {
+          if (inv > 0 && inv < 3) {
+            lsEl.style.display = 'flex';
+            var qtyEl = lsEl.querySelector('[data-low-stock-qty]');
+            if (inv === 1) {
+              lsEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Solo queda <strong>1</strong> unidad';
+            } else {
+              lsEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Solo quedan <strong>' + inv + '</strong> unidades';
+            }
+          } else {
+            lsEl.style.display = 'none';
+          }
+        }
 
         break;
       }

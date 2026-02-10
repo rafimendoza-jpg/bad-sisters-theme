@@ -2071,6 +2071,21 @@ body.mobile-nav-open::before {
 .pp-option-btn:hover { border-color: var(--color-text); }
 .pp-option-btn.is-selected { background: var(--color-text); color: #fff; border-color: var(--color-text); }
 
+/* Low stock warning */
+.pp-low-stock {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #c62828;
+  background: #ffebee;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 0.75rem;
+}
+.pp-low-stock strong { font-weight: 700; }
+.pp-low-stock svg { flex-shrink: 0; color: #c62828; }
+
 .pp-add-row { display: flex; gap: 0; margin-bottom: 2rem; }
 .pp-quantity {
   display: flex; align-items: center;
