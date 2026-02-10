@@ -74,8 +74,10 @@
 
     {% sections 'footer-group' %}
 
+    <script>window.__bsdCustomerId = {{ customer.id | default: 'null' }};</script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
     <script src="{{ 'bsd-referral.js' | asset_url }}" defer></script>
+    <script src="{{ 'bsd-wishlist.js' | asset_url }}" defer></script>
 
     {%- if settings.custom_js != blank -%}
       <script>{{ settings.custom_js }}</script>
