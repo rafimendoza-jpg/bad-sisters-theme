@@ -430,14 +430,20 @@
 
 {%- comment -%} Size Guide Modal {%- endcomment -%}
 {%- if section.settings.show_size_guide -%}
+  {%- comment -%} Priority: product metafield → section setting → generic table {%- endcomment -%}
+  {%- assign sg_image = product.metafields.bsd.size_guide_image.value | default: nil -%}
+  {%- unless sg_image -%}
+    {%- assign sg_image = section.settings.size_guide_image -%}
+  {%- endunless -%}
+
   <div class="pp-modal" id="SizeGuideModal" onclick="if(event.target === this) this.classList.remove('is-open');">
     <div class="pp-modal__content">
       <button class="pp-modal__close" onclick="document.getElementById('SizeGuideModal').classList.remove('is-open');" aria-label="Cerrar">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <h3>Guía de tallas</h3>
-      {%- if section.settings.size_guide_image != blank -%}
-        <img src="{{ section.settings.size_guide_image | image_url: width: 800 }}" srcset="{{ section.settings.size_guide_image | image_url: width: 400 }} 400w, {{ section.settings.size_guide_image | image_url: width: 800 }} 800w" sizes="(max-width: 600px) 90vw, 600px" alt="Guía de tallas" loading="lazy" decoding="async">
+      {%- if sg_image != blank -%}
+        <img src="{{ sg_image | image_url: width: 800 }}" srcset="{{ sg_image | image_url: width: 400 }} 400w, {{ sg_image | image_url: width: 800 }} 800w" sizes="(max-width: 600px) 90vw, 600px" alt="Guía de tallas — {{ product.title | escape }}" loading="lazy" decoding="async">
       {%- else -%}
         <p>Consulta nuestra guía de tallas para encontrar tu talla perfecta. Si tienes dudas, contáctanos.</p>
         <table class="pp-size-table">
