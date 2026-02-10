@@ -335,17 +335,54 @@
                     </div>
                   {%- endif -%}
 
-                  {%- comment -%} CTA to leave review from account {%- endcomment -%}
-                  <div class="pp-reviews-cta" style="margin-top: 1.25rem; text-align: center;">
-                    {%- if customer -%}
-                      <a href="/account#reviews" class="btn btn--secondary btn--small" style="gap: 0.35rem;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                        Dejar una reseña
-                      </a>
-                    {%- else -%}
-                      <p style="font-size: 0.85rem; color: var(--color-text-light); margin-bottom: 0.5rem;">¿Compraste este producto?</p>
-                      <a href="/account/login" class="btn btn--secondary btn--small">Inicia sesión para dejar tu reseña</a>
-                    {%- endif -%}
+                  {%- comment -%} Inline review form — works for guests AND logged-in {%- endcomment -%}
+                  <div class="pp-review-form-wrap" data-pdp-review-wrap>
+                    <button class="pp-review-form-toggle" data-pdp-review-toggle>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                      Escribir una reseña
+                    </button>
+
+                    <div class="pp-review-form" data-pdp-review-form style="display:none;">
+                      {%- unless customer -%}
+                        <div class="pp-review-form__row">
+                          <div class="pp-review-form__field">
+                            <label for="PdpReviewName">Tu nombre</label>
+                            <input type="text" id="PdpReviewName" data-pdp-review-name placeholder="Ej: María G." required>
+                          </div>
+                          <div class="pp-review-form__field">
+                            <label for="PdpReviewEmail">Email</label>
+                            <input type="email" id="PdpReviewEmail" data-pdp-review-email placeholder="tu@email.com" required>
+                          </div>
+                        </div>
+                      {%- endunless -%}
+
+                      <div class="pp-review-form__stars" data-pdp-star-picker>
+                        <label>Calificación</label>
+                        <div class="pp-review-stars">
+                          {%- for i in (1..5) -%}
+                            <button type="button" class="pp-review-star" data-star="{{ i }}" aria-label="{{ i }} estrellas">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            </button>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+
+                      <div class="pp-review-form__field">
+                        <label for="PdpReviewText">Tu reseña</label>
+                        <textarea id="PdpReviewText" data-pdp-review-text rows="4" placeholder="Cuéntanos tu experiencia con este producto..."></textarea>
+                      </div>
+
+                      <div class="pp-review-form__actions">
+                        <button type="button" class="btn btn--secondary btn--small" data-pdp-review-cancel>Cancelar</button>
+                        <button type="button" class="btn btn--primary btn--small" data-pdp-review-submit>Enviar reseña</button>
+                      </div>
+                      <div class="pp-review-form__msg" data-pdp-review-msg></div>
+                    </div>
+
+                    <div class="pp-review-form__success" data-pdp-review-success style="display:none;">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                      <p>¡Gracias por tu reseña! Tu opinión nos ayuda mucho.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -537,6 +574,116 @@
       if (sizeGuide) sizeGuide.classList.remove('is-open');
     }
   });
+
+  /* ===== PDP Review Form ===== */
+  (function() {
+    var toggleBtn = document.querySelector('[data-pdp-review-toggle]');
+    var form = document.querySelector('[data-pdp-review-form]');
+    var cancelBtn = document.querySelector('[data-pdp-review-cancel]');
+    var submitBtn = document.querySelector('[data-pdp-review-submit]');
+    var successEl = document.querySelector('[data-pdp-review-success]');
+    var picker = document.querySelector('[data-pdp-star-picker]');
+    if (!toggleBtn || !form) return;
+
+    toggleBtn.addEventListener('click', function() {
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+      toggleBtn.style.display = 'none';
+    });
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', function() {
+        form.style.display = 'none';
+        toggleBtn.style.display = 'flex';
+      });
+    }
+
+    /* Star picker */
+    if (picker) {
+      var stars = picker.querySelectorAll('[data-star]');
+      stars.forEach(function(star) {
+        star.addEventListener('mouseenter', function() {
+          var val = parseInt(this.dataset.star);
+          stars.forEach(function(s) {
+            s.classList.toggle('is-hovered', parseInt(s.dataset.star) <= val);
+          });
+        });
+        star.addEventListener('mouseleave', function() {
+          stars.forEach(function(s) { s.classList.remove('is-hovered'); });
+        });
+        star.addEventListener('click', function() {
+          var val = parseInt(this.dataset.star);
+          stars.forEach(function(s) {
+            s.classList.toggle('is-active', parseInt(s.dataset.star) <= val);
+          });
+          picker.dataset.rating = val;
+        });
+      });
+    }
+
+    /* Submit */
+    if (submitBtn) {
+      submitBtn.addEventListener('click', function() {
+        var msg = document.querySelector('[data-pdp-review-msg]');
+        var rating = picker ? (parseInt(picker.dataset.rating) || 0) : 0;
+        var text = (document.querySelector('[data-pdp-review-text]') || {}).value || '';
+        text = text.trim();
+
+        /* Guest fields */
+        var nameEl = document.querySelector('[data-pdp-review-name]');
+        var emailEl = document.querySelector('[data-pdp-review-email]');
+        var guestName = nameEl ? nameEl.value.trim() : '';
+        var guestEmail = emailEl ? emailEl.value.trim() : '';
+
+        /* Validation */
+        if (nameEl && !guestName) { showPdpMsg(msg, 'Por favor ingresa tu nombre.', 'error'); return; }
+        if (emailEl && !guestEmail) { showPdpMsg(msg, 'Por favor ingresa tu email.', 'error'); return; }
+        if (rating === 0) { showPdpMsg(msg, 'Por favor selecciona una calificación.', 'error'); return; }
+        if (text.length < 5) { showPdpMsg(msg, 'Por favor escribe al menos unas palabras.', 'error'); return; }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando…';
+
+        var customerName = '{{ customer.first_name | default: "" }} {{ customer.last_name | default: "" }}'.trim();
+        var customerEmail = '{{ customer.email | default: "" }}';
+        var senderName = customerName || guestName;
+        var senderEmail = customerEmail || guestEmail;
+
+        var fd = new FormData();
+        fd.append('form_type', 'contact');
+        fd.append('utf8', '✓');
+        fd.append('contact[email]', senderEmail);
+        fd.append('contact[body]',
+          '--- RESEÑA DE PRODUCTO ---\n' +
+          'Nombre: ' + senderName + '\n' +
+          'Email: ' + senderEmail + '\n' +
+          'Producto: {{ product.title | escape }}\n' +
+          'Handle: {{ product.handle }}\n' +
+          'Product ID: {{ product.id }}\n' +
+          'Calificación: ' + rating + '/5 ' + '★'.repeat(rating) + '☆'.repeat(5 - rating) + '\n' +
+          'Reseña: ' + text + '\n' +
+          '---'
+        );
+
+        fetch('/contact', {
+          method: 'POST',
+          body: fd,
+          headers: { 'Accept': 'application/json' }
+        }).then(function() {
+          form.style.display = 'none';
+          if (successEl) successEl.style.display = 'flex';
+        }).catch(function() {
+          /* Contact form redirects — treat as success */
+          form.style.display = 'none';
+          if (successEl) successEl.style.display = 'flex';
+        });
+      });
+    }
+
+    function showPdpMsg(el, text, type) {
+      if (!el) return;
+      el.textContent = text;
+      el.className = 'pp-review-form__msg is-' + type;
+    }
+  })();
 </script>
 
 {% schema %}

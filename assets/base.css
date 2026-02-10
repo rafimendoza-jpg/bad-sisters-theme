@@ -2158,6 +2158,135 @@ body.mobile-nav-open::before {
 .pp-reviews-empty p { color: var(--color-text-light); margin-bottom: 0.5rem; font-size: 0.8rem; }
 .pp-reviews-empty__cta { font-weight: 400; color: var(--color-text); letter-spacing: 0.05em; }
 
+/* PDP Review form */
+.pp-review-form-wrap { margin-top: 1.5rem; }
+.pp-review-form-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--color-text);
+  border-radius: var(--button-border-radius);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin: 0 auto;
+  display: flex;
+  width: fit-content;
+}
+.pp-review-form-toggle:hover {
+  background: var(--color-text);
+  color: var(--color-background);
+}
+
+.pp-review-form {
+  margin-top: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: rgba(0,0,0,0.01);
+}
+.pp-review-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 600px) {
+  .pp-review-form__row { grid-template-columns: 1fr; }
+}
+.pp-review-form__field { margin-bottom: 1rem; }
+.pp-review-form__field:last-child { margin-bottom: 0; }
+.pp-review-form__row .pp-review-form__field { margin-bottom: 0; }
+.pp-review-form__field label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-light);
+  margin-bottom: 0.4rem;
+}
+.pp-review-form__field input,
+.pp-review-form__field textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--border-radius) / 2);
+  padding: 0.65rem 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  transition: border-color 0.2s;
+}
+.pp-review-form__field input:focus,
+.pp-review-form__field textarea:focus {
+  outline: none;
+  border-color: var(--color-text);
+}
+.pp-review-form__field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.pp-review-form__stars { margin-bottom: 1rem; }
+.pp-review-form__stars label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-light);
+  margin-bottom: 0.4rem;
+}
+.pp-review-stars {
+  display: inline-flex;
+  gap: 0.15rem;
+}
+.pp-review-star {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: #ccc;
+  transition: color 0.15s, transform 0.15s;
+}
+.pp-review-star:hover { transform: scale(1.15); }
+.pp-review-star.is-active svg,
+.pp-review-star.is-hovered svg {
+  fill: #f5a623;
+  stroke: #f5a623;
+  color: #f5a623;
+}
+
+.pp-review-form__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+.pp-review-form__msg {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  text-align: center;
+}
+.pp-review-form__msg.is-success { color: #2e7d32; }
+.pp-review-form__msg.is-error { color: var(--color-sale); }
+.pp-review-form__success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: #e8f5e9;
+  border-radius: var(--border-radius);
+  color: #2e7d32;
+  font-size: 0.88rem;
+}
+
 .pp-share { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .pp-share__link {
   display: inline-flex; align-items: center; gap: 0.5rem;
