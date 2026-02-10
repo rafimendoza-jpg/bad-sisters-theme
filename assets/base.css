@@ -1947,7 +1947,7 @@ body.mobile-nav-open::before {
 /* ==============================================
    PRODUCT PAGE (pp-) — Zara: clean, spacious, architectural
    ============================================== */
-.pp { padding: 0 0 5rem; }
+.pp { padding: 0 0 5rem; background-color: #fff; }
 
 .pp-breadcrumb {
   padding: 1.25rem 0;
