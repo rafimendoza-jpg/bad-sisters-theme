@@ -2297,6 +2297,55 @@ body.mobile-nav-open::before {
 }
 .pp-share__link:hover { border-color: var(--color-text); opacity: 1; }
 
+/* Share row (inline, below trust badges) */
+.pp-share-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--color-border);
+  margin-bottom: 0.25rem;
+}
+.pp-share-row__label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  white-space: nowrap;
+}
+.pp-share-row__icons {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.pp-share-row__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  background: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  padding: 0;
+  font-family: inherit;
+}
+.pp-share-row__icon:hover {
+  background: var(--color-text);
+  color: var(--color-background);
+  border-color: var(--color-text);
+}
+.pp-share-row__icon.is-copied {
+  background: #e8f5e9;
+  border-color: #2e7d32;
+  color: #2e7d32;
+}
+
 .pp-zoom-modal {
   position: fixed; inset: 0; z-index: 9999;
   background: rgba(255, 255, 255, 0.88);
