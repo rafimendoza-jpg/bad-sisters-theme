@@ -1,10 +1,10 @@
 {%- comment -%} Customer: Account — Portal BSD {%- endcomment -%}
 
-{%- comment -%} Calculate total Store Credit earned (1% of each order subtotal) {%- endcomment -%}
-{%- assign bsd_total_credit = 0 -%}
+{%- comment -%} Calculate total Sister Points earned (1 SP = $1 CLP, 1% of subtotal) {%- endcomment -%}
+{%- assign bsd_total_sp = 0 -%}
 {%- for order in customer.orders -%}
-  {%- assign _oc = order.subtotal_price | divided_by: 100 | floor -%}
-  {%- assign bsd_total_credit = bsd_total_credit | plus: _oc -%}
+  {%- assign _osp = order.subtotal_price | divided_by: 100 | floor -%}
+  {%- assign bsd_total_sp = bsd_total_sp | plus: _osp -%}
 {%- endfor -%}
 
 <section class="section-padding">
@@ -24,20 +24,21 @@
       <a href="/account/logout" class="btn btn--secondary btn--small">Cerrar sesión</a>
     </div>
 
-    {%- comment -%} Store Credit Summary Card {%- endcomment -%}
+    {%- comment -%} Sister Points Summary Card {%- endcomment -%}
     <div class="account-points-card">
       <div class="account-points-card__total">
-        <span class="account-points-card__label">Crédito ganado históricamente</span>
-        <span class="account-points-card__value">{{ bsd_total_credit | times: 100 | money_without_trailing_zeros }}</span>
-        <span class="account-points-card__sub">en crédito de tienda</span>
+        <span class="account-points-card__label">Tus Sister Points</span>
+        <span class="account-points-card__value">{{ bsd_total_sp }}</span>
+        <span class="account-points-card__sub">Sister Points equivalentes a {{ bsd_total_sp | times: 100 | money_without_trailing_zeros }}</span>
+        <span class="account-points-card__hint">que puedes utilizar en tu siguiente compra</span>
       </div>
       <div class="account-points-card__info">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-        <span>Ganas 1% de cada compra como crédito de tienda · Expira 1 año después de ganarlo</span>
+        <span>Acumulas 1% de cada compra como Sister Points · Expiran 1 año después de ganarlos</span>
       </div>
       <div class="account-points-card__info" style="margin-top: .5rem; border-top: none; padding-top: 0;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>Tu crédito disponible se aplica automáticamente en el checkout</span>
+        <span>Tus Sister Points se aplican como crédito en el checkout</span>
       </div>
     </div>
 
@@ -46,7 +47,7 @@
 
       {%- comment -%} Points Breakdown {%- endcomment -%}
       <div class="account-card">
-        <h2 class="account-card__title">Historial de crédito ganado</h2>
+        <h2 class="account-card__title">Historial de Sister Points</h2>
 
         {%- if customer.orders.size > 0 -%}
           <div class="account-table-wrap">
@@ -56,33 +57,33 @@
                   <th>Fecha</th>
                   <th>Motivo</th>
                   <th>Detalle</th>
-                  <th style="text-align: right;">Crédito</th>
+                  <th style="text-align: right;">Sister Points</th>
                 </tr>
               </thead>
               <tbody>
                 {%- for order in customer.orders -%}
-                  {%- assign _oc = order.subtotal_price | divided_by: 100 | floor -%}
-                  {%- if _oc > 0 -%}
+                  {%- assign _osp = order.subtotal_price | divided_by: 100 | floor -%}
+                  {%- if _osp > 0 -%}
                     <tr>
                       <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
                       <td>Compra (1%)</td>
                       <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
-                      <td style="text-align: right; font-weight: 600; color: var(--color-accent);">+{{ _oc | times: 100 | money_without_trailing_zeros }}</td>
+                      <td style="text-align: right; font-weight: 600; color: var(--color-accent);">+{{ _osp }}</td>
                     </tr>
                   {%- endif -%}
                 {%- endfor -%}
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="3" style="text-align: right; font-weight: 600;">Total ganado</td>
-                  <td style="text-align: right; font-weight: 700; font-size: 1.05rem;">{{ bsd_total_credit | times: 100 | money_without_trailing_zeros }}</td>
+                  <td colspan="3" style="text-align: right; font-weight: 600;">Total</td>
+                  <td style="text-align: right; font-weight: 700; font-size: 1.05rem;">{{ bsd_total_sp }} SP</td>
                 </tr>
               </tfoot>
             </table>
           </div>
-          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* El crédito expira 1 año después de ganarlo. Los referidos y reseñas verificadas también generan crédito (gestionado por Shopify Flow).</p>
+          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* Los Sister Points expiran 1 año después de ganarlos. Referidos y reseñas verificadas también generan Sister Points.</p>
         {%- else -%}
-          <p class="account-card__empty">Aún no tienes crédito. ¡Haz tu primera compra y gana 1% como crédito de tienda!</p>
+          <p class="account-card__empty">¡Haz tu primera compra y acumula Sister Points para usar en tus siguientes compras!</p>
         {%- endif -%}
       </div>
 
@@ -312,6 +313,13 @@
     font-size: 0.85rem;
     opacity: 0.6;
     margin-top: 0.25rem;
+  }
+  .account-points-card__hint {
+    display: block;
+    font-size: 0.78rem;
+    opacity: 0.5;
+    margin-top: 0.35rem;
+    font-style: italic;
   }
   .account-points-card__info {
     display: inline-flex;

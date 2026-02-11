@@ -577,13 +577,13 @@
           addBtn.disabled = false;
           addBtn.textContent = 'Agregar al carrito — ' + opt.dataset.price;
         }
-        /* BSD Store Credit update (1% del precio) */
+        /* BSD Sister Points update (1% = 1 SP per $100 CLP) */
         var rawPrice = parseInt(opt.dataset.rawPrice) || 0;
-        var creditCents = Math.floor(rawPrice / 100);
+        var sp = Math.floor(rawPrice / 100);
         var ptsEl = document.querySelector('[data-bsd-points-value]');
         var ptsLine = document.querySelector('[data-bsd-points-line]');
-        if (ptsEl) ptsEl.textContent = '$' + Math.floor(creditCents / 100).toLocaleString('es-CL');
-        if (ptsLine) ptsLine.style.display = creditCents > 0 ? 'flex' : 'none';
+        if (ptsEl) ptsEl.textContent = sp.toLocaleString('es-CL');
+        if (ptsLine) ptsLine.style.display = sp > 0 ? 'flex' : 'none';
 
         /* Low stock update */
         var inv = parseInt(opt.dataset.inventory) || 0;
