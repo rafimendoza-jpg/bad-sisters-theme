@@ -275,6 +275,20 @@
 
               <p class="cart__note">Impuestos y envío calculados al finalizar la compra.</p>
 
+              {%- comment -%} Referral code input {%- endcomment -%}
+              <div class="cart__ref-code" style="margin-bottom: 1rem;">
+                <label for="bsd_ref_code" style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.5rem;">Código de referido <span style="font-weight: 400; color: var(--color-text-light);">(solo primera compra)</span></label>
+                <input
+                  id="bsd_ref_code"
+                  type="text"
+                  name="attributes[bsd_ref_code]"
+                  value="{{ cart.attributes['bsd_ref_code'] | escape }}"
+                  placeholder="Ej: MARIA2026"
+                  autocomplete="off"
+                  style="width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--color-border); border-radius: calc(var(--border-radius) / 2); font-family: var(--font-body); font-size: 0.85rem; transition: border-color 0.2s;"
+                >
+              </div>
+
               {%- if section.settings.show_cart_note -%}
                 <div style="margin-bottom: 1rem;">
                   <label for="CartNote" style="font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.5rem;">Nota del pedido</label>
