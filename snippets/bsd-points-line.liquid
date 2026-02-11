@@ -1,17 +1,16 @@
 {%- comment -%}
   Snippet: bsd-points-line
-  Shows "Ganas X puntos con esta compra"
+  Shows "Ganas $X en crédito de tienda" (1% del subtotal como Store Credit)
   Usage: {% render 'bsd-points-line', cents: variant.price %}
          {% render 'bsd-points-line', cents: cart.items_subtotal_price %}
-  Formula: floor(cents / 10000) = 1% of CLP subtotal
 {%- endcomment -%}
-{%- assign bsd_pts = cents | divided_by: 10000 | floor -%}
-{%- if bsd_pts > 0 -%}
+{%- assign bsd_credit_cents = cents | times: 1 | divided_by: 100 | floor -%}
+{%- if bsd_credit_cents > 0 -%}
   <div class="bsd-points-line" data-bsd-points-line style="
     font-size: 0.82rem; color: var(--color-text-light, #666);
     margin-top: 0.4rem; display: flex; align-items: center; gap: 0.35rem;
   ">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-    Ganas <strong data-bsd-points-value style="font-weight:600;">{{ bsd_pts }}</strong> puntos con esta compra
+    Ganas <strong data-bsd-points-value style="font-weight:600;">{{ bsd_credit_cents | money_without_trailing_zeros }}</strong> en crédito de tienda
   </div>
 {%- endif -%}
