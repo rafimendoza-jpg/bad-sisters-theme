@@ -5,7 +5,7 @@
   Usage: {% render 'bsd-points-line', cents: variant.price %}
          {% render 'bsd-points-line', cents: cart.items_subtotal_price %}
 {%- endcomment -%}
-{%- assign bsd_sp = cents | divided_by: 100 | floor -%}
+{%- assign bsd_sp = cents | divided_by: 10000 | floor -%}
 {%- if bsd_sp > 0 -%}
   <div class="bsd-points-line" data-bsd-points-line style="
     font-size: 0.82rem; color: var(--color-text-light, #666);

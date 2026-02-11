@@ -3,7 +3,7 @@
 {%- comment -%} Calculate total Sister Points earned (1 SP = $1 CLP, 1% of subtotal) {%- endcomment -%}
 {%- assign bsd_total_sp = 0 -%}
 {%- for order in customer.orders -%}
-  {%- assign _osp = order.subtotal_price | divided_by: 100 | floor -%}
+  {%- assign _osp = order.subtotal_price | divided_by: 10000 | floor -%}
   {%- assign bsd_total_sp = bsd_total_sp | plus: _osp -%}
 {%- endfor -%}
 
@@ -62,7 +62,7 @@
               </thead>
               <tbody>
                 {%- for order in customer.orders -%}
-                  {%- assign _osp = order.subtotal_price | divided_by: 100 | floor -%}
+                  {%- assign _osp = order.subtotal_price | divided_by: 10000 | floor -%}
                   {%- if _osp > 0 -%}
                     <tr>
                       <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>

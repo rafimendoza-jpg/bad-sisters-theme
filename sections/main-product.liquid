@@ -577,9 +577,9 @@
           addBtn.disabled = false;
           addBtn.textContent = 'Agregar al carrito — ' + opt.dataset.price;
         }
-        /* BSD Sister Points update (1% = 1 SP per $100 CLP) */
+        /* BSD Sister Points update (1% = 1 SP per $1 CLP) */
         var rawPrice = parseInt(opt.dataset.rawPrice) || 0;
-        var sp = Math.floor(rawPrice / 100);
+        var sp = Math.floor(rawPrice / 10000);
         var ptsEl = document.querySelector('[data-bsd-points-value]');
         var ptsLine = document.querySelector('[data-bsd-points-line]');
         if (ptsEl) ptsEl.textContent = sp.toLocaleString('es-CL');
