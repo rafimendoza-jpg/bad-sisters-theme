@@ -1,0 +1,76 @@
+{%- comment -%} Page: Wishlist / Mis Favoritos {%- endcomment -%}
+
+<section class="section-padding">
+  <div class="page-width">
+
+    <div class="wishlist-page__header">
+      <h1 class="wishlist-page__title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -3px; margin-right: 4px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Mis Favoritos
+        <span class="wishlist-page__count" data-wishlist-total>0</span>
+      </h1>
+    </div>
+
+    {%- if customer -%}
+      <div class="wishlist-grid" data-wishlist-grid></div>
+
+      <p class="wishlist-page__empty" data-wishlist-empty style="display:none;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="vertical-align: -6px; margin-right: 6px; opacity: .4;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Aún no tienes productos en favoritos.<br>
+        Explora nuestra <a href="/collections/all">tienda</a> y guarda los que más te gusten tocando el corazón.
+      </p>
+    {%- else -%}
+      <div class="wishlist-page__login">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" style="opacity: .3; margin-bottom: 1rem;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <p>Inicia sesión para ver tus productos favoritos.</p>
+        <a href="/account/login" class="btn btn--primary" style="margin-top: 1rem;">Iniciar sesión</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+  .wishlist-page__header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .wishlist-page__title {
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+  }
+  .wishlist-page__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    background: var(--color-text);
+    color: var(--color-background);
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .wishlist-page__empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    line-height: 1.8;
+  }
+  .wishlist-page__empty a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .wishlist-page__login {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+  }
+</style>
