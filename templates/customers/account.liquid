@@ -1,11 +1,21 @@
 {%- comment -%} Customer: Account — Portal BSD {%- endcomment -%}
 
-{%- comment -%} Calculate total Sister Points earned (1 SP = $1 CLP, 1% of subtotal) {%- endcomment -%}
+{%- comment -%} Read real SP balance from metafield (synced by Shopify Flow with every credit change) {%- endcomment -%}
+{%- assign bsd_sp_meta = customer.metafields.bsd.sp_balance.value | default: nil -%}
+
+{%- comment -%} Calculate SP earned from orders only (for history table + fallback) {%- endcomment -%}
 {%- assign bsd_total_sp = 0 -%}
 {%- for order in customer.orders -%}
   {%- assign _osp = order.subtotal_price | divided_by: 10000 | floor -%}
   {%- assign bsd_total_sp = bsd_total_sp | plus: _osp -%}
 {%- endfor -%}
+
+{%- comment -%} Display balance: metafield (real) → fallback to order-calculated {%- endcomment -%}
+{%- if bsd_sp_meta != nil -%}
+  {%- assign bsd_display_sp = bsd_sp_meta | floor -%}
+{%- else -%}
+  {%- assign bsd_display_sp = bsd_total_sp -%}
+{%- endif -%}
 
 <section class="section-padding">
   <div class="page-width">
@@ -27,18 +37,17 @@
     {%- comment -%} Sister Points Summary Card {%- endcomment -%}
     <div class="account-points-card">
       <div class="account-points-card__total">
-        <span class="account-points-card__label">Tus Sister Points</span>
-        <span class="account-points-card__value">{{ bsd_total_sp }}</span>
-        <span class="account-points-card__sub">Sister Points equivalentes a {{ bsd_total_sp | times: 100 | money_without_trailing_zeros }}</span>
-        <span class="account-points-card__hint">que puedes utilizar en tu siguiente compra</span>
+        <span class="account-points-card__label">Tu saldo de Sister Points</span>
+        <span class="account-points-card__value">{{ bsd_display_sp }}</span>
+        <span class="account-points-card__sub">equivalentes a {{ bsd_display_sp | times: 100 | money_without_trailing_zeros }} en tu próxima compra</span>
       </div>
       <div class="account-points-card__info">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-        <span>Acumulas 1% de cada compra como Sister Points · Expiran 1 año después de ganarlos</span>
+        <span>Ganas SP con cada compra (1%), por reseñas verificadas (1.000 SP) y por referidos</span>
       </div>
       <div class="account-points-card__info" style="margin-top: .5rem; border-top: none; padding-top: 0;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>Tus Sister Points se aplican como crédito en el checkout</span>
+        <span>Tu saldo se aplica automáticamente como crédito en el checkout</span>
       </div>
     </div>
 
@@ -107,7 +116,7 @@
 
       {%- comment -%} Points Breakdown {%- endcomment -%}
       <div class="account-card">
-        <h2 class="account-card__title">Historial de Sister Points</h2>
+        <h2 class="account-card__title">Sister Points por compras</h2>
 
         {%- if customer.orders.size > 0 -%}
           <div class="account-table-wrap">
@@ -135,13 +144,13 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="3" style="text-align: right; font-weight: 600;">Total</td>
+                  <td colspan="3" style="text-align: right; font-weight: 600;">Total por compras</td>
                   <td style="text-align: right; font-weight: 700; font-size: 1.05rem;">{{ bsd_total_sp }} SP</td>
                 </tr>
               </tfoot>
             </table>
           </div>
-          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* Los Sister Points expiran 1 año después de ganarlos. Referidos y reseñas verificadas también generan Sister Points.</p>
+          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* Este historial muestra solo puntos por compras. Tu saldo total incluye también puntos por referidos y reseñas verificadas, descontando los ya utilizados.</p>
         {%- else -%}
           <p class="account-card__empty">¡Haz tu primera compra y acumula Sister Points para usar en tus siguientes compras!</p>
         {%- endif -%}
