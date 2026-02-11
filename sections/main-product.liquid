@@ -277,9 +277,6 @@
                   Detalles
                 </button>
               {%- endif -%}
-              <button class="pp-tab-btn" onclick="openProductTab('reviews')" data-tab="reviews">
-                Reseñas
-              </button>
             </div>
 
             <div class="pp-tabs__content">
@@ -322,11 +319,6 @@
                   </table>
                 </div>
               {%- endif -%}
-
-              {%- comment -%} Tab: Reseñas — Junip handles all review display & submission {%- endcomment -%}
-              <div class="pp-tab-panel" data-panel="reviews" id="ProductReviewsTab">
-                <div id="junip-product-review-widget" data-product-id="{{ product.id }}"></div>
-              </div>
 
             </div>
           </div>
