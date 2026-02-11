@@ -12,8 +12,14 @@
     "main": {
       "type": "main-collection",
       "settings": {
+        "show_hero_image": true,
+        "hero_full_width": false,
         "show_description": true,
-        "default_columns": "4"
+        "occasion_group": "Ocasión",
+        "default_columns": "4",
+        "products_per_page": 24,
+        "show_quick_sizes": true,
+        "show_color_swatches": true
       }
     }
   },
