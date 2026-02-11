@@ -1,47 +1,13 @@
 {%- comment -%}
-  Section: Product Reviews
-  Renders a reviews section that integrates with Shopify metafields or review apps.
-  This section provides its own "hook" for apps like Judge.me, Loox, or Yotpo,
-  plus a native review display using product metafields.
+  Section: Product Reviews — Powered by Junip
+  Renders the Junip review widget below the main product section.
 {%- endcomment -%}
 
 <section class="product-reviews-section section-padding" data-section-id="{{ section.id }}">
   <div class="page-width">
     <div class="reviews-container">
       <h2 class="reviews-title">{{ section.settings.title | default: 'Reseñas de clientes' }}</h2>
-
-      {%- comment -%} App hook — review apps inject here {%- endcomment -%}
-      <div id="shopify-product-reviews" data-id="{{ product.id }}">
-        {{ product.metafields.reviews.rating_html }}
-      </div>
-
-      {%- comment -%} Native reviews display using metafields if no app {%- endcomment -%}
-      {%- if section.settings.show_native_reviews -%}
-        {%- assign review_rating = product.metafields.reviews.rating.value -%}
-        {%- assign review_count = product.metafields.reviews.rating_count.value | default: 0 -%}
-
-        {%- if review_count > 0 -%}
-          <div class="reviews-summary">
-            <div class="reviews-summary__rating">
-              <span class="reviews-summary__number">{{ review_rating | round: 1 }}</span>
-              {% render 'star-rating', rating: review_rating, count: review_count, show_count: true, size: 'large' %}
-            </div>
-            <p class="reviews-summary__text">Basado en {{ review_count }} {% if review_count == 1 %}reseña{% else %}reseñas{% endif %}</p>
-          </div>
-        {%- endif -%}
-      {%- endif -%}
-
-      {%- comment -%} Review app placeholder {%- endcomment -%}
-      <div class="reviews-app-hook">
-        {{ product.metafields.judgeme.widget | default: '' }}
-        {{ product.metafields.loox.reviews_widget | default: '' }}
-      </div>
-
-      {%- if section.settings.show_write_review -%}
-        <div class="reviews-write">
-          <a href="#write-review" class="btn btn--secondary">Escribir una reseña</a>
-        </div>
-      {%- endif -%}
+      <div id="junip-product-review-widget" data-product-id="{{ product.id }}"></div>
     </div>
   </div>
 </section>
@@ -55,19 +21,6 @@
       "id": "title",
       "label": "Título",
       "default": "Reseñas de clientes"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_native_reviews",
-      "label": "Mostrar reseñas nativas (metafields)",
-      "default": true,
-      "info": "Usa metafields de Shopify. Si usas una app de reseñas, desactiva esto."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_write_review",
-      "label": "Mostrar botón 'Escribir reseña'",
-      "default": true
     }
   ],
   "templates": ["product"]

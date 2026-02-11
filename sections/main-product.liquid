@@ -6,8 +6,7 @@
 {%- endcomment -%}
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- assign review_rating = product.metafields.reviews.rating.value | default: 0 -%}
-{%- assign review_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+{%- comment -%} Reviews handled by Junip app {%- endcomment -%}
 
 <section class="pp" data-section-id="{{ section.id }}">
   <div class="page-width">
@@ -76,18 +75,9 @@
 
           <h1 class="pp-info__title">{{ product.title }}</h1>
 
-          {%- comment -%} ★★★★★ STAR RATING — Prominente, justo debajo del título {%- endcomment -%}
+          {%- comment -%} ★ JUNIP STAR RATING — Prominente, justo debajo del título {%- endcomment -%}
           <div class="pp-info__rating" id="ProductRating">
-            {% render 'star-rating', rating: review_rating, count: review_count, show_count: true, size: 'medium' %}
-            {%- if review_count > 0 -%}
-              <a href="#ProductReviewsTab" class="pp-info__rating-link" onclick="openProductTab('reviews')">
-                Ver {{ review_count }} {% if review_count == 1 %}reseña{% else %}reseñas{% endif %}
-              </a>
-            {%- else -%}
-              <a href="#ProductReviewsTab" class="pp-info__rating-link" onclick="openProductTab('reviews')">
-                Escribir reseña
-              </a>
-            {%- endif -%}
+            <span class="junip-product-summary" data-product-id="{{ product.id }}"></span>
           </div>
 
           {%- comment -%} PRICE {%- endcomment -%}
@@ -289,9 +279,6 @@
               {%- endif -%}
               <button class="pp-tab-btn" onclick="openProductTab('reviews')" data-tab="reviews">
                 Reseñas
-                {%- if review_count > 0 -%}
-                  <span class="pp-tab-count">{{ review_count }}</span>
-                {%- endif -%}
               </button>
             </div>
 
@@ -336,84 +323,9 @@
                 </div>
               {%- endif -%}
 
-              {%- comment -%} Tab: Reseñas — ¡AQUÍ SE VEN! No están enterradas {%- endcomment -%}
+              {%- comment -%} Tab: Reseñas — Junip handles all review display & submission {%- endcomment -%}
               <div class="pp-tab-panel" data-panel="reviews" id="ProductReviewsTab">
-                {%- if review_count > 0 -%}
-                  <div class="pp-reviews-summary">
-                    <div class="pp-reviews-summary__stars">
-                      <span class="pp-reviews-big-number">{{ review_rating | round: 1 }}</span>
-                      {% render 'star-rating', rating: review_rating, count: review_count, show_count: false, size: 'large' %}
-                    </div>
-                    <p>Basado en {{ review_count }} {% if review_count == 1 %}reseña{% else %}reseñas{% endif %}</p>
-                  </div>
-                {%- endif -%}
-
-                {%- comment -%} Review app hooks — Judge.me, Loox, Yotpo, etc. inject here {%- endcomment -%}
-                <div id="shopify-product-reviews" data-id="{{ product.id }}">
-                  {{ product.metafields.reviews.rating_html | default: '' }}
-                  {{ product.metafields.judgeme.widget | default: '' }}
-                  {{ product.metafields.loox.reviews_widget | default: '' }}
-                </div>
-
-                {%- comment -%} If no review app, show native prompt {%- endcomment -%}
-                <div class="pp-reviews-native">
-                  {%- if review_count == 0 -%}
-                    <div class="pp-reviews-empty">
-                      <p>Aún no hay reseñas para este producto.</p>
-                      <p class="pp-reviews-empty__cta">¡Sé el primero en dejar tu opinión!</p>
-                    </div>
-                  {%- endif -%}
-
-                  {%- comment -%} Inline review form — works for guests AND logged-in {%- endcomment -%}
-                  <div class="pp-review-form-wrap" data-pdp-review-wrap>
-                    <button class="pp-review-form-toggle" data-pdp-review-toggle>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                      Escribir una reseña
-                    </button>
-
-                    <div class="pp-review-form" data-pdp-review-form style="display:none;">
-                      {%- unless customer -%}
-                        <div class="pp-review-form__row">
-                          <div class="pp-review-form__field">
-                            <label for="PdpReviewName">Tu nombre</label>
-                            <input type="text" id="PdpReviewName" data-pdp-review-name placeholder="Ej: María G." required>
-                          </div>
-                          <div class="pp-review-form__field">
-                            <label for="PdpReviewEmail">Email</label>
-                            <input type="email" id="PdpReviewEmail" data-pdp-review-email placeholder="tu@email.com" required>
-                          </div>
-                        </div>
-                      {%- endunless -%}
-
-                      <div class="pp-review-form__stars" data-pdp-star-picker>
-                        <label>Calificación</label>
-                        <div class="pp-review-stars">
-                          {%- for i in (1..5) -%}
-                            <button type="button" class="pp-review-star" data-star="{{ i }}" aria-label="{{ i }} estrellas">
-                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                            </button>
-                          {%- endfor -%}
-                        </div>
-                      </div>
-
-                      <div class="pp-review-form__field">
-                        <label for="PdpReviewText">Tu reseña</label>
-                        <textarea id="PdpReviewText" data-pdp-review-text rows="4" placeholder="Cuéntanos tu experiencia con este producto..."></textarea>
-                      </div>
-
-                      <div class="pp-review-form__actions">
-                        <button type="button" class="btn btn--secondary btn--small" data-pdp-review-cancel>Cancelar</button>
-                        <button type="button" class="btn btn--primary btn--small" data-pdp-review-submit>Enviar reseña</button>
-                      </div>
-                      <div class="pp-review-form__msg" data-pdp-review-msg></div>
-                    </div>
-
-                    <div class="pp-review-form__success" data-pdp-review-success style="display:none;">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                      <p>¡Gracias por tu reseña! Tu opinión nos ayuda mucho.</p>
-                    </div>
-                  </div>
-                </div>
+                <div id="junip-product-review-widget" data-product-id="{{ product.id }}"></div>
               </div>
 
             </div>
@@ -671,116 +583,6 @@
       if (sizeGuide) sizeGuide.classList.remove('is-open');
     }
   });
-
-  /* ===== PDP Review Form ===== */
-  (function() {
-    var toggleBtn = document.querySelector('[data-pdp-review-toggle]');
-    var form = document.querySelector('[data-pdp-review-form]');
-    var cancelBtn = document.querySelector('[data-pdp-review-cancel]');
-    var submitBtn = document.querySelector('[data-pdp-review-submit]');
-    var successEl = document.querySelector('[data-pdp-review-success]');
-    var picker = document.querySelector('[data-pdp-star-picker]');
-    if (!toggleBtn || !form) return;
-
-    toggleBtn.addEventListener('click', function() {
-      form.style.display = form.style.display === 'none' ? 'block' : 'none';
-      toggleBtn.style.display = 'none';
-    });
-    if (cancelBtn) {
-      cancelBtn.addEventListener('click', function() {
-        form.style.display = 'none';
-        toggleBtn.style.display = 'flex';
-      });
-    }
-
-    /* Star picker */
-    if (picker) {
-      var stars = picker.querySelectorAll('[data-star]');
-      stars.forEach(function(star) {
-        star.addEventListener('mouseenter', function() {
-          var val = parseInt(this.dataset.star);
-          stars.forEach(function(s) {
-            s.classList.toggle('is-hovered', parseInt(s.dataset.star) <= val);
-          });
-        });
-        star.addEventListener('mouseleave', function() {
-          stars.forEach(function(s) { s.classList.remove('is-hovered'); });
-        });
-        star.addEventListener('click', function() {
-          var val = parseInt(this.dataset.star);
-          stars.forEach(function(s) {
-            s.classList.toggle('is-active', parseInt(s.dataset.star) <= val);
-          });
-          picker.dataset.rating = val;
-        });
-      });
-    }
-
-    /* Submit */
-    if (submitBtn) {
-      submitBtn.addEventListener('click', function() {
-        var msg = document.querySelector('[data-pdp-review-msg]');
-        var rating = picker ? (parseInt(picker.dataset.rating) || 0) : 0;
-        var text = (document.querySelector('[data-pdp-review-text]') || {}).value || '';
-        text = text.trim();
-
-        /* Guest fields */
-        var nameEl = document.querySelector('[data-pdp-review-name]');
-        var emailEl = document.querySelector('[data-pdp-review-email]');
-        var guestName = nameEl ? nameEl.value.trim() : '';
-        var guestEmail = emailEl ? emailEl.value.trim() : '';
-
-        /* Validation */
-        if (nameEl && !guestName) { showPdpMsg(msg, 'Por favor ingresa tu nombre.', 'error'); return; }
-        if (emailEl && !guestEmail) { showPdpMsg(msg, 'Por favor ingresa tu email.', 'error'); return; }
-        if (rating === 0) { showPdpMsg(msg, 'Por favor selecciona una calificación.', 'error'); return; }
-        if (text.length < 5) { showPdpMsg(msg, 'Por favor escribe al menos unas palabras.', 'error'); return; }
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Enviando…';
-
-        var customerName = '{{ customer.first_name | default: "" }} {{ customer.last_name | default: "" }}'.trim();
-        var customerEmail = '{{ customer.email | default: "" }}';
-        var senderName = customerName || guestName;
-        var senderEmail = customerEmail || guestEmail;
-
-        var fd = new FormData();
-        fd.append('form_type', 'contact');
-        fd.append('utf8', '✓');
-        fd.append('contact[email]', senderEmail);
-        fd.append('contact[body]',
-          '--- RESEÑA DE PRODUCTO ---\n' +
-          'Nombre: ' + senderName + '\n' +
-          'Email: ' + senderEmail + '\n' +
-          'Producto: {{ product.title | escape }}\n' +
-          'Handle: {{ product.handle }}\n' +
-          'Product ID: {{ product.id }}\n' +
-          'Calificación: ' + rating + '/5 ' + '★'.repeat(rating) + '☆'.repeat(5 - rating) + '\n' +
-          'Reseña: ' + text + '\n' +
-          '---'
-        );
-
-        fetch('/contact', {
-          method: 'POST',
-          body: fd,
-          headers: { 'Accept': 'application/json' }
-        }).then(function() {
-          form.style.display = 'none';
-          if (successEl) successEl.style.display = 'flex';
-        }).catch(function() {
-          /* Contact form redirects — treat as success */
-          form.style.display = 'none';
-          if (successEl) successEl.style.display = 'flex';
-        });
-      });
-    }
-
-    function showPdpMsg(el, text, type) {
-      if (!el) return;
-      el.textContent = text;
-      el.className = 'pp-review-form__msg is-' + type;
-    }
-  })();
 
   /* ===== Custom Order Form ===== */
   (function() {

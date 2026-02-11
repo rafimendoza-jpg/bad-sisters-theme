@@ -21,9 +21,7 @@
     "reviews": {
       "type": "product-reviews",
       "settings": {
-        "title": "Reseñas de clientes",
-        "show_native_reviews": true,
-        "show_write_review": true
+        "title": "Reseñas de clientes"
       }
     }
   },
