@@ -1970,7 +1970,8 @@ body.mobile-nav-open::before {
 .pp-gallery__grid .pp-gallery__item:first-child:nth-last-child(1) { grid-column: span 2; }
 @media (max-width: 900px) { .pp-gallery__grid { grid-template-columns: 1fr; } }
 
-.pp-gallery__item { background: transparent; }
+.pp-gallery__item { background: transparent; transition: transform 0.4s ease, box-shadow 0.4s ease, z-index 0s; position: relative; }
+.pp-gallery__item.is-highlighted { transform: scale(1.03); z-index: 2; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
 .pp-gallery__img {
   width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in;
   transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -2237,7 +2238,28 @@ body.mobile-nav-open::before {
   background: none; border: none; color: var(--color-text);
   cursor: pointer; z-index: 2; padding: 0.5rem;
 }
-.pp-zoom-modal__img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+.pp-zoom-modal__img { max-width: 80vw; max-height: 88vh; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.pp-zoom-modal__nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.85); border: none; border-radius: 50%;
+  width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--color-text); z-index: 2;
+  transition: background 0.2s, opacity 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.pp-zoom-modal__nav:hover { background: #fff; }
+.pp-zoom-modal__nav--prev { left: 1.5rem; }
+.pp-zoom-modal__nav--next { right: 1.5rem; }
+.pp-zoom-modal__counter {
+  position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  font-size: 0.8rem; color: var(--color-text-light); letter-spacing: 0.08em;
+}
+@media (max-width: 600px) {
+  .pp-zoom-modal__nav { width: 36px; height: 36px; }
+  .pp-zoom-modal__nav--prev { left: 0.75rem; }
+  .pp-zoom-modal__nav--next { right: 0.75rem; }
+  .pp-zoom-modal__img { max-width: 92vw; }
+}
 
 .pp-modal {
   position: fixed; inset: 0; z-index: 9998;

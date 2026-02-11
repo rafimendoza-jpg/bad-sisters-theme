@@ -329,12 +329,19 @@
   </div>
 </section>
 
-{%- comment -%} Zoom Modal {%- endcomment -%}
+{%- comment -%} Zoom Lightbox {%- endcomment -%}
 <div class="pp-zoom-modal" id="ProductZoomModal" onclick="if(event.target === this) closeProductZoom();">
   <button class="pp-zoom-modal__close" onclick="closeProductZoom()" aria-label="Cerrar">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
+  <button class="pp-zoom-modal__nav pp-zoom-modal__nav--prev" onclick="zoomNav(-1)" aria-label="Anterior">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
   <img class="pp-zoom-modal__img" id="ProductZoomImage" src="" alt="">
+  <button class="pp-zoom-modal__nav pp-zoom-modal__nav--next" onclick="zoomNav(1)" aria-label="Siguiente">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <span class="pp-zoom-modal__counter" id="ZoomCounter"></span>
 </div>
 
 {%- comment -%} Size Guide Modal {%- endcomment -%}
@@ -514,29 +521,65 @@
   /* ===== Gallery Scroll ===== */
   function scrollToProductImage(index) {
     const items = document.querySelectorAll('.pp-gallery__item');
+    /* Remove highlight from all, add to selected */
+    items.forEach(it => it.classList.remove('is-highlighted'));
     if (items[index]) {
       items[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      items[index].classList.add('is-highlighted');
+      setTimeout(() => items[index].classList.remove('is-highlighted'), 1200);
     }
     document.querySelectorAll('.pp-gallery__thumb').forEach(t => t.classList.remove('is-active'));
     const thumbs = document.querySelectorAll('.pp-gallery__thumb');
     if (thumbs[index]) thumbs[index].classList.add('is-active');
   }
 
-  /* ===== Zoom ===== */
+  /* ===== Zoom Lightbox with Navigation ===== */
+  var _zoomImages = [];
+  var _zoomIndex = 0;
+  var _zoomTouchStartX = 0;
+
+  (function () {
+    document.querySelectorAll('.pp-gallery__img').forEach(function (img, i) {
+      _zoomImages.push({ src: img.dataset.zoomSrc || img.src, alt: img.alt });
+    });
+  })();
+
   function openProductZoom(img) {
-    const modal = document.getElementById('ProductZoomModal');
-    const zoomImg = document.getElementById('ProductZoomImage');
-    zoomImg.src = img.dataset.zoomSrc || img.src;
-    zoomImg.alt = img.alt;
-    modal.classList.add('is-open');
+    var idx = Array.from(document.querySelectorAll('.pp-gallery__img')).indexOf(img);
+    _zoomIndex = idx >= 0 ? idx : 0;
+    showZoomImage();
+    document.getElementById('ProductZoomModal').classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeProductZoom() {
-    const modal = document.getElementById('ProductZoomModal');
-    modal.classList.remove('is-open');
+    document.getElementById('ProductZoomModal').classList.remove('is-open');
     document.body.style.overflow = '';
   }
+
+  function zoomNav(dir) {
+    _zoomIndex = (_zoomIndex + dir + _zoomImages.length) % _zoomImages.length;
+    showZoomImage();
+  }
+
+  function showZoomImage() {
+    var zoomImg = document.getElementById('ProductZoomImage');
+    var counter = document.getElementById('ZoomCounter');
+    if (_zoomImages[_zoomIndex]) {
+      zoomImg.src = _zoomImages[_zoomIndex].src;
+      zoomImg.alt = _zoomImages[_zoomIndex].alt;
+    }
+    if (counter) counter.textContent = (_zoomIndex + 1) + ' / ' + _zoomImages.length;
+  }
+
+  /* Swipe support for lightbox */
+  document.getElementById('ProductZoomModal').addEventListener('touchstart', function (e) {
+    _zoomTouchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  document.getElementById('ProductZoomModal').addEventListener('touchend', function (e) {
+    var diff = e.changedTouches[0].screenX - _zoomTouchStartX;
+    if (Math.abs(diff) > 50) zoomNav(diff < 0 ? 1 : -1);
+  }, { passive: true });
 
   /* ===== Quantity ===== */
   document.querySelectorAll('.pp-quantity__btn').forEach(btn => {
@@ -573,6 +616,12 @@
       closeProductZoom();
       const sizeGuide = document.getElementById('SizeGuideModal');
       if (sizeGuide) sizeGuide.classList.remove('is-open');
+    }
+    if (e.key === 'ArrowLeft') {
+      if (document.getElementById('ProductZoomModal').classList.contains('is-open')) zoomNav(-1);
+    }
+    if (e.key === 'ArrowRight') {
+      if (document.getElementById('ProductZoomModal').classList.contains('is-open')) zoomNav(1);
     }
   });
 
