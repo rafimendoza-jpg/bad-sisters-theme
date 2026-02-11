@@ -4,7 +4,7 @@
   <div class="page-width" style="max-width: 500px;">
     <h1 class="text-center mb-4">Iniciar sesión</h1>
 
-    {%- form 'customer_login' -%}
+    {%- form 'customer_login', return_to: '/' -%}
       {%- if form.errors -%}
         <div style="background-color: #fff0f0; border: 1px solid var(--color-sale); padding: 1rem; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
           <p style="color: var(--color-sale); font-size: 0.9rem;">{{ form.errors | default_errors }}</p>
