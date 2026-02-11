@@ -1970,9 +1970,9 @@ body.mobile-nav-open::before {
 .pp-gallery__grid .pp-gallery__item:first-child:nth-last-child(1) { grid-column: span 2; }
 @media (max-width: 900px) { .pp-gallery__grid { grid-template-columns: 1fr; } }
 
-.pp-gallery__item { background: linear-gradient(180deg, #f3f2ef 0%, #eceae6 100%); }
+.pp-gallery__item { background: transparent; }
 .pp-gallery__img {
-  width: 100%; display: block; cursor: zoom-in;
+  width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in;
   transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 .pp-gallery__img:hover { opacity: 0.97; }
