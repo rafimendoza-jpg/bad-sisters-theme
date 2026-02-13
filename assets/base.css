@@ -136,6 +136,12 @@ p {
 @media (max-width: 749px) {
   .page-width { padding: 0 1.25rem; }
   .section-padding { padding-top: 3rem; padding-bottom: 3rem; }
+  .zc-hero__content { padding: 2.5rem 1.25rem; }
+  .zc-hero__content--over { padding: 2rem 1.25rem; }
+  .stl--full,
+  .lbk--full,
+  .mc--full,
+  .fp--full { padding-left: 1.25rem; padding-right: 1.25rem; }
 }
 
 .grid { display: grid; gap: 2px; }
@@ -1767,7 +1773,7 @@ body.mobile-nav-open::before {
 .zc-hero__media { position: absolute; inset: 0; }
 .zc-hero__img { width: 100%; height: 100%; object-fit: cover; }
 .zc-hero__overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.4) 0%, transparent 50%); }
-.zc-hero__content { position: relative; z-index: 2; padding: 3.5rem 0; }
+.zc-hero__content { position: relative; z-index: 2; padding: 3.5rem 2.5rem; }
 .zc-hero--has-image .zc-hero__content { color: #fff; }
 .zc-hero__title {
   font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 200;
@@ -1779,7 +1785,7 @@ body.mobile-nav-open::before {
 /* Toolbar */
 .zc-toolbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.25rem 2.5rem; border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem 0; border-bottom: 1px solid var(--color-border);
 }
 .zc-toolbar__left { display: flex; align-items: center; gap: 1.5rem; }
 .zc-toolbar__right { display: flex; align-items: center; gap: 2rem; }
@@ -1825,7 +1831,7 @@ body.mobile-nav-open::before {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
-.zc-filters.is-open { max-height: 600px; padding: 2rem 2.5rem; overflow-y: auto; }
+.zc-filters.is-open { max-height: 600px; padding: 2rem 0; overflow-y: auto; }
 
 .zc-active-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
 .zc-active-tag {
@@ -2360,7 +2366,7 @@ body.mobile-nav-open::before {
 /* ============================================================
    SHOP THE LOOK (flexible layout)
    ============================================================ */
-.stl--full { width: 100%; padding-left: 0; padding-right: 0; }
+.stl--full { width: 100%; padding-left: 2.5rem; padding-right: 2.5rem; }
 
 .stl__header {
   text-align: center;
@@ -2686,7 +2692,7 @@ body.mobile-nav-open::before {
 /* ============================================================
    LOOKBOOK (structured layouts)
    ============================================================ */
-.lbk--full { width: 100%; padding: 0; }
+.lbk--full { width: 100%; padding: 0 2.5rem; }
 .lbk__header { text-align: center; margin-bottom: 2.5rem; }
 .lbk__sub { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--color-text-light); margin: 0 0 0.5rem; }
 .lbk__title { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
@@ -2905,7 +2911,7 @@ body.mobile-nav-open::before {
    MULTICOLUMN
    ============================================================ */
 .mc { background-color: transparent !important; }
-.mc--full { width: 100%; padding: 0; }
+.mc--full { width: 100%; padding: 0 2.5rem; }
 
 .mc__header { text-align: center; margin-bottom: 2.5rem; }
 .mc__sub {
@@ -2975,7 +2981,7 @@ body.mobile-nav-open::before {
 }
 .fp__layout--right .fp__gallery { order: 2; }
 .fp__layout--right .fp__details { order: 1; }
-.fp--full { width: 100%; padding: 0; }
+.fp--full { width: 100%; padding: 0 2.5rem; }
 
 /* Gallery */
 .fp__gallery { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -3304,7 +3310,7 @@ body.mobile-nav-open::before {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 3rem 2rem;
+  padding: 3rem 2.5rem;
   z-index: 2;
 }
 .zc-hero--has-image .zc-hero__content--over .zc-hero__title {
