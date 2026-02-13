@@ -1903,11 +1903,11 @@ body.mobile-nav-open::before {
 
 .zc-product__badge {
   position: absolute; top: 0.75rem; left: 0.75rem;
-  font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 0.2rem 0.5rem; z-index: 2;
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.3rem 0.6rem; z-index: 2;
 }
 .zc-product__badge--sale { background: transparent; color: var(--color-text); }
-.zc-product__badge--sold { background: transparent; color: var(--color-text-light); }
+.zc-product__badge--sold { background: rgba(0, 0, 0, 0.75); color: #fff; font-weight: 500; }
 .zc-product__badge--new { background: transparent; color: var(--color-text); font-weight: 500; }
 
 .zc-product__sizes {
