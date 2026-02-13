@@ -194,16 +194,26 @@
           {%- for order in customer.orders -%}
             {%- for line_item in order.line_items -%}
               {%- assign pid_str = line_item.product_id | append: '' -%}
-              {%- assign _prod_url = line_item.product.url | default: '' -%}
-              {%- if _prod_url == blank and line_item.product.handle != blank -%}
-                {%- assign _prod_url = '/products/' | append: line_item.product.handle -%}
-              {%- endif -%}
-              {%- unless bsd_review_seen contains pid_str or _prod_url == blank -%}
+              {%- unless bsd_review_seen contains pid_str -%}
                 {%- assign bsd_review_seen = bsd_review_seen | append: pid_str | append: ',' -%}
+
+                {%- comment -%} Build product URL — fallback to unavailable page {%- endcomment -%}
+                {%- assign _prod_url = '' -%}
+                {%- assign _prod_available = false -%}
+                {%- if line_item.product.handle != blank -%}
+                  {%- assign _prod_url = '/products/' | append: line_item.product.handle -%}
+                  {%- if line_item.product.published_at != blank -%}
+                    {%- assign _prod_available = true -%}
+                  {%- endif -%}
+                {%- endif -%}
+                {%- unless _prod_available -%}
+                  {%- assign _prod_url = '/pages/producto-no-disponible' -%}
+                {%- endunless -%}
+
                 <div class="account-review-item">
                   <div class="account-review-item__media">
                     {%- if line_item.image -%}
-                      <img src="{{ line_item.image | image_url: width: 200 }}" alt="{{ line_item.product.title | escape }}" loading="lazy" width="80" height="80">
+                      <img src="{{ line_item.image | image_url: width: 200 }}" alt="{{ line_item.product.title | default: line_item.title | escape }}" loading="lazy" width="80" height="80">
                     {%- elsif line_item.product.featured_image -%}
                       <img src="{{ line_item.product.featured_image | image_url: width: 200 }}" alt="{{ line_item.product.title | escape }}" loading="lazy" width="80" height="80">
                     {%- else -%}
@@ -217,10 +227,16 @@
                     <span class="account-review-item__order">Pedido {{ order.name }} · {{ order.created_at | date: '%d/%m/%Y' }}</span>
                   </div>
                   <div class="account-review-item__actions">
-                    <a href="{{ _prod_url }}#junip-product-review-widget" class="account-review-item__btn">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                      Dejar reseña
-                    </a>
+                    {%- if _prod_available -%}
+                      <a href="{{ _prod_url }}#junip-product-review-widget" class="account-review-item__btn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        Dejar reseña
+                      </a>
+                    {%- else -%}
+                      <span class="account-review-item__btn" style="opacity: 0.4; cursor: default; pointer-events: none;">
+                        No disponible
+                      </span>
+                    {%- endif -%}
                   </div>
                 </div>
               {%- endunless -%}
