@@ -43,73 +43,13 @@
       </div>
       <div class="account-points-card__info">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-        <span>Ganas SP con cada compra (1%), por reseñas verificadas (1.000 SP) y por referidos</span>
+        <span>Ganas SP con cada compra (1%) y por reseñas verificadas (1.000 SP)</span>
       </div>
       <div class="account-points-card__info" style="margin-top: .5rem; border-top: none; padding-top: 0;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>Tu saldo se aplica automáticamente como crédito en el checkout</span>
       </div>
     </div>
-
-    {%- comment -%} ===== REFERRAL CODE — BAD GIRL ===== {%- endcomment -%}
-    {%- assign bsd_ref_code = customer.metafields.bsd.ref_code.value | default: '' -%}
-    {%- if bsd_ref_code != blank -%}
-      <div class="account-referral-card" style="margin-bottom: 2rem;">
-        <div class="account-referral__header">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <h2 class="account-referral__title">Tu Código Bad Girl</h2>
-        </div>
-
-        <div class="account-referral__code-wrap">
-          <span class="account-referral__code" id="BsdRefCode">{{ bsd_ref_code }}</span>
-          <button class="account-referral__copy" id="BsdRefCopyBtn" type="button" aria-label="Copiar código">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            <span data-ref-copy-label>Copiar</span>
-          </button>
-        </div>
-
-        <p class="account-referral__desc">
-          Compártelo con tus amigas: si usan tu código en su primera compra, quedan como tus referidas y tú ganas <strong>Sister Points por cada compra que ellas hagan durante un año</strong>. ¡Así crecemos juntas!
-        </p>
-
-        <button class="account-referral__share" id="BsdRefShareBtn" type="button">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-          Compartir con mensaje
-        </button>
-      </div>
-
-      <script>
-        (function() {
-          var code = {{ bsd_ref_code | json }};
-          var link = '{{ shop.url }}?ref=' + code;
-          var message = '¡Hola! \uD83D\uDDA4 Te comparto mi código Bad Girl: ' + code + '. Úsalo en tu primera compra en Bad Sisters Design y quedarás como mi referida — así las dos ganamos Sister Points. Solo ingresa con este enlace: ' + link + ' \u00A1Nos vemos!';
-
-          var copyBtn = document.getElementById('BsdRefCopyBtn');
-          var shareBtn = document.getElementById('BsdRefShareBtn');
-
-          if (copyBtn) {
-            copyBtn.addEventListener('click', function() {
-              navigator.clipboard.writeText(code).then(function() {
-                var label = copyBtn.querySelector('[data-ref-copy-label]');
-                if (label) { label.textContent = '¡Copiado!'; setTimeout(function() { label.textContent = 'Copiar'; }, 2000); }
-              });
-            });
-          }
-
-          if (shareBtn) {
-            shareBtn.addEventListener('click', function() {
-              navigator.clipboard.writeText(message).then(function() {
-                shareBtn.classList.add('is-copied');
-                shareBtn.querySelector('span') || shareBtn.insertAdjacentHTML('beforeend', '<span></span>');
-                var origHTML = shareBtn.innerHTML;
-                shareBtn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ¡Mensaje copiado!';
-                setTimeout(function() { shareBtn.innerHTML = origHTML; shareBtn.classList.remove('is-copied'); }, 2500);
-              });
-            });
-          }
-        })();
-      </script>
-    {%- endif -%}
 
     {%- comment -%} Dashboard Grid {%- endcomment -%}
     <div class="account-grid">
@@ -150,7 +90,7 @@
               </tfoot>
             </table>
           </div>
-          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* Este historial muestra solo puntos por compras. Tu saldo total incluye también puntos por referidos y reseñas verificadas, descontando los ya utilizados.</p>
+          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* Este historial muestra solo puntos por compras. Tu saldo total incluye también puntos por reseñas verificadas, descontando los ya utilizados.</p>
         {%- else -%}
           <p class="account-card__empty">¡Haz tu primera compra y acumula Sister Points para usar en tus siguientes compras!</p>
         {%- endif -%}
@@ -447,93 +387,6 @@
   .account-badge--unfulfilled { background: #fff3e0; color: #e65100; }
   .account-badge--partial { background: #e3f2fd; color: #1565c0; }
 
-  /* ====== REFERRAL CODE CARD ====== */
-  .account-referral-card {
-    border: 2px solid var(--color-text);
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    text-align: center;
-  }
-  .account-referral__header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-  .account-referral__title {
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin: 0;
-  }
-  .account-referral__code-wrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: rgba(0,0,0,0.04);
-    border: 1px dashed var(--color-text);
-    border-radius: calc(var(--border-radius) / 1.5);
-    padding: 0.75rem 1.5rem;
-    margin-bottom: 1.25rem;
-  }
-  .account-referral__code {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    user-select: all;
-  }
-  .account-referral__copy {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    background: none;
-    border: 1px solid var(--color-border);
-    border-radius: var(--button-border-radius);
-    padding: 0.35rem 0.65rem;
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: var(--color-text);
-    transition: all 0.25s ease;
-  }
-  .account-referral__copy:hover {
-    background: var(--color-text);
-    color: var(--color-background);
-  }
-  .account-referral__desc {
-    font-size: 0.85rem;
-    color: var(--color-text-light);
-    line-height: 1.6;
-    max-width: 520px;
-    margin: 0 auto 1.5rem;
-  }
-  .account-referral__desc strong {
-    color: var(--color-text);
-  }
-  .account-referral__share {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.65rem 1.4rem;
-    background: var(--color-text);
-    color: var(--color-background);
-    border: none;
-    border-radius: var(--button-border-radius);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  .account-referral__share:hover {
-    opacity: 0.85;
-  }
   .account-referral__share.is-copied {
     background: #2e7d32;
   }

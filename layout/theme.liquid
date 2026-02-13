@@ -76,26 +76,11 @@
 
     <script>window.__bsdCustomerId = {{ customer.id | default: 'null' }};</script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
-    <script src="{{ 'bsd-referral.js' | asset_url }}" defer></script>
     <script src="{{ 'bsd-wishlist.js' | asset_url }}" defer></script>
 
     {%- if settings.custom_js != blank -%}
       <script>{{ settings.custom_js }}</script>
     {%- endif -%}
 
-    {%- comment -%} Auto-fill referral code input on /cart from localStorage {%- endcomment -%}
-    <script>
-    (function(){
-      var key = 'bsd_ref';
-      var url = new URL(window.location.href);
-      var ref = (url.searchParams.get('ref') || '').trim();
-      if (ref && !localStorage.getItem(key)) localStorage.setItem(key, ref);
-      if (window.location.pathname === '/cart') {
-        var input = document.getElementById('bsd_ref_code');
-        var saved = localStorage.getItem(key);
-        if (input && saved && !input.value) input.value = saved;
-      }
-    })();
-    </script>
   </body>
 </html>
