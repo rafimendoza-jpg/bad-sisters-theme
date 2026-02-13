@@ -3,11 +3,15 @@
 {%- comment -%} Read real SP balance from metafield (synced by Shopify Flow with every credit change) {%- endcomment -%}
 {%- assign bsd_sp_meta = customer.metafields.bsd.sp_balance.value | default: nil -%}
 
-{%- comment -%} Calculate SP earned from orders only (for history table + fallback) {%- endcomment -%}
+{%- comment -%} Calculate SP earned from FULFILLED orders in the last 12 months (for history table + fallback) {%- endcomment -%}
 {%- assign bsd_total_sp = 0 -%}
+{%- assign bsd_one_year_ago = 'now' | date: '%s' | minus: 31536000 -%}
 {%- for order in customer.orders -%}
-  {%- assign _osp = order.subtotal_price | divided_by: 10000 | floor -%}
-  {%- assign bsd_total_sp = bsd_total_sp | plus: _osp -%}
+  {%- assign _order_epoch = order.created_at | date: '%s' | plus: 0 -%}
+  {%- if order.fulfillment_status == 'fulfilled' and _order_epoch >= bsd_one_year_ago -%}
+    {%- assign _osp = order.subtotal_price | divided_by: 10000 | floor -%}
+    {%- assign bsd_total_sp = bsd_total_sp | plus: _osp -%}
+  {%- endif -%}
 {%- endfor -%}
 
 {%- comment -%} Display balance: metafield (real) → fallback to order-calculated {%- endcomment -%}
@@ -71,14 +75,17 @@
               </thead>
               <tbody>
                 {%- for order in customer.orders -%}
-                  {%- assign _osp = order.subtotal_price | divided_by: 10000 | floor -%}
-                  {%- if _osp > 0 -%}
-                    <tr>
-                      <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
-                      <td>Compra (1%)</td>
-                      <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
-                      <td style="text-align: right; font-weight: 600; color: var(--color-accent);">+{{ _osp }}</td>
-                    </tr>
+                  {%- assign _order_epoch = order.created_at | date: '%s' | plus: 0 -%}
+                  {%- if order.fulfillment_status == 'fulfilled' and _order_epoch >= bsd_one_year_ago -%}
+                    {%- assign _osp = order.subtotal_price | divided_by: 10000 | floor -%}
+                    {%- if _osp > 0 -%}
+                      <tr>
+                        <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
+                        <td>Compra (1%)</td>
+                        <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                        <td style="text-align: right; font-weight: 600; color: var(--color-accent);">+{{ _osp }}</td>
+                      </tr>
+                    {%- endif -%}
                   {%- endif -%}
                 {%- endfor -%}
               </tbody>
@@ -90,7 +97,7 @@
               </tfoot>
             </table>
           </div>
-          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* Este historial muestra solo puntos por compras. Tu saldo total incluye también puntos por reseñas verificadas, descontando los ya utilizados.</p>
+          <p style="font-size: .75rem; color: var(--color-text-light); margin-top: .75rem;">* Solo se acumulan puntos de compras completadas (despachadas). Los Sister Points vencen 1 año después de ganarlos.</p>
         {%- else -%}
           <p class="account-card__empty">¡Haz tu primera compra y acumula Sister Points para usar en tus siguientes compras!</p>
         {%- endif -%}
