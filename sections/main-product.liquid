@@ -154,9 +154,13 @@
                       {%- endfor -%}
                     </div>
                     {%- if section.settings.show_size_guide -%}
-                      <a href="#" class="pp-size-guide" onclick="event.preventDefault(); document.getElementById('SizeGuideModal').classList.add('is-open');">
-                        Guía de tallas
-                      </a>
+                      {%- assign _sg_img = product.metafields.bsd.size_guide_image.value | default: nil -%}
+                      {%- unless _sg_img -%}{%- assign _sg_img = section.settings.size_guide_image -%}{%- endunless -%}
+                      {%- if _sg_img != blank -%}
+                        <a href="#" class="pp-size-guide" onclick="event.preventDefault(); document.getElementById('SizeGuideModal').classList.add('is-open');">
+                          Guía de tallas
+                        </a>
+                      {%- endif -%}
                     {%- endif -%}
                   {%- else -%}
                     {%- comment -%} Generic options {%- endcomment -%}
@@ -346,35 +350,23 @@
 
 {%- comment -%} Size Guide Modal {%- endcomment -%}
 {%- if section.settings.show_size_guide -%}
-  {%- comment -%} Priority: product metafield → section setting → generic table {%- endcomment -%}
+  {%- comment -%} Priority: product metafield → section setting. No image = no modal. {%- endcomment -%}
   {%- assign sg_image = product.metafields.bsd.size_guide_image.value | default: nil -%}
   {%- unless sg_image -%}
     {%- assign sg_image = section.settings.size_guide_image -%}
   {%- endunless -%}
 
+  {%- if sg_image != blank -%}
   <div class="pp-modal" id="SizeGuideModal" onclick="if(event.target === this) this.classList.remove('is-open');">
     <div class="pp-modal__content">
       <button class="pp-modal__close" onclick="document.getElementById('SizeGuideModal').classList.remove('is-open');" aria-label="Cerrar">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <h3>Guía de tallas</h3>
-      {%- if sg_image != blank -%}
-        <img src="{{ sg_image | image_url: width: 800 }}" srcset="{{ sg_image | image_url: width: 400 }} 400w, {{ sg_image | image_url: width: 800 }} 800w" sizes="(max-width: 600px) 90vw, 600px" alt="Guía de tallas — {{ product.title | escape }}" loading="lazy" decoding="async">
-      {%- else -%}
-        <p>Consulta nuestra guía de tallas para encontrar tu talla perfecta. Si tienes dudas, contáctanos.</p>
-        <table class="pp-size-table">
-          <thead><tr><th>Talla</th><th>Pecho (cm)</th><th>Cintura (cm)</th><th>Cadera (cm)</th></tr></thead>
-          <tbody>
-            <tr><td>XS</td><td>80-84</td><td>60-64</td><td>86-90</td></tr>
-            <tr><td>S</td><td>84-88</td><td>64-68</td><td>90-94</td></tr>
-            <tr><td>M</td><td>88-92</td><td>68-72</td><td>94-98</td></tr>
-            <tr><td>L</td><td>92-96</td><td>72-76</td><td>98-102</td></tr>
-            <tr><td>XL</td><td>96-100</td><td>76-80</td><td>102-106</td></tr>
-          </tbody>
-        </table>
-      {%- endif -%}
+      <img src="{{ sg_image | image_url: width: 800 }}" srcset="{{ sg_image | image_url: width: 400 }} 400w, {{ sg_image | image_url: width: 800 }} 800w" sizes="(max-width: 600px) 90vw, 600px" alt="Guía de tallas — {{ product.title | escape }}" loading="lazy" decoding="async">
     </div>
   </div>
+  {%- endif -%}
 {%- endif -%}
 
 {%- comment -%} Custom Order Modal {%- endcomment -%}
