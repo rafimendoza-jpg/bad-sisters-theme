@@ -72,13 +72,19 @@
   <div class="page-width">
 
     {%- comment -%} ===== FILTER + SORT BAR ===== {%- endcomment -%}
+    {%- comment -%} Count active storefront filters {%- endcomment -%}
+    {%- assign bsd_active_filter_count = 0 -%}
+    {%- for filter in collection.filters -%}
+      {%- assign bsd_active_filter_count = bsd_active_filter_count | plus: filter.active_values.size -%}
+    {%- endfor -%}
+
     <div class="zc-toolbar">
       <div class="zc-toolbar__left">
         <button class="zc-filter-toggle" onclick="document.querySelector('.zc-filters').classList.toggle('is-open'); this.classList.toggle('is-active');">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
           <span>Filtros</span>
-          {%- if current_tags.size > 0 -%}
-            <span class="zc-filter-count">{{ current_tags.size }}</span>
+          {%- if bsd_active_filter_count > 0 -%}
+            <span class="zc-filter-count">{{ bsd_active_filter_count }}</span>
           {%- endif -%}
         </button>
       </div>
@@ -113,108 +119,94 @@
       </div>
     </div>
 
-    {%- comment -%} ===== TAG FILTERS (detailed: talla, color, tipo — excluding occasion) ===== {%- endcomment -%}
+    {%- comment -%} ===== STOREFRONT FILTERS (tipo de prenda, talla, etc.) ===== {%- endcomment -%}
     <div class="zc-filters">
-      {%- if collection.all_tags.size > 0 -%}
 
-        {%- comment -%} Active filters strip {%- endcomment -%}
-        {%- if current_tags.size > 0 -%}
-          <div class="zc-active-filters">
-            {%- for tag in current_tags -%}
-              {%- assign tag_display = tag -%}
-              {%- if tag contains ':' -%}
-                {%- assign tag_display = tag | split: ':' | last | strip -%}
-              {%- endif -%}
-              <a href="{{ collection.url }}" class="zc-active-tag">
-                {{ tag_display }}
+      {%- comment -%} Active filters strip {%- endcomment -%}
+      {%- if bsd_active_filter_count > 0 -%}
+        <div class="zc-active-filters">
+          {%- for filter in collection.filters -%}
+            {%- for value in filter.active_values -%}
+              <a href="{{ value.url_to_remove }}" class="zc-active-tag">
+                {{ value.label }}
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </a>
             {%- endfor -%}
-            <a href="{{ collection.url }}" class="zc-clear-filters">Limpiar todo</a>
-          </div>
-        {%- endif -%}
+          {%- endfor -%}
+          <a href="{{ collection.url }}{% if current_tags %}/{{ current_tags | join: '+' }}{% endif %}" class="zc-clear-filters">Limpiar todo</a>
+        </div>
+      {%- endif -%}
 
-        {%- comment -%} Collect unique group names from "Group:Value" tags, excluding occasion {%- endcomment -%}
-        {%- assign tag_groups = '' -%}
-        {%- assign has_ungrouped = false -%}
-
-        {%- for tag in collection.all_tags -%}
-          {%- if tag contains ':' -%}
-            {%- assign tag_group_name = tag | split: ':' | first | strip -%}
-            {%- if tag_group_name != occasion_prefix -%}
-              {%- unless tag_groups contains tag_group_name -%}
-                {%- if tag_groups != '' -%}{%- assign tag_groups = tag_groups | append: '|||' -%}{%- endif -%}
-                {%- assign tag_groups = tag_groups | append: tag_group_name -%}
-              {%- endunless -%}
-            {%- endif -%}
-          {%- else -%}
-            {%- assign has_ungrouped = true -%}
-          {%- endif -%}
-        {%- endfor -%}
-
-        {%- assign tag_groups_arr = tag_groups | split: '|||' -%}
-
+      {%- comment -%} Filter groups from Storefront Filtering API {%- endcomment -%}
+      {%- if collection.filters.size > 0 -%}
         <div class="zc-filter-groups">
+          {%- for filter in collection.filters -%}
+            {%- if filter.type == 'list' -%}
+              {%- comment -%} Count values with products to avoid empty groups {%- endcomment -%}
+              {%- assign available_values = 0 -%}
+              {%- for value in filter.values -%}
+                {%- if value.count > 0 or value.active -%}
+                  {%- assign available_values = available_values | plus: 1 -%}
+                {%- endif -%}
+              {%- endfor -%}
 
-          {%- comment -%} Grouped tags (e.g. Color:Rojo, Talla:M) {%- endcomment -%}
-          {%- for group_name in tag_groups_arr -%}
-            {%- if group_name != '' -%}
-              <div class="zc-filter-group is-open">
-                <button class="zc-filter-group__toggle" onclick="this.parentElement.classList.toggle('is-open')">
-                  {{ group_name }}
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="zc-filter-group__options">
-                  {%- for tag in collection.all_tags -%}
-                    {%- if tag contains ':' -%}
-                      {%- assign this_group = tag | split: ':' | first | strip -%}
-                      {%- if this_group == group_name -%}
-                        {%- assign tag_value = tag | split: ':' | last | strip -%}
-                        {%- if current_tags contains tag -%}
-                          <a href="{{ collection.url }}" class="zc-filter-tag is-active">
-                            <span class="zc-filter-check">✓</span> {{ tag_value }}
+              {%- if available_values > 0 -%}
+                <div class="zc-filter-group is-open">
+                  <button class="zc-filter-group__toggle" onclick="this.parentElement.classList.toggle('is-open')">
+                    {{ filter.label }}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                  </button>
+                  <div class="zc-filter-group__options">
+                    {%- for value in filter.values -%}
+                      {%- if value.count > 0 or value.active -%}
+                        {%- if value.active -%}
+                          <a href="{{ value.url_to_remove }}" class="zc-filter-tag is-active">
+                            <span class="zc-filter-check">✓</span> {{ value.label }}
                           </a>
                         {%- else -%}
-                          <a href="{{ collection.url }}/{{ tag | handleize }}" class="zc-filter-tag">
-                            {{ tag_value }}
+                          <a href="{{ value.url_to_add }}" class="zc-filter-tag">
+                            {{ value.label }} <span class="zc-filter-tag__count">({{ value.count }})</span>
                           </a>
                         {%- endif -%}
                       {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endif -%}
+
+            {%- elsif filter.type == 'price_range' -%}
+              <div class="zc-filter-group is-open">
+                <button class="zc-filter-group__toggle" onclick="this.parentElement.classList.toggle('is-open')">
+                  {{ filter.label }}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="zc-filter-group__options zc-filter-group__options--price">
+                  <form class="zc-price-filter" action="{{ collection.url }}{% if current_tags %}/{{ current_tags | join: '+' }}{% endif %}" method="get">
+                    {%- comment -%} Preserve existing filters {%- endcomment -%}
+                    {%- for f in collection.filters -%}
+                      {%- if f.type == 'list' -%}
+                        {%- for val in f.active_values -%}
+                          <input type="hidden" name="{{ val.param_name }}" value="{{ val.value }}">
+                        {%- endfor -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if collection.sort_by -%}
+                      <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
                     {%- endif -%}
-                  {%- endfor -%}
+                    <div class="zc-price-inputs">
+                      <input type="number" name="{{ filter.min_value.param_name }}" placeholder="$ Min" value="{{ filter.min_value.value | divided_by: 100 }}" min="0" class="zc-price-input">
+                      <span class="zc-price-sep">—</span>
+                      <input type="number" name="{{ filter.max_value.param_name }}" placeholder="$ Max" value="{{ filter.max_value.value | divided_by: 100 }}" min="0" class="zc-price-input">
+                      <button type="submit" class="zc-price-go">Ir</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             {%- endif -%}
           {%- endfor -%}
-
-          {%- comment -%} Ungrouped tags (plain etiquetas) {%- endcomment -%}
-          {%- if has_ungrouped -%}
-            <div class="zc-filter-group is-open">
-              <button class="zc-filter-group__toggle" onclick="this.parentElement.classList.toggle('is-open')">
-                Etiquetas
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-              </button>
-              <div class="zc-filter-group__options">
-                {%- for tag in collection.all_tags -%}
-                  {%- unless tag contains ':' -%}
-                    {%- if current_tags contains tag -%}
-                      <a href="{{ collection.url }}" class="zc-filter-tag is-active">
-                        <span class="zc-filter-check">✓</span> {{ tag }}
-                      </a>
-                    {%- else -%}
-                      <a href="{{ collection.url }}/{{ tag | handleize }}" class="zc-filter-tag">
-                        {{ tag }}
-                      </a>
-                    {%- endif -%}
-                  {%- endunless -%}
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endif -%}
-
         </div>
       {%- else -%}
-        <p class="zc-filters__empty">No hay etiquetas disponibles. Agrega tags a tus productos para activar los filtros.</p>
+        <p class="zc-filters__empty">No hay filtros disponibles.</p>
       {%- endif -%}
     </div>
 

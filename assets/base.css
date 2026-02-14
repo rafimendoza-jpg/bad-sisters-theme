@@ -1869,7 +1869,29 @@ body.mobile-nav-open::before {
 .zc-filter-tag:hover { color: var(--color-text); opacity: 1; }
 .zc-filter-tag.is-active { color: var(--color-text); font-weight: 500; }
 .zc-filter-check { font-size: 0.6rem; }
+.zc-filter-tag__count { opacity: 0.5; font-size: 0.6rem; }
 .zc-filters__empty { font-size: 0.75rem; color: var(--color-text-light); letter-spacing: 0.03em; padding: 1rem 0; }
+
+/* Price range filter */
+.zc-filter-group__options--price { flex-direction: row !important; }
+.zc-price-filter { width: 100%; }
+.zc-price-inputs { display: flex; align-items: center; gap: 0.5rem; }
+.zc-price-input {
+  width: 80px; padding: 0.35rem 0.5rem;
+  border: 1px solid var(--color-border); background: transparent;
+  font-family: inherit; font-size: 0.7rem; letter-spacing: 0.03em;
+  color: var(--color-text);
+}
+.zc-price-input:focus { outline: none; border-color: var(--color-text); }
+.zc-price-input::placeholder { color: var(--color-text-light); }
+.zc-price-sep { font-size: 0.7rem; color: var(--color-text-light); }
+.zc-price-go {
+  background: var(--color-text); color: var(--color-background);
+  border: none; padding: 0.35rem 0.75rem; font-family: inherit;
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: opacity 0.3s;
+}
+.zc-price-go:hover { opacity: 0.7; }
 
 /* Product Grid — Zara: tight grid, no gaps */
 .zc-products { display: grid; gap: 2px; }
