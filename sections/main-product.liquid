@@ -427,15 +427,25 @@
         <button type="submit" class="pp-custom-order-form__submit" data-co-submit>
           Enviar solicitud
         </button>
-      {%- endform -%}
 
-      {%- comment -%} Success message shown after redirect back {%- endcomment -%}
-      {%- if form.posted_successfully? -%}
-        <div class="pp-custom-order-form__success" style="display:flex;">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <p><strong>¡Solicitud enviada!</strong><br>Te contactaremos pronto para coordinar tu pedido especial.</p>
-        </div>
-      {%- endif -%}
+        {%- if form.posted_successfully? -%}
+          <div class="pp-custom-order-form__success" style="display:flex;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <p><strong>¡Solicitud enviada!</strong><br>Te contactaremos pronto para coordinar tu pedido especial.</p>
+          </div>
+          <script>
+            /* Auto-open the modal to show success message */
+            document.addEventListener('DOMContentLoaded', function() {
+              var modal = document.getElementById('CustomOrderModal');
+              if (modal) modal.classList.add('is-open');
+              /* Hide the form fields */
+              document.querySelectorAll('#CustomOrderForm .pp-custom-order-form__row, #CustomOrderForm .pp-custom-order-form__submit').forEach(function(el) {
+                el.style.display = 'none';
+              });
+            });
+          </script>
+        {%- endif -%}
+      {%- endform -%}
     </div>
   </div>
 {%- endif -%}
