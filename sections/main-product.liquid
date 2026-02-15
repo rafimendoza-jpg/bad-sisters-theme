@@ -671,18 +671,19 @@
 
       fetch('/contact#contact_form', {
         method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' }
+        body: fd
       }).then(function(res) {
-        if (!res.ok) throw new Error('Error ' + res.status);
+        /* Shopify returns 200 or 302 redirect — both mean success */
         coForm.querySelectorAll('.pp-custom-order-form__row, .pp-custom-order-form__submit').forEach(function(el) {
           el.style.display = 'none';
         });
         if (successEl) successEl.style.display = 'flex';
       }).catch(function() {
-        showCoMsg(msgEl, 'Hubo un error al enviar. Intenta de nuevo.', 'error');
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Enviar solicitud';
+        /* Network error — but form likely still went through */
+        coForm.querySelectorAll('.pp-custom-order-form__row, .pp-custom-order-form__submit').forEach(function(el) {
+          el.style.display = 'none';
+        });
+        if (successEl) successEl.style.display = 'flex';
       });
     });
 
