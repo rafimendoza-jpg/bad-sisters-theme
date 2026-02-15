@@ -22,7 +22,7 @@
     "recommendations": {
       "type": "product-recommendations",
       "settings": {
-        "heading": "COMPLETA TU LOOK",
+        "heading": "TAMBIÉN TE PUEDE GUSTAR",
         "max_products": 4,
         "show_vendor": false
       }
