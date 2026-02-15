@@ -1,0 +1,191 @@
+<style>
+  .co-page { padding: 4rem 0; }
+  .co-page__header { text-align: center; margin-bottom: 3rem; }
+  .co-page__title {
+    font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 200;
+    letter-spacing: 0.15em; text-transform: uppercase; margin: 0 0 0.75rem;
+  }
+  .co-page__subtitle {
+    font-size: 0.8rem; color: var(--color-text-light);
+    letter-spacing: 0.03em; max-width: 500px; margin: 0 auto; line-height: 1.6;
+  }
+  .co-page__form-wrap {
+    max-width: 540px; margin: 0 auto;
+    background: rgba(247, 246, 243, 0.5);
+    padding: 2.5rem;
+    border: 1px solid var(--color-border);
+  }
+  .co-page__row { margin-bottom: 1.25rem; }
+  .co-page__row label {
+    display: block; font-size: 0.6rem; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 0.4rem; color: var(--color-text);
+  }
+  .co-page__row input,
+  .co-page__row select,
+  .co-page__row textarea {
+    width: 100%; padding: 0.6rem 0.75rem;
+    border: 1px solid var(--color-border); background: #fff;
+    font-family: inherit; font-size: 0.8rem; color: var(--color-text);
+    letter-spacing: 0.02em; transition: border-color 0.3s;
+  }
+  .co-page__row input:focus,
+  .co-page__row select:focus,
+  .co-page__row textarea:focus {
+    outline: none; border-color: var(--color-text);
+  }
+  .co-page__row textarea { resize: vertical; min-height: 100px; }
+  .co-page__row select { appearance: none; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%231a1a1a' stroke-width='1'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0.75rem center;
+  }
+  .co-page__submit {
+    width: 100%; padding: 0.85rem;
+    background: var(--color-text); color: var(--color-background);
+    border: none; font-family: inherit; font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    cursor: pointer; transition: opacity 0.3s; margin-top: 0.5rem;
+  }
+  .co-page__submit:hover { opacity: 0.8; }
+  .co-page__success {
+    text-align: center; padding: 2rem;
+  }
+  .co-page__success svg { margin-bottom: 1rem; }
+  .co-page__success p {
+    font-size: 0.85rem; line-height: 1.6; color: var(--color-text);
+  }
+  .co-page__success a {
+    display: inline-block; margin-top: 1.5rem;
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-text); text-decoration: underline; text-underline-offset: 3px;
+  }
+  .co-page__msg {
+    display: none; font-size: 0.75rem; padding: 0.5rem 0; margin-bottom: 0.5rem;
+  }
+  .co-page__msg.is-error { color: #dc2626; display: block; }
+
+  @media (max-width: 749px) {
+    .co-page__form-wrap { padding: 1.5rem; }
+  }
+</style>
+
+<div class="co-page">
+  <div class="page-width">
+    <div class="co-page__header">
+      <h1 class="co-page__title">Pedido Especial</h1>
+      <p class="co-page__subtitle">
+        ¿Necesitas una talla, estampado, color o personalización especial?
+        Completa el formulario y te contactaremos para coordinar tu pedido.
+      </p>
+    </div>
+
+    <div class="co-page__form-wrap">
+      {%- form 'contact', id: 'CustomOrderPageForm', class: 'co-page__form' -%}
+        <input type="hidden" name="contact[Pedido Especial]" value="true">
+
+        {%- if form.posted_successfully? -%}
+          <div class="co-page__success">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <p><strong>¡Solicitud enviada!</strong><br>Te contactaremos pronto para coordinar tu pedido especial.</p>
+            <a href="/collections/all">Explorar productos</a>
+          </div>
+        {%- else -%}
+          <div class="co-page__row">
+            <label for="cop_name">Nombre *</label>
+            <input type="text" id="cop_name" name="contact[name]" required
+              {%- if customer %} value="{{ customer.name | escape }}"{% endif %}>
+          </div>
+
+          <div class="co-page__row">
+            <label for="cop_email">Email *</label>
+            <input type="email" id="cop_email" name="contact[email]" required
+              {%- if customer %} value="{{ customer.email | escape }}"{% endif %}>
+          </div>
+
+          <div class="co-page__row">
+            <label for="cop_phone">Teléfono</label>
+            <input type="tel" id="cop_phone" name="contact[phone]"
+              {%- if customer and customer.default_address %} value="{{ customer.default_address.phone | escape }}"{% endif %}>
+          </div>
+
+          <div class="co-page__row">
+            <label for="cop_type">Tipo de solicitud *</label>
+            <select id="cop_type" required>
+              <option value="">Selecciona una opción</option>
+              <option value="A medida">A medida (talla personalizada)</option>
+              <option value="Estampado personalizado">Estampado personalizado</option>
+              <option value="Talla especial">Talla especial</option>
+              <option value="Color especial">Color especial</option>
+              <option value="Diseño nuevo">Diseño nuevo</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="co-page__row">
+            <label for="cop_product">Producto de referencia (opcional)</label>
+            <input type="text" id="cop_product" placeholder="Nombre o link del producto que te interesa">
+          </div>
+
+          <div class="co-page__row">
+            <label for="cop_details">Detalles de tu pedido *</label>
+            <textarea id="cop_details" rows="5" required placeholder="Describe lo que necesitas: medidas, tipo de estampado, color, cantidad, etc."></textarea>
+          </div>
+
+          <input type="hidden" id="cop_body" name="contact[body]" value="">
+
+          <div class="co-page__msg" id="copMsg"></div>
+
+          <button type="submit" class="co-page__submit">Enviar solicitud</button>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var f = document.getElementById('CustomOrderPageForm');
+  if (!f || f.querySelector('.co-page__success')) return;
+
+  f.addEventListener('submit', function(e) {
+    var name = f.querySelector('#cop_name').value.trim();
+    var email = f.querySelector('#cop_email').value.trim();
+    var type = f.querySelector('#cop_type').value;
+    var details = f.querySelector('#cop_details').value.trim();
+
+    if (!name || !email || !type || !details) {
+      e.preventDefault();
+      showMsg('Por favor completa todos los campos obligatorios.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      e.preventDefault();
+      showMsg('Introduce un email válido.');
+      return;
+    }
+
+    var phone = (f.querySelector('#cop_phone') || {}).value || '';
+    var product = (f.querySelector('#cop_product') || {}).value || '';
+    var body = [
+      '--- PEDIDO ESPECIAL (página) ---',
+      '',
+      'Tipo de solicitud: ' + type,
+      'Producto de referencia: ' + (product.trim() || 'No especificado'),
+      'Detalles: ' + details,
+      '',
+      'Teléfono: ' + (phone.trim() || 'No proporcionado'),
+    ].join('\n');
+
+    document.getElementById('cop_body').value = body;
+  });
+
+  function showMsg(text) {
+    var el = document.getElementById('copMsg');
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'co-page__msg is-error';
+  }
+})();
+</script>
