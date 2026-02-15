@@ -382,33 +382,30 @@
       </h3>
       <p class="pp-custom-order__subtitle">¿Necesitas una talla, estampado o personalización especial? Completa el formulario y te contactaremos.</p>
 
-      {%- form 'contact', id: 'CustomOrderForm', class: 'pp-custom-order-form', novalidate: 'novalidate' -%}
+      {%- form 'contact', id: 'CustomOrderForm', class: 'pp-custom-order-form' -%}
         <input type="hidden" name="contact[Pedido Especial]" value="true">
-        <input type="hidden" name="product_title" value="{{ product.title | escape }}">
-        <input type="hidden" name="product_url" value="{{ shop.url }}{{ product.url }}">
-        <input type="hidden" name="product_id" value="{{ product.id }}">
 
         <div class="pp-custom-order-form__row">
           <label for="co_name">Nombre *</label>
-          <input type="text" id="co_name" name="name" required
+          <input type="text" id="co_name" name="contact[name]" required
             {%- if customer %} value="{{ customer.name | escape }}"{% endif %}>
         </div>
 
         <div class="pp-custom-order-form__row">
           <label for="co_email">Email *</label>
-          <input type="email" id="co_email" name="email" required
+          <input type="email" id="co_email" name="contact[email]" required
             {%- if customer %} value="{{ customer.email | escape }}"{% endif %}>
         </div>
 
         <div class="pp-custom-order-form__row">
           <label for="co_phone">Teléfono</label>
-          <input type="tel" id="co_phone" name="phone"
+          <input type="tel" id="co_phone" name="contact[phone]"
             {%- if customer and customer.default_address %} value="{{ customer.default_address.phone | escape }}"{% endif %}>
         </div>
 
         <div class="pp-custom-order-form__row">
           <label for="co_type">Tipo de solicitud *</label>
-          <select id="co_type" name="type" required>
+          <select id="co_type" required>
             <option value="">Selecciona una opción</option>
             <option value="A medida">A medida (talla personalizada)</option>
             <option value="Estampado personalizado">Estampado personalizado</option>
@@ -420,20 +417,25 @@
 
         <div class="pp-custom-order-form__row">
           <label for="co_details">Detalles de tu pedido *</label>
-          <textarea id="co_details" name="details" rows="4" required placeholder="Describe lo que necesitas: medidas, tipo de estampado, color, etc."></textarea>
+          <textarea id="co_details" rows="4" required placeholder="Describe lo que necesitas: medidas, tipo de estampado, color, etc."></textarea>
         </div>
+
+        <input type="hidden" id="co_body" name="contact[body]" value="">
 
         <div class="pp-custom-order-form__msg" data-co-msg></div>
 
         <button type="submit" class="pp-custom-order-form__submit" data-co-submit>
           Enviar solicitud
         </button>
+      {%- endform -%}
 
-        <div class="pp-custom-order-form__success" data-co-success style="display:none;">
+      {%- comment -%} Success message shown after redirect back {%- endcomment -%}
+      {%- if form.posted_successfully? -%}
+        <div class="pp-custom-order-form__success" style="display:flex;">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           <p><strong>¡Solicitud enviada!</strong><br>Te contactaremos pronto para coordinar tu pedido especial.</p>
         </div>
-      {%- endform -%}
+      {%- endif -%}
     </div>
   </div>
 {%- endif -%}
@@ -623,68 +625,40 @@
     var coForm = document.getElementById('CustomOrderForm');
     if (!coForm) return;
 
-    var submitBtn = coForm.querySelector('[data-co-submit]');
     var msgEl = coForm.querySelector('[data-co-msg]');
-    var successEl = coForm.querySelector('[data-co-success]');
 
     coForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
       var name = coForm.querySelector('#co_name').value.trim();
       var email = coForm.querySelector('#co_email').value.trim();
       var type = coForm.querySelector('#co_type').value;
       var details = coForm.querySelector('#co_details').value.trim();
-      var phone = coForm.querySelector('#co_phone').value.trim();
-      var productTitle = coForm.querySelector('[name="product_title"]').value;
-      var productUrl = coForm.querySelector('[name="product_url"]').value;
 
       if (!name || !email || !type || !details) {
+        e.preventDefault();
         showCoMsg(msgEl, 'Por favor completa todos los campos obligatorios.', 'error');
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        e.preventDefault();
         showCoMsg(msgEl, 'Introduce un email válido.', 'error');
         return;
       }
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Enviando...';
-      if (msgEl) msgEl.style.display = 'none';
-
+      /* Compose the body field before native submit */
+      var phone = (coForm.querySelector('#co_phone') || {}).value || '';
       var body = [
         '--- PEDIDO ESPECIAL ---',
-        'Producto: ' + productTitle,
-        'URL: ' + productUrl,
+        'Producto: {{ product.title | escape }}',
+        'URL: {{ shop.url }}{{ product.url }}',
         '',
         'Tipo de solicitud: ' + type,
         'Detalles: ' + details,
         '',
-        'Teléfono: ' + (phone || 'No proporcionado'),
+        'Teléfono: ' + (phone.trim() || 'No proporcionado'),
       ].join('\n');
 
-      /* Build FormData from the real Shopify form (includes authenticity_token) */
-      var fd = new FormData(coForm);
-      fd.set('contact[name]', name);
-      fd.set('contact[email]', email);
-      fd.set('contact[phone]', phone);
-      fd.set('contact[body]', body);
-
-      fetch('/contact#contact_form', {
-        method: 'POST',
-        body: fd
-      }).then(function(res) {
-        /* Shopify returns 200 or 302 redirect — both mean success */
-        coForm.querySelectorAll('.pp-custom-order-form__row, .pp-custom-order-form__submit').forEach(function(el) {
-          el.style.display = 'none';
-        });
-        if (successEl) successEl.style.display = 'flex';
-      }).catch(function() {
-        /* Network error — but form likely still went through */
-        coForm.querySelectorAll('.pp-custom-order-form__row, .pp-custom-order-form__submit').forEach(function(el) {
-          el.style.display = 'none';
-        });
-        if (successEl) successEl.style.display = 'flex';
-      });
+      document.getElementById('co_body').value = body;
+      /* Let the form submit natively — Shopify handles the rest */
     });
 
     function showCoMsg(el, text, type) {
