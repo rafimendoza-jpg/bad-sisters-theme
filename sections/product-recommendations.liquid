@@ -7,8 +7,13 @@
 {%- comment -%} Gather recommended products {%- endcomment -%}
 {%- assign rec_products = product.metafields.custom.recommended_products.value -%}
 {%- assign has_metafield_recs = false -%}
-{%- if rec_products != blank and rec_products.size > 0 -%}
-  {%- assign has_metafield_recs = true -%}
+{%- if rec_products != blank -%}
+  {%- if rec_products.size > 0 -%}
+    {%- assign has_metafield_recs = true -%}
+  {%- elsif rec_products.title != blank -%}
+    {%- comment -%} Single product reference — treat as list of 1 {%- endcomment -%}
+    {%- assign has_metafield_recs = true -%}
+  {%- endif -%}
 {%- endif -%}
 
 {%- comment -%} Fallback: use block-level products (generic per template) {%- endcomment -%}
@@ -43,59 +48,85 @@
     <div class="prec__grid">
       {%- if has_metafield_recs -%}
         {%- comment -%} === Per-product picks from metafield === {%- endcomment -%}
-        {%- for rec in rec_products limit: section.settings.max_products -%}
-          {%- if rec.available != nil -%}
-            <div class="prec__item">
-              <a href="{{ rec.url }}" class="prec__product">
-                <div class="prec__media">
-                  {%- if rec.featured_image != blank -%}
-                    <img
-                      src="{{ rec.featured_image | image_url: width: 500 }}"
-                      srcset="{{ rec.featured_image | image_url: width: 250 }} 250w, {{ rec.featured_image | image_url: width: 400 }} 400w, {{ rec.featured_image | image_url: width: 500 }} 500w"
-                      sizes="(max-width: 767px) 45vw, 260px"
-                      alt="{{ rec.title }}"
-                      loading="lazy"
-                      decoding="async"
-                      width="{{ rec.featured_image.width }}"
-                      height="{{ rec.featured_image.height }}"
-                    >
-                    {%- if rec.images[1] != blank -%}
+        {%- if rec_products.size > 0 -%}
+          {%- comment -%} List of products {%- endcomment -%}
+          {%- for rec in rec_products limit: section.settings.max_products -%}
+            {%- if rec.title != blank -%}
+              <div class="prec__item">
+                <a href="{{ rec.url }}" class="prec__product">
+                  <div class="prec__media">
+                    {%- if rec.featured_image != blank -%}
                       <img
-                        class="prec__img-hover"
-                        src="{{ rec.images[1] | image_url: width: 500 }}"
+                        src="{{ rec.featured_image | image_url: width: 500 }}"
+                        srcset="{{ rec.featured_image | image_url: width: 250 }} 250w, {{ rec.featured_image | image_url: width: 400 }} 400w, {{ rec.featured_image | image_url: width: 500 }} 500w"
+                        sizes="(max-width: 767px) 45vw, 260px"
                         alt="{{ rec.title }}"
                         loading="lazy"
                         decoding="async"
-                        width="{{ rec.images[1].width }}"
-                        height="{{ rec.images[1].height }}"
+                        width="{{ rec.featured_image.width }}"
+                        height="{{ rec.featured_image.height }}"
                       >
-                    {%- endif -%}
-                  {%- else -%}
-                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  {%- endif -%}
-                  {%- if rec.compare_at_price > rec.price -%}
-                    {%- assign discount = rec.compare_at_price | minus: rec.price | times: 100 | divided_by: rec.compare_at_price -%}
-                    <span class="prec__badge">-{{ discount }}%</span>
-                  {%- endif -%}
-                </div>
-                <div class="prec__info">
-                  <span class="prec__title">{{ rec.title }}</span>
-                  {%- if section.settings.show_vendor and rec.vendor != blank -%}
-                    <span class="prec__vendor">{{ rec.vendor }}</span>
-                  {%- endif -%}
-                  <span class="prec__price">
-                    {%- if rec.compare_at_price > rec.price -%}
-                      <s>{{ rec.compare_at_price | money }}</s>
-                      <span class="prec__price--sale">{{ rec.price | money }}</span>
+                      {%- if rec.images[1] != blank -%}
+                        <img
+                          class="prec__img-hover"
+                          src="{{ rec.images[1] | image_url: width: 500 }}"
+                          alt="{{ rec.title }}"
+                          loading="lazy"
+                          decoding="async"
+                          width="{{ rec.images[1].width }}"
+                          height="{{ rec.images[1].height }}"
+                        >
+                      {%- endif -%}
                     {%- else -%}
-                      {{ rec.price | money }}
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
                     {%- endif -%}
-                  </span>
-                </div>
-              </a>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+                    {%- if rec.compare_at_price > rec.price -%}
+                      {%- assign discount = rec.compare_at_price | minus: rec.price | times: 100 | divided_by: rec.compare_at_price -%}
+                      <span class="prec__badge">-{{ discount }}%</span>
+                    {%- endif -%}
+                  </div>
+                  <div class="prec__info">
+                    <span class="prec__title">{{ rec.title }}</span>
+                    {%- if section.settings.show_vendor and rec.vendor != blank -%}
+                      <span class="prec__vendor">{{ rec.vendor }}</span>
+                    {%- endif -%}
+                    <span class="prec__price">
+                      {%- if rec.compare_at_price > rec.price -%}
+                        <s>{{ rec.compare_at_price | money }}</s>
+                        <span class="prec__price--sale">{{ rec.price | money }}</span>
+                      {%- else -%}
+                        {{ rec.price | money }}
+                      {%- endif -%}
+                    </span>
+                  </div>
+                </a>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- elsif rec_products.title != blank -%}
+          {%- comment -%} Single product reference {%- endcomment -%}
+          {%- assign rec = rec_products -%}
+          <div class="prec__item">
+            <a href="{{ rec.url }}" class="prec__product">
+              <div class="prec__media">
+                {%- if rec.featured_image != blank -%}
+                  <img
+                    src="{{ rec.featured_image | image_url: width: 500 }}"
+                    srcset="{{ rec.featured_image | image_url: width: 250 }} 250w, {{ rec.featured_image | image_url: width: 400 }} 400w, {{ rec.featured_image | image_url: width: 500 }} 500w"
+                    sizes="(max-width: 767px) 45vw, 260px"
+                    alt="{{ rec.title }}"
+                    loading="lazy" decoding="async"
+                    width="{{ rec.featured_image.width }}" height="{{ rec.featured_image.height }}"
+                  >
+                {%- endif -%}
+              </div>
+              <div class="prec__info">
+                <span class="prec__title">{{ rec.title }}</span>
+                <span class="prec__price">{{ rec.price | money }}</span>
+              </div>
+            </a>
+          </div>
+        {%- endif -%}
 
       {%- elsif has_block_recs -%}
         {%- comment -%} === Block-picked products (per section) === {%- endcomment -%}
