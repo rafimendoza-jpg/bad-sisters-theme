@@ -382,7 +382,8 @@
       </h3>
       <p class="pp-custom-order__subtitle">¿Necesitas una talla, estampado o personalización especial? Completa el formulario y te contactaremos.</p>
 
-      <form id="CustomOrderForm" class="pp-custom-order-form" novalidate>
+      {%- form 'contact', id: 'CustomOrderForm', class: 'pp-custom-order-form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="contact[Pedido Especial]" value="true">
         <input type="hidden" name="product_title" value="{{ product.title | escape }}">
         <input type="hidden" name="product_url" value="{{ shop.url }}{{ product.url }}">
         <input type="hidden" name="product_id" value="{{ product.id }}">
@@ -432,7 +433,7 @@
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           <p><strong>¡Solicitud enviada!</strong><br>Te contactaremos pronto para coordinar tu pedido especial.</p>
         </div>
-      </form>
+      {%- endform -%}
     </div>
   </div>
 {%- endif -%}
@@ -661,30 +662,27 @@
         'Teléfono: ' + (phone || 'No proporcionado'),
       ].join('\n');
 
-      var fd = new FormData();
-      fd.append('form_type', 'contact');
-      fd.append('utf8', '✓');
-      fd.append('contact[name]', name);
-      fd.append('contact[email]', email);
-      fd.append('contact[phone]', phone);
-      fd.append('contact[body]', body);
-      fd.append('contact[Pedido Especial]', 'true');
+      /* Build FormData from the real Shopify form (includes authenticity_token) */
+      var fd = new FormData(coForm);
+      fd.set('contact[name]', name);
+      fd.set('contact[email]', email);
+      fd.set('contact[phone]', phone);
+      fd.set('contact[body]', body);
 
-      fetch('/contact', {
+      fetch('/contact#contact_form', {
         method: 'POST',
         body: fd,
         headers: { 'Accept': 'application/json' }
-      }).then(function() {
+      }).then(function(res) {
+        if (!res.ok) throw new Error('Error ' + res.status);
         coForm.querySelectorAll('.pp-custom-order-form__row, .pp-custom-order-form__submit').forEach(function(el) {
           el.style.display = 'none';
         });
         if (successEl) successEl.style.display = 'flex';
       }).catch(function() {
-        /* Contact form redirects — treat as success */
-        coForm.querySelectorAll('.pp-custom-order-form__row, .pp-custom-order-form__submit').forEach(function(el) {
-          el.style.display = 'none';
-        });
-        if (successEl) successEl.style.display = 'flex';
+        showCoMsg(msgEl, 'Hubo un error al enviar. Intenta de nuevo.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar solicitud';
       });
     });
 
