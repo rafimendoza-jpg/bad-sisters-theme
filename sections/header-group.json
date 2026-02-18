@@ -15,7 +15,7 @@
       "type": "announcement-bar",
       "settings": {
         "show_announcement": true,
-        "text": "Envío gratis en pedidos mayores a $999 MXN",
+        "text": "Envío gratis en pedidos mayores a $100.000",
         "link": "",
         "bar_color": "#1a1a1a",
         "text_color": "#ffffff"
