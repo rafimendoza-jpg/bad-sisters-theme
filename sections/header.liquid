@@ -321,7 +321,7 @@
       if (closeTimer) clearTimeout(closeTimer);
       closeTimer = setTimeout(() => {
         if (!isInsideMenu) closeAll();
-      }, 500);
+      }, 120);
     }
 
     triggers.forEach(trigger => {
@@ -355,16 +355,7 @@
         });
       }
 
-      /* Click on the nav link opens panel, doesn't navigate */
-      const link = trigger.querySelector('[data-mega-toggle]');
-      if (link) {
-        link.addEventListener('click', (e) => {
-          if (window.innerWidth > 989) {
-            e.preventDefault();
-            openPanel(trigger);
-          }
-        });
-      }
+      /* Desktop behavior is hover-first; keep click navigation native */
     });
 
     /* All links inside mega panels should navigate normally */

@@ -322,10 +322,10 @@ p {
 
 /* Mega trigger wrapper */
 .mega-trigger {
-  position: static;
+  position: relative;
   display: flex;
   align-items: center;
-  align-self: stretch; /* stretch full header height for seamless hover */
+  align-self: stretch;
 }
 .mega-trigger.is-active > .header__nav-link { opacity: 1; }
 .mega-trigger.is-active > .header__nav-link::after { width: 100%; }
@@ -558,19 +558,23 @@ p {
 /* === MEGA MENU PANEL === */
 .mega-panel {
   position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  padding-top: 10px; /* invisible hover bridge between nav link and panel */
+  top: calc(100% + 8px);
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%) translateY(8px);
+  width: max-content;
+  max-width: min(92vw, 980px);
+  padding-top: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
   pointer-events: none;
   z-index: 999;
 }
 .mega-panel.is-open {
   opacity: 1;
   visibility: visible;
+  transform: translateX(-50%) translateY(0);
   pointer-events: all;
 }
 
@@ -580,15 +584,17 @@ p {
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
   border-top: 1px solid rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 2px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
 .mega-panel__inner {
   display: flex;
   gap: 3rem;
-  padding: 2rem var(--page-padding, 2rem) 2.5rem;
-  max-width: var(--page-width);
-  margin: 0 auto;
+  padding: 1.25rem 1.5rem 1.5rem;
+  max-width: none;
+  margin: 0;
 }
 
 /* Left side: multi-column link layout */
@@ -716,10 +722,10 @@ p {
 
 /* Compact mega panel (no featured image) — constrained width */
 .mega-panel--compact .mega-panel__bg {
-  max-width: 600px;
+  max-width: min(92vw, 560px);
 }
 .mega-panel--compact .mega-panel__inner {
-  max-width: 600px;
+  max-width: min(92vw, 560px);
 }
 
 /* Overlay behind mega panel */
