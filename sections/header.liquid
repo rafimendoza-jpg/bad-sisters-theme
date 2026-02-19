@@ -207,8 +207,7 @@
     </div>
   </div>
 
-  {%- comment -%} Mega menu overlay {%- endcomment -%}
-  <div class="mega-overlay" data-mega-overlay></div>
+  {%- comment -%} Overlay is now a CSS ::after on .site-header.mega-open — no extra div needed {%- endcomment -%}
 </header>
 
 {%- comment -%} ===== MOBILE MENU PANEL (slide-in, accordion) ===== {%- endcomment -%}
@@ -282,48 +281,71 @@
 
 <script>
   /*
-   * Mega Menu: panels are shown/hidden by CSS :hover on .mega-trigger.
-   * JS only manages the background overlay + header opaque state.
+   * Mega Menu: JS opens/closes panels via .is-open class.
+   * Overlay is pure CSS (::after on header) — no separate element to flicker.
+   * mouseleave only on the entire .header__nav — never on individual triggers.
    */
   (function() {
     var triggers = document.querySelectorAll('.mega-trigger');
-    var overlay = document.querySelector('[data-mega-overlay]');
+    var nav = document.querySelector('.header__nav');
     var header = document.querySelector('.site-header');
+    var currentTrigger = null;
     var closeTimer = null;
 
-    function showOverlay() {
+    function openPanel(trigger) {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-      if (overlay) overlay.classList.add('is-visible');
+      var panel = trigger.querySelector('[data-mega-panel]');
+      if (!panel) return;
+      /* Close previous if different */
+      if (currentTrigger && currentTrigger !== trigger) {
+        var prevPanel = currentTrigger.querySelector('[data-mega-panel]');
+        if (prevPanel) prevPanel.classList.remove('is-open');
+        currentTrigger.classList.remove('is-active');
+      }
+      panel.classList.add('is-open');
+      trigger.classList.add('is-active');
       header.classList.add('mega-open');
+      currentTrigger = trigger;
     }
 
-    function hideOverlay() {
-      if (overlay) overlay.classList.remove('is-visible');
+    function closeAll() {
+      if (currentTrigger) {
+        var panel = currentTrigger.querySelector('[data-mega-panel]');
+        if (panel) panel.classList.remove('is-open');
+        currentTrigger.classList.remove('is-active');
+        currentTrigger = null;
+      }
       header.classList.remove('mega-open');
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
     }
 
-    function scheduleHideOverlay() {
-      if (closeTimer) clearTimeout(closeTimer);
-      closeTimer = setTimeout(hideOverlay, 300);
-    }
-
-    /* Show overlay when any trigger is hovered */
+    /* Open specific panel on trigger mouseenter */
     triggers.forEach(function(trigger) {
       trigger.addEventListener('mouseenter', function() {
-        if (window.innerWidth > 989) showOverlay();
-      });
-      trigger.addEventListener('mouseleave', function() {
-        if (window.innerWidth > 989) scheduleHideOverlay();
+        if (window.innerWidth > 989) openPanel(trigger);
       });
     });
 
-    if (overlay) {
-      overlay.addEventListener('click', hideOverlay);
+    /* Close ONLY when mouse leaves the entire nav (includes all panels) */
+    if (nav) {
+      nav.addEventListener('mouseleave', function() {
+        if (window.innerWidth > 989) {
+          closeTimer = setTimeout(closeAll, 250);
+        }
+      });
+      nav.addEventListener('mouseenter', function() {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      });
     }
 
+    /* Close on click outside (the ::after overlay captures clicks via header) */
+    document.addEventListener('click', function(e) {
+      if (!currentTrigger) return;
+      if (header && !header.contains(e.target)) closeAll();
+    });
+
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') hideOverlay();
+      if (e.key === 'Escape') closeAll();
     });
 
     /* === MOBILE MENU === */
