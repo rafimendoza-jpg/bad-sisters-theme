@@ -259,8 +259,8 @@ p {
 }
 .site-header.mega-open {
   background-color: rgba(252, 252, 250, 0.98);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
 }
 
 .header__inner {
@@ -581,8 +581,8 @@ p {
 /* Visible background layer (inside padding bridge) */
 .mega-panel__bg {
   background: rgba(252, 252, 250, 0.98);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   border-top: 1px solid rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 2px;
@@ -736,8 +736,8 @@ p {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.08);
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   opacity: 0;
   visibility: hidden;
   transition: all 0.4s ease;
@@ -778,6 +778,38 @@ p {
   .mobile-menu-toggle { display: flex; }
   .header__nav { display: none; }
   .mega-overlay { display: none; }
+
+  .header__inner {
+    min-height: 52px;
+    padding: 0.35rem 0;
+  }
+
+  .header__logo img,
+  .header__logo svg {
+    max-height: 34px;
+  }
+
+  .mobile-menu-toggle,
+  .header__icon,
+  .header__account-link {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header__icons {
+    gap: 0.15rem;
+  }
+
+  .mobile-nav {
+    max-width: 100%;
+  }
+
+  .mobile-nav__link,
+  .mobile-nav__parent {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
 }
 
 /* ==== MOBILE NAV — Slide-in panel with accordion ==== */

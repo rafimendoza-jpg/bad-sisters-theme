@@ -7,7 +7,7 @@
     <div class="header__inner">
 
       {%- comment -%} Mobile Menu Toggle {%- endcomment -%}
-      <button class="mobile-menu-toggle" aria-label="Menú" onclick="document.querySelector('.header__nav').classList.toggle('is-open'); this.classList.toggle('active');">
+      <button class="mobile-menu-toggle" aria-label="Menú">
         <span></span>
         <span></span>
         <span></span>
@@ -284,15 +284,16 @@
   /* === Mega Menu: desktop hover with reliable bridge + mobile toggle === */
   (function() {
     const triggers = document.querySelectorAll('.mega-trigger');
+    const desktopNav = document.querySelector('.header__nav');
     const overlay = document.querySelector('[data-mega-overlay]');
     const header = document.querySelector('.site-header');
     let currentPanel = null;
     let closeTimer = null;
-    let isInsideMenu = false;
 
     function openPanel(trigger) {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       const panel = trigger.querySelector('[data-mega-panel]');
+      if (!panel) return;
       if (currentPanel && currentPanel !== panel) {
         currentPanel.classList.remove('is-open');
         currentPanel.closest('.mega-trigger').classList.remove('is-active');
@@ -302,7 +303,6 @@
       overlay.classList.add('is-visible');
       header.classList.add('mega-open');
       currentPanel = panel;
-      isInsideMenu = true;
     }
 
     function closeAll() {
@@ -313,50 +313,33 @@
       }
       overlay.classList.remove('is-visible');
       header.classList.remove('mega-open');
-      isInsideMenu = false;
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
     }
 
     function scheduleClose() {
       if (closeTimer) clearTimeout(closeTimer);
-      closeTimer = setTimeout(() => {
-        if (!isInsideMenu) closeAll();
-      }, 120);
+      closeTimer = setTimeout(closeAll, 180);
     }
 
     triggers.forEach(trigger => {
-      const panel = trigger.querySelector('[data-mega-panel]');
-
-      /* Open on hover — enter the trigger (nav link area) */
+      /* Open immediately on hover for desktop */
       trigger.addEventListener('mouseenter', () => {
         if (window.innerWidth > 989) {
-          isInsideMenu = true;
           openPanel(trigger);
         }
       });
 
-      /* When leaving the trigger, schedule close but give time to reach panel */
-      trigger.addEventListener('mouseleave', (e) => {
-        if (window.innerWidth > 989) {
-          isInsideMenu = false;
-          scheduleClose();
-        }
-      });
-
-      /* Panel hover: cancel close when mouse enters panel */
-      if (panel) {
-        panel.addEventListener('mouseenter', () => {
-          isInsideMenu = true;
-          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-        });
-        panel.addEventListener('mouseleave', () => {
-          isInsideMenu = false;
-          if (window.innerWidth > 989) scheduleClose();
-        });
-      }
-
       /* Desktop behavior is hover-first; keep click navigation native */
     });
+
+    if (desktopNav) {
+      desktopNav.addEventListener('mouseenter', () => {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      });
+      desktopNav.addEventListener('mouseleave', () => {
+        if (window.innerWidth > 989) scheduleClose();
+      });
+    }
 
     /* All links inside mega panels should navigate normally */
     document.querySelectorAll('.mega-panel__link, .mega-panel__col-title--link, .mega-featured').forEach(link => {
@@ -367,7 +350,7 @@
     });
 
     if (overlay) {
-      overlay.addEventListener('mouseenter', () => { isInsideMenu = false; scheduleClose(); });
+      overlay.addEventListener('mouseenter', () => { if (window.innerWidth > 989) scheduleClose(); });
       overlay.addEventListener('click', closeAll);
     }
 
