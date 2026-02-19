@@ -289,6 +289,7 @@
     const header = document.querySelector('.site-header');
     let currentPanel = null;
     let closeTimer = null;
+    let isInsideNav = false;
 
     function openPanel(trigger) {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
@@ -318,7 +319,14 @@
 
     function scheduleClose() {
       if (closeTimer) clearTimeout(closeTimer);
-      closeTimer = setTimeout(closeAll, 220);
+      closeTimer = setTimeout(function() {
+        /* Only close if mouse truly left the nav + panel area */
+        if (!isInsideNav) closeAll();
+      }, 300);
+    }
+
+    function cancelClose() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
     }
 
     triggers.forEach(trigger => {
@@ -327,6 +335,8 @@
       /* Open immediately on hover for desktop */
       trigger.addEventListener('mouseenter', () => {
         if (window.innerWidth > 989) {
+          isInsideNav = true;
+          cancelClose();
           openPanel(trigger);
         }
       });
@@ -334,25 +344,48 @@
       trigger.addEventListener('mouseleave', (e) => {
         if (window.innerWidth <= 989) return;
         const related = e.relatedTarget;
-        if (panel && related && panel.contains(related)) return;
+        /* If moving to another trigger, the panel, or the nav — don't close */
+        if (related) {
+          if (panel && panel.contains(related)) { cancelClose(); return; }
+          if (related.closest && related.closest('.mega-trigger')) { cancelClose(); return; }
+          if (related.closest && related.closest('.header__nav')) { cancelClose(); return; }
+        }
         scheduleClose();
       });
 
       if (panel) {
         panel.addEventListener('mouseenter', () => {
-          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          isInsideNav = true;
+          cancelClose();
         });
-        panel.addEventListener('mouseleave', () => {
-          if (window.innerWidth > 989) scheduleClose();
+        panel.addEventListener('mouseleave', (e) => {
+          if (window.innerWidth <= 989) return;
+          const related = e.relatedTarget;
+          /* If moving back to nav area, don't close */
+          if (related && related.closest && (related.closest('.mega-trigger') || related.closest('.header__nav'))) {
+            cancelClose();
+            return;
+          }
+          isInsideNav = false;
+          scheduleClose();
         });
       }
-
-      /* Desktop behavior is hover-first; keep click navigation native */
     });
 
     if (desktopNav) {
       desktopNav.addEventListener('mouseenter', () => {
-        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        isInsideNav = true;
+        cancelClose();
+      });
+      desktopNav.addEventListener('mouseleave', (e) => {
+        const related = e.relatedTarget;
+        /* If moving to a mega panel that's outside the nav, keep open */
+        if (related && related.closest && related.closest('[data-mega-panel]')) {
+          cancelClose();
+          return;
+        }
+        isInsideNav = false;
+        scheduleClose();
       });
     }
 
@@ -366,6 +399,10 @@
 
     if (overlay) {
       overlay.addEventListener('click', closeAll);
+      overlay.addEventListener('mouseenter', () => {
+        isInsideNav = false;
+        scheduleClose();
+      });
     }
 
     /* Close on Escape */
