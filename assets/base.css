@@ -1583,6 +1583,40 @@ body.mobile-nav-open::before {
 }
 .cart__note { font-size: 0.7rem; color: var(--color-text-light); margin-bottom: 2rem; letter-spacing: 0.04em; }
 
+/* Sister Points in Cart */
+.cart__sp-redeem {
+  background: #fef9e7;
+  border: 1px solid #f5d67b;
+  border-radius: calc(var(--border-radius) / 2);
+  padding: 0.85rem 1rem;
+  margin: 0.75rem 0 0.5rem;
+}
+.cart__sp-redeem-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: #5a4200;
+  margin-bottom: 0.35rem;
+}
+.cart__sp-redeem-header svg { color: #d4a000; flex-shrink: 0; }
+.cart__sp-redeem-detail {
+  font-size: 0.78rem;
+  color: #7a5c00;
+  line-height: 1.5;
+  margin: 0;
+}
+.cart__sp-redeem-detail strong { color: #5a4200; }
+.cart__sp-login {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--color-text-light);
+  margin: 0.5rem 0;
+}
+.cart__sp-login a { color: var(--color-accent); font-weight: 500; }
+
 @media (max-width: 749px) {
   .cart__table thead { display: none; }
   .cart__table, .cart__table tbody, .cart__table tr, .cart__table td { display: block; width: 100%; }
