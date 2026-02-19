@@ -277,6 +277,9 @@
                   Detalles
                 </button>
               {%- endif -%}
+              <button class="pp-tab-btn" onclick="openProductTab('reviews')" data-tab="reviews">
+                Reseñas
+              </button>
             </div>
 
             <div class="pp-tabs__content">
@@ -319,6 +322,13 @@
                   </table>
                 </div>
               {%- endif -%}
+
+              {%- comment -%} Tab: Reseñas (Junip) {%- endcomment -%}
+              <div class="pp-tab-panel" data-panel="reviews">
+                <div class="pp-reviews">
+                  <span class="junip-product-review" data-product-id="{{ product.id }}"></span>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -484,10 +494,10 @@
         const addBtn = document.getElementById('ProductAddToCart');
         if (opt.disabled) {
           addBtn.disabled = true;
-          addBtn.textContent = 'Agotado';
+          addBtn.innerHTML = 'Agotado';
         } else {
           addBtn.disabled = false;
-          addBtn.textContent = 'Agregar al carrito — ' + opt.dataset.price;
+          addBtn.innerHTML = 'Agregar al carrito &mdash; ' + opt.dataset.price;
         }
         /* BSD Sister Points update (1% = 1 SP per $1 CLP) */
         var rawPrice = parseInt(opt.dataset.rawPrice) || 0;
