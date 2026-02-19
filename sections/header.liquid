@@ -318,10 +318,12 @@
 
     function scheduleClose() {
       if (closeTimer) clearTimeout(closeTimer);
-      closeTimer = setTimeout(closeAll, 180);
+      closeTimer = setTimeout(closeAll, 220);
     }
 
     triggers.forEach(trigger => {
+      const panel = trigger.querySelector('[data-mega-panel]');
+
       /* Open immediately on hover for desktop */
       trigger.addEventListener('mouseenter', () => {
         if (window.innerWidth > 989) {
@@ -329,15 +331,28 @@
         }
       });
 
+      trigger.addEventListener('mouseleave', (e) => {
+        if (window.innerWidth <= 989) return;
+        const related = e.relatedTarget;
+        if (panel && related && panel.contains(related)) return;
+        scheduleClose();
+      });
+
+      if (panel) {
+        panel.addEventListener('mouseenter', () => {
+          if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        });
+        panel.addEventListener('mouseleave', () => {
+          if (window.innerWidth > 989) scheduleClose();
+        });
+      }
+
       /* Desktop behavior is hover-first; keep click navigation native */
     });
 
     if (desktopNav) {
       desktopNav.addEventListener('mouseenter', () => {
         if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-      });
-      desktopNav.addEventListener('mouseleave', () => {
-        if (window.innerWidth > 989) scheduleClose();
       });
     }
 
@@ -350,7 +365,6 @@
     });
 
     if (overlay) {
-      overlay.addEventListener('mouseenter', () => { if (window.innerWidth > 989) scheduleClose(); });
       overlay.addEventListener('click', closeAll);
     }
 

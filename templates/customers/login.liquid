@@ -4,41 +4,95 @@
   <div class="page-width" style="max-width: 500px;">
     <h1 class="text-center mb-4">Iniciar sesión</h1>
 
-    {%- form 'customer_login', return_to: '/' -%}
-      {%- if form.errors -%}
-        <div style="background-color: #fff0f0; border: 1px solid var(--color-sale); padding: 1rem; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
-          <p style="color: var(--color-sale); font-size: 0.9rem;">{{ form.errors | default_errors }}</p>
+    <div id="CustomerLoginForm">
+      {%- form 'customer_login', return_to: '/' -%}
+        {%- if form.errors -%}
+          <div style="background-color: #fff0f0; border: 1px solid var(--color-sale); padding: 1rem; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+            <p style="color: var(--color-sale); font-size: 0.9rem;">{{ form.errors | default_errors }}</p>
+          </div>
+        {%- endif -%}
+
+        <div style="margin-bottom: 1rem;">
+          <label for="CustomerEmail" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Email</label>
+          <input type="email" id="CustomerEmail" name="customer[email]" autocomplete="email" required>
         </div>
-      {%- endif -%}
 
-      <div style="margin-bottom: 1rem;">
-        <label for="CustomerEmail" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Email</label>
-        <input type="email" id="CustomerEmail" name="customer[email]" autocomplete="email" required>
-      </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label for="CustomerPassword" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Contraseña</label>
+          <input type="password" id="CustomerPassword" name="customer[password]" autocomplete="current-password" required>
+        </div>
 
-      <div style="margin-bottom: 1.5rem;">
-        <label for="CustomerPassword" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Contraseña</label>
-        <input type="password" id="CustomerPassword" name="customer[password]" autocomplete="current-password" required>
-      </div>
+        <button type="submit" class="btn btn--primary btn--full">Iniciar sesión</button>
 
-      <button type="submit" class="btn btn--primary btn--full">Iniciar sesión</button>
+        <div class="text-center" style="margin-top: 1.5rem;">
+          <a href="/account/register" style="font-size: 0.9rem; color: var(--color-accent);">Crear cuenta</a>
+          <span style="margin: 0 0.5rem; color: var(--color-text-light);">|</span>
+          <a href="#recover" id="RecoverPasswordLink" style="font-size: 0.9rem; color: var(--color-text-light);">¿Olvidaste tu contraseña?</a>
+        </div>
+      {%- endform -%}
+    </div>
 
-      <div class="text-center" style="margin-top: 1.5rem;">
-        <a href="/account/register" style="font-size: 0.9rem; color: var(--color-accent);">Crear cuenta</a>
-        <span style="margin: 0 0.5rem; color: var(--color-text-light);">|</span>
-        <a href="#recover" style="font-size: 0.9rem; color: var(--color-text-light);">¿Olvidaste tu contraseña?</a>
-      </div>
-    {%- endform -%}
-
-    <div id="recover" style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border);">
+    <div id="RecoverPasswordForm" style="display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border);">
       <h2 class="text-center mb-3" style="font-size: 1.25rem;">Recuperar contraseña</h2>
       {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <div style="background-color: #f4f8f2; border: 1px solid #c5d8b8; padding: 1rem; border-radius: var(--border-radius); margin-bottom: 1.25rem;">
+            <p style="font-size: 0.9rem; margin: 0;">Te enviamos un correo para restablecer tu contraseña.</p>
+          </div>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div style="background-color: #fff0f0; border: 1px solid var(--color-sale); padding: 1rem; border-radius: var(--border-radius); margin-bottom: 1.25rem;">
+            <p style="color: var(--color-sale); font-size: 0.9rem;">{{ form.errors | default_errors }}</p>
+          </div>
+        {%- endif -%}
         <div style="margin-bottom: 1rem;">
           <label for="RecoverEmail" style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem;">Email</label>
           <input type="email" id="RecoverEmail" name="email" autocomplete="email" required>
         </div>
         <button type="submit" class="btn btn--secondary btn--full">Enviar enlace de recuperación</button>
+        <div class="text-center" style="margin-top: 1rem;">
+          <a href="#login" id="HideRecoverPasswordLink" style="font-size: 0.9rem; color: var(--color-text-light);">Volver a iniciar sesión</a>
+        </div>
       {%- endform -%}
     </div>
   </div>
 </section>
+
+<script>
+  (function() {
+    var recoverLink = document.getElementById('RecoverPasswordLink');
+    var hideRecoverLink = document.getElementById('HideRecoverPasswordLink');
+    var loginForm = document.getElementById('CustomerLoginForm');
+    var recoverForm = document.getElementById('RecoverPasswordForm');
+
+    if (!loginForm || !recoverForm) return;
+
+    function showRecover() {
+      loginForm.style.display = 'none';
+      recoverForm.style.display = 'block';
+    }
+
+    function showLogin() {
+      recoverForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    }
+
+    if (recoverLink) {
+      recoverLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        showRecover();
+      });
+    }
+
+    if (hideRecoverLink) {
+      hideRecoverLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        showLogin();
+      });
+    }
+
+    if (window.location.hash === '#recover') {
+      showRecover();
+    }
+  })();
+</script>
