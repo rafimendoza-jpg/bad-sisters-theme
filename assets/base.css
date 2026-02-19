@@ -326,20 +326,7 @@ p {
   display: flex;
   align-items: center;
   align-self: stretch;
-  padding-bottom: 0;
 }
-/* Invisible bridge below trigger so cursor can travel to panel */
-.mega-trigger::after {
-  content: '';
-  position: absolute;
-  left: -1rem;
-  right: -1rem;
-  top: 100%;
-  height: 18px;
-  z-index: 999;
-}
-.mega-trigger.is-active > .header__nav-link { opacity: 1; }
-.mega-trigger.is-active > .header__nav-link::after { width: 100%; }
 
 /* Icons */
 .header__icons {
@@ -587,6 +574,22 @@ p {
   visibility: visible;
   transition: opacity 0.22s ease, visibility 0s 0s;
   pointer-events: all;
+}
+
+/* Desktop: pure CSS hover — flicker-free since :hover propagates to DOM children */
+@media (min-width: 990px) {
+  .mega-trigger:hover > .mega-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transition: opacity 0.18s ease, visibility 0s 0s;
+  }
+  .mega-trigger:hover > .header__nav-link {
+    opacity: 1;
+  }
+  .mega-trigger:hover > .header__nav-link::after {
+    width: 100%;
+  }
 }
 
 /* Visible background layer (inside padding bridge) */
