@@ -4124,3 +4124,57 @@ input:focus, textarea:focus, select:focus {
   padding: 0 4px;
   line-height: 1;
 }
+
+/* === GLOBAL MOBILE FRIENDLINESS === */
+@media (max-width: 767px) {
+  .page-width {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section-padding {
+    padding-top: 2.2rem;
+    padding-bottom: 2.2rem;
+  }
+
+  button,
+  .btn,
+  input,
+  select,
+  textarea,
+  a.btn,
+  .mobile-nav__link,
+  .mobile-nav__parent {
+    min-height: 44px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .header__logo img,
+  .header__logo svg {
+    max-width: 150px;
+    height: auto;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  img,
+  video,
+  iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .cart-dropdown {
+    display: none !important;
+  }
+}
