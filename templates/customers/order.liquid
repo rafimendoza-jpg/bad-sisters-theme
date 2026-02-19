@@ -8,6 +8,37 @@
       <p style="color: var(--color-text-light); font-size: 0.9rem;">
         Realizado el {{ order.created_at | date: '%d de %B, %Y' }}
       </p>
+
+      {%- comment -%} Smart order status badge {%- endcomment -%}
+      {%- assign _bsd_os_label = 'Pendiente' -%}
+      {%- assign _bsd_os_class = 'pending' -%}
+      {%- if order.financial_status == 'paid' or order.financial_status == 'partially_paid' -%}
+        {%- if order.fulfillment_status == 'fulfilled' -%}
+          {%- assign _bsd_os_label = 'Enviado' -%}
+          {%- assign _bsd_os_class = 'fulfilled' -%}
+        {%- elsif order.fulfillment_status == 'partial' -%}
+          {%- assign _bsd_os_label = 'Envío parcial' -%}
+          {%- assign _bsd_os_class = 'partial' -%}
+        {%- else -%}
+          {%- assign _bsd_os_label = 'Pagado' -%}
+          {%- assign _bsd_os_class = 'paid' -%}
+        {%- endif -%}
+      {%- elsif order.financial_status == 'refunded' -%}
+        {%- assign _bsd_os_label = 'Devuelto' -%}
+        {%- assign _bsd_os_class = 'refunded' -%}
+      {%- elsif order.financial_status == 'partially_refunded' -%}
+        {%- assign _bsd_os_label = 'Reembolso parcial' -%}
+        {%- assign _bsd_os_class = 'partial' -%}
+      {%- elsif order.financial_status == 'voided' or order.cancelled -%}
+        {%- assign _bsd_os_label = 'Cancelado' -%}
+        {%- assign _bsd_os_class = 'refunded' -%}
+      {%- elsif order.financial_status == 'pending' or order.financial_status == 'authorized' -%}
+        {%- assign _bsd_os_label = 'Pago pendiente' -%}
+        {%- assign _bsd_os_class = 'pending' -%}
+      {%- endif -%}
+      <div style="margin-top: 0.75rem;">
+        <span class="account-badge account-badge--{{ _bsd_os_class }}">{{ _bsd_os_label }}</span>
+      </div>
     </div>
 
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
@@ -60,3 +91,18 @@
     </div>
   </div>
 </section>
+<style>
+  .account-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  .account-badge--paid { background: #e8f5e9; color: #2e7d32; }
+  .account-badge--fulfilled { background: #e0f2f1; color: #00695c; }
+  .account-badge--pending { background: #fff3e0; color: #e65100; }
+  .account-badge--partial { background: #e3f2fd; color: #1565c0; }
+  .account-badge--refunded { background: #fce4ec; color: #c62828; }
+</style>

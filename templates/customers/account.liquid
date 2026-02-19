@@ -103,6 +103,31 @@
         {%- endif -%}
       </div>
 
+      {%- comment -%} Sister Points for Reviews {%- endcomment -%}
+      {%- assign bsd_review_sp = customer.metafields.bsd.sp_reviews.value | default: 0 | plus: 0 -%}
+      {%- assign bsd_review_count = customer.metafields.bsd.review_count.value | default: 0 | plus: 0 -%}
+      <div class="account-card">
+        <h2 class="account-card__title">Sister Points por reseñas</h2>
+
+        {%- if bsd_review_count > 0 -%}
+          <div class="account-review-sp__summary">
+            <div class="account-review-sp__stat">
+              <span class="account-review-sp__number">{{ bsd_review_count }}</span>
+              <span class="account-review-sp__desc">{{ bsd_review_count | pluralize: 'reseña', 'reseñas' }} verificada{{ bsd_review_count | pluralize: '', 's' }}</span>
+            </div>
+            <div class="account-review-sp__stat">
+              <span class="account-review-sp__number" style="color: var(--color-accent);">+{{ bsd_review_sp }}</span>
+              <span class="account-review-sp__desc">Sister Points ganados</span>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="account-review-sp__empty">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <p>Aún no has dejado reseñas. ¡Gana <strong>1.000 SP</strong> por cada reseña verificada!</p>
+          </div>
+        {%- endif -%}
+      </div>
+
       {%- comment -%} Order History {%- endcomment -%}
       <div class="account-card">
         <h2 class="account-card__title">Historial de pedidos</h2>
@@ -120,12 +145,41 @@
               </thead>
               <tbody>
                 {%- for order in customer.orders -%}
+                  {%- comment -%} Smart status: prioritise payment status over fulfillment {%- endcomment -%}
+                  {%- assign _bsd_status_label = 'Pendiente' -%}
+                  {%- assign _bsd_status_class = 'pending' -%}
+
+                  {%- if order.financial_status == 'paid' or order.financial_status == 'partially_paid' -%}
+                    {%- if order.fulfillment_status == 'fulfilled' -%}
+                      {%- assign _bsd_status_label = 'Enviado' -%}
+                      {%- assign _bsd_status_class = 'fulfilled' -%}
+                    {%- elsif order.fulfillment_status == 'partial' -%}
+                      {%- assign _bsd_status_label = 'Envío parcial' -%}
+                      {%- assign _bsd_status_class = 'partial' -%}
+                    {%- else -%}
+                      {%- assign _bsd_status_label = 'Pagado' -%}
+                      {%- assign _bsd_status_class = 'paid' -%}
+                    {%- endif -%}
+                  {%- elsif order.financial_status == 'refunded' -%}
+                    {%- assign _bsd_status_label = 'Devuelto' -%}
+                    {%- assign _bsd_status_class = 'refunded' -%}
+                  {%- elsif order.financial_status == 'partially_refunded' -%}
+                    {%- assign _bsd_status_label = 'Reembolso parcial' -%}
+                    {%- assign _bsd_status_class = 'partial' -%}
+                  {%- elsif order.financial_status == 'voided' or order.cancelled -%}
+                    {%- assign _bsd_status_label = 'Cancelado' -%}
+                    {%- assign _bsd_status_class = 'refunded' -%}
+                  {%- elsif order.financial_status == 'pending' or order.financial_status == 'authorized' -%}
+                    {%- assign _bsd_status_label = 'Pago pendiente' -%}
+                    {%- assign _bsd_status_class = 'pending' -%}
+                  {%- endif -%}
+
                   <tr>
                     <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
                     <td>{{ order.created_at | date: '%d/%m/%Y' }}</td>
                     <td>
-                      <span class="account-badge account-badge--{{ order.fulfillment_status | default: 'unfulfilled' }}">
-                        {{ order.fulfillment_status_label | default: 'Pendiente' }}
+                      <span class="account-badge account-badge--{{ _bsd_status_class }}">
+                        {{ _bsd_status_label }}
                       </span>
                     </td>
                     <td style="text-align: right; font-weight: 500;">{{ order.total_price | money }}</td>
@@ -410,13 +464,46 @@
     font-weight: 500;
     text-transform: capitalize;
   }
-  .account-badge--fulfilled { background: #e8f5e9; color: #2e7d32; }
-  .account-badge--unfulfilled { background: #fff3e0; color: #e65100; }
+  .account-badge--paid { background: #e8f5e9; color: #2e7d32; }
+  .account-badge--fulfilled { background: #e0f2f1; color: #00695c; }
+  .account-badge--pending { background: #fff3e0; color: #e65100; }
   .account-badge--partial { background: #e3f2fd; color: #1565c0; }
+  .account-badge--refunded { background: #fce4ec; color: #c62828; }
 
   .account-referral__share.is-copied {
     background: #2e7d32;
   }
+
+  /* ====== REVIEW POINTS SUMMARY ====== */
+  .account-review-sp__summary {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0;
+  }
+  .account-review-sp__stat {
+    display: flex;
+    flex-direction: column;
+  }
+  .account-review-sp__number {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+  .account-review-sp__desc {
+    font-size: 0.78rem;
+    color: var(--color-text-light);
+    margin-top: 0.25rem;
+  }
+  .account-review-sp__empty {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+  }
+  .account-review-sp__empty p { margin: 0; }
+  .account-review-sp__empty strong { color: var(--color-accent); }
 
   /* ====== REVIEWS PENDING SECTION ====== */
   .account-reviews-card__incentive {
