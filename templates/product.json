@@ -23,16 +23,42 @@
       "type": "product-recommendations",
       "settings": {
         "heading": "TAMBIÉN TE PUEDE GUSTAR",
+        "subheading": "",
+        "products": [],
         "max_products": 4,
         "show_vendor": false
       }
     },
     "reviews": {
       "type": "product-reviews",
+      "disabled": true,
       "settings": {
         "title": "Reseñas de clientes"
       }
+    },
+    "1771464493842186e9": {
+      "type": "apps",
+      "blocks": {
+        "junip_junip_product_review_69UgmR": {
+          "type": "shopify://apps/junip/blocks/junip-product-review/dc14f5a8-ed15-41b1-ad08-cfba23f9789b",
+          "settings": {
+            "product": "{{product}}",
+            "title": "",
+            "alignment": "",
+            "sortOrder": "mostRecent"
+          }
+        }
+      },
+      "block_order": [
+        "junip_junip_product_review_69UgmR"
+      ],
+      "settings": {}
     }
   },
-  "order": ["main", "recommendations", "reviews"]
+  "order": [
+    "main",
+    "recommendations",
+    "reviews",
+    "1771464493842186e9"
+  ]
 }
