@@ -215,7 +215,7 @@
 <div class="mobile-nav" id="MobileNav" data-mobile-nav>
   <div class="mobile-nav__header">
     <span class="mobile-nav__title">Menú</span>
-    <button class="mobile-nav__close" onclick="document.getElementById('MobileNav').classList.remove('is-open'); document.querySelector('.mobile-menu-toggle').classList.remove('active');" aria-label="Cerrar menú">
+    <button class="mobile-nav__close" data-mobile-nav-close aria-label="Cerrar menú">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
@@ -281,19 +281,18 @@
 </div>
 
 <script>
-  /* === Mega Menu: desktop hover with reliable bridge + mobile toggle === */
+  /* === Mega Menu: simplified robust hover + mobile toggle === */
   (function() {
-    const triggers = document.querySelectorAll('.mega-trigger');
-    const desktopNav = document.querySelector('.header__nav');
-    const overlay = document.querySelector('[data-mega-overlay]');
-    const header = document.querySelector('.site-header');
-    let currentPanel = null;
-    let closeTimer = null;
-    let isInsideNav = false;
+    var triggers = document.querySelectorAll('.mega-trigger');
+    var desktopNav = document.querySelector('.header__nav');
+    var overlay = document.querySelector('[data-mega-overlay]');
+    var header = document.querySelector('.site-header');
+    var currentPanel = null;
+    var closeTimer = null;
 
     function openPanel(trigger) {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-      const panel = trigger.querySelector('[data-mega-panel]');
+      var panel = trigger.querySelector('[data-mega-panel]');
       if (!panel) return;
       if (currentPanel && currentPanel !== panel) {
         currentPanel.classList.remove('is-open');
@@ -319,112 +318,89 @@
 
     function scheduleClose() {
       if (closeTimer) clearTimeout(closeTimer);
-      closeTimer = setTimeout(function() {
-        /* Only close if mouse truly left the nav + panel area */
-        if (!isInsideNav) closeAll();
-      }, 300);
+      closeTimer = setTimeout(closeAll, 350);
     }
 
-    function cancelClose() {
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-    }
-
-    triggers.forEach(trigger => {
-      const panel = trigger.querySelector('[data-mega-panel]');
-
-      /* Open immediately on hover for desktop */
-      trigger.addEventListener('mouseenter', () => {
+    /* Each trigger opens its panel on mouseenter */
+    triggers.forEach(function(trigger) {
+      trigger.addEventListener('mouseenter', function() {
         if (window.innerWidth > 989) {
-          isInsideNav = true;
-          cancelClose();
           openPanel(trigger);
         }
       });
-
-      trigger.addEventListener('mouseleave', (e) => {
-        if (window.innerWidth <= 989) return;
-        const related = e.relatedTarget;
-        /* If moving to another trigger, the panel, or the nav — don't close */
-        if (related) {
-          if (panel && panel.contains(related)) { cancelClose(); return; }
-          if (related.closest && related.closest('.mega-trigger')) { cancelClose(); return; }
-          if (related.closest && related.closest('.header__nav')) { cancelClose(); return; }
-        }
-        scheduleClose();
-      });
-
-      if (panel) {
-        panel.addEventListener('mouseenter', () => {
-          isInsideNav = true;
-          cancelClose();
-        });
-        panel.addEventListener('mouseleave', (e) => {
-          if (window.innerWidth <= 989) return;
-          const related = e.relatedTarget;
-          /* If moving back to nav area, don't close */
-          if (related && related.closest && (related.closest('.mega-trigger') || related.closest('.header__nav'))) {
-            cancelClose();
-            return;
-          }
-          isInsideNav = false;
-          scheduleClose();
-        });
-      }
     });
 
+    /*
+     * Key insight: all .mega-panel elements are DOM children of .mega-trigger,
+     * which are DOM children of .header__nav. So mouseleave on .header__nav
+     * only fires when the mouse truly exits the ENTIRE nav + all open panels.
+     * No flicker-prone per-element tracking needed.
+     */
     if (desktopNav) {
-      desktopNav.addEventListener('mouseenter', () => {
-        isInsideNav = true;
-        cancelClose();
-      });
-      desktopNav.addEventListener('mouseleave', (e) => {
-        const related = e.relatedTarget;
-        /* If moving to a mega panel that's outside the nav, keep open */
-        if (related && related.closest && related.closest('[data-mega-panel]')) {
-          cancelClose();
-          return;
+      desktopNav.addEventListener('mouseleave', function() {
+        if (window.innerWidth > 989 && currentPanel) {
+          scheduleClose();
         }
-        isInsideNav = false;
-        scheduleClose();
+      });
+      desktopNav.addEventListener('mouseenter', function() {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       });
     }
-
-    /* All links inside mega panels should navigate normally */
-    document.querySelectorAll('.mega-panel__link, .mega-panel__col-title--link, .mega-featured').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.stopPropagation();
-        /* Let it navigate */
-      });
-    });
 
     if (overlay) {
       overlay.addEventListener('click', closeAll);
-      overlay.addEventListener('mouseenter', () => {
-        isInsideNav = false;
-        scheduleClose();
-      });
     }
 
-    /* Close on Escape */
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeAll();
     });
 
-    /* Mobile menu toggle */
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const mobileNav = document.getElementById('MobileNav');
+    /* === MOBILE MENU === */
+    var mobileToggle = document.querySelector('.mobile-menu-toggle');
+    var mobileNav = document.getElementById('MobileNav');
+    var mobileClose = document.querySelector('[data-mobile-nav-close]');
+
+    function closeMobileNav() {
+      if (mobileNav) mobileNav.classList.remove('is-open');
+      if (mobileToggle) mobileToggle.classList.remove('active');
+      document.body.classList.remove('mobile-nav-open');
+    }
+
+    function openMobileNav() {
+      if (mobileNav) mobileNav.classList.add('is-open');
+      if (mobileToggle) mobileToggle.classList.add('active');
+      document.body.classList.add('mobile-nav-open');
+    }
+
     if (mobileToggle && mobileNav) {
-      mobileToggle.addEventListener('click', () => {
-        mobileNav.classList.toggle('is-open');
-        mobileToggle.classList.toggle('active');
-        document.body.classList.toggle('mobile-nav-open');
+      mobileToggle.addEventListener('click', function() {
+        if (mobileNav.classList.contains('is-open')) {
+          closeMobileNav();
+        } else {
+          openMobileNav();
+        }
       });
     }
 
+    /* Close button inside the mobile nav */
+    if (mobileClose) {
+      mobileClose.addEventListener('click', closeMobileNav);
+    }
+
+    /* Close mobile nav when tapping the backdrop (body::before overlay) */
+    document.addEventListener('click', function(e) {
+      if (!document.body.classList.contains('mobile-nav-open')) return;
+      /* If click is outside the mobile nav panel and not on the toggle */
+      if (mobileNav && !mobileNav.contains(e.target) &&
+          mobileToggle && !mobileToggle.contains(e.target)) {
+        closeMobileNav();
+      }
+    });
+
     /* Sticky header scroll effect */
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const scroll = window.scrollY;
+    var lastScroll = 0;
+    window.addEventListener('scroll', function() {
+      var scroll = window.scrollY;
       header.classList.toggle('scrolled', scroll > 20);
       lastScroll = scroll;
     }, { passive: true });
