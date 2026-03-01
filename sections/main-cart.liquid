@@ -271,39 +271,6 @@
                 <span>{{ cart.total_price | money }}</span>
               </div>
 
-              {%- render 'bsd-points-line', cents: cart.items_subtotal_price -%}
-
-              {%- comment -%} ===== SISTER POINTS REDEMPTION ===== {%- endcomment -%}
-              {%- if customer -%}
-                {%- assign _cart_sp_meta = customer.metafields.bsd.sp_balance.value | default: 0 | plus: 0 | floor -%}
-                {%- if _cart_sp_meta > 0 -%}
-                  {%- assign _cart_sp_value = _cart_sp_meta | times: 100 -%}
-                  {%- assign _cart_total = cart.total_price -%}
-                  {%- if _cart_sp_value > _cart_total -%}
-                    {%- assign _cart_sp_apply = _cart_total -%}
-                    {%- assign _cart_sp_use = _cart_total | divided_by: 100 | ceil -%}
-                  {%- else -%}
-                    {%- assign _cart_sp_apply = _cart_sp_value -%}
-                    {%- assign _cart_sp_use = _cart_sp_meta -%}
-                  {%- endif -%}
-                  <div class="cart__sp-redeem">
-                    <div class="cart__sp-redeem-header">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                      <span>Tienes <strong>{{ _cart_sp_meta }} Sister Points</strong></span>
-                    </div>
-                    <p class="cart__sp-redeem-detail">
-                      Equivalen a <strong>{{ _cart_sp_apply | money_without_trailing_zeros }}</strong> de descuento en esta compra.
-                      Tu crédito se aplica automáticamente en el checkout.
-                    </p>
-                  </div>
-                {%- endif -%}
-              {%- else -%}
-                <div class="cart__sp-login">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                  <span><a href="/account/login">Inicia sesión</a> para usar tus Sister Points</span>
-                </div>
-              {%- endif -%}
-
               <p class="cart__note">Impuestos y envío calculados al finalizar la compra.</p>
 
               {%- if section.settings.show_cart_note -%}
