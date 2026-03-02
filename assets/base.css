@@ -2034,13 +2034,13 @@ body.mobile-nav-open::before {
 .pp-breadcrumb a:hover { color: var(--color-text); opacity: 1; }
 .pp-breadcrumb span { margin: 0 0.5rem; }
 
-.pp-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; align-items: start; }
+.pp-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; align-items: start; overflow: hidden; }
 @media (max-width: 900px) { .pp-layout { grid-template-columns: 1fr; gap: 0; } }
 
-.pp-gallery { position: relative; }
+.pp-gallery { position: relative; min-width: 0; overflow: hidden; }
 @media (min-width: 901px) { .pp-gallery { position: sticky; top: 60px; } }
 
-.pp-gallery__grid { display: grid; gap: 2px; grid-template-columns: 1fr 1fr; }
+.pp-gallery__grid { display: grid; gap: 2px; grid-template-columns: 1fr 1fr; min-width: 0; }
 .pp-gallery__grid .pp-gallery__item:first-child:nth-last-child(1) { grid-column: span 2; }
 @media (max-width: 900px) { .pp-gallery__grid { grid-template-columns: 1fr; } }
 
