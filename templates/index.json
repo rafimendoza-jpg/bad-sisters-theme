@@ -42,26 +42,6 @@
         "text_color": ""
       }
     },
-    "image_crossfade_4kWtFc": {
-      "type": "image-crossfade",
-      "name": "Image Crossfade",
-      "settings": {
-        "image_before": "shopify://shop_images/IMG-2232.png",
-        "image_after": "shopify://shop_images/IMG-2233.png",
-        "show_labels": true,
-        "label_before": "Antes",
-        "label_after": "Después",
-        "heading": "",
-        "subheading": "",
-        "text_position": "center",
-        "button_label": "",
-        "button_link": "",
-        "scroll_distance": 3,
-        "overlay_opacity": 0.2,
-        "show_progress": true,
-        "background_color": ""
-      }
-    },
     "featured_product_PjjFwN": {
       "type": "featured-product",
       "blocks": {
@@ -383,13 +363,33 @@
         "text_color": ""
       }
     },
+    "image_crossfade_4kWtFc": {
+      "type": "image-crossfade",
+      "name": "Image Crossfade",
+      "settings": {
+        "image_before": "shopify://shop_images/IMG-2232.png",
+        "image_after": "shopify://shop_images/IMG-2233.png",
+        "show_labels": true,
+        "label_before": "Antes",
+        "label_after": "Después",
+        "heading": "",
+        "subheading": "",
+        "text_position": "center",
+        "button_label": "",
+        "button_link": "",
+        "scroll_distance": 3,
+        "overlay_opacity": 0.2,
+        "show_progress": true,
+        "background_color": ""
+      }
+    },
     "shop_the_look_zAA7z8": {
       "type": "shop-the-look",
       "blocks": {
         "hotspot_nXcEnF": {
           "type": "hotspot",
           "settings": {
-            "product": "catsuit-de-malla-segunda-piel-con-arte-pintado-a-mano-edicion-limitada",
+            "product": "vestido-largo-halter-rayado-amarillo-bad-sisters",
             "pos_x": 50,
             "pos_y": 50
           }
@@ -409,13 +409,13 @@
       ],
       "name": "Shop the Look",
       "settings": {
-        "heading": "ALL IN RED",
-        "subheading": "shop the look",
-        "image": "shopify://shop_images/81D82C0C-71CA-4C8C-A434-B96DA98409EB.jpg",
+        "heading": "",
+        "subheading": "",
+        "image": "shopify://shop_images/IMG-2233.png",
         "layout": "image-left",
         "image_size": 30,
         "full_width": false,
-        "text_content": "<p>ESTAMPADO ESTRELLA - <strong>CANNES EDITION</strong> <strong>2025</strong></p><p></p><p></p>",
+        "text_content": "<p></p><p></p><p></p>",
         "button_label": "Shop all",
         "button_link": "shopify://collections/family-rose",
         "text_color": ""
@@ -723,9 +723,9 @@
     "shop_the_look_Gt3etK",
     "gallery_slideshow_w6zFXM",
     "lookbook_BYqcJD",
-    "image_crossfade_4kWtFc",
     "featured-collection",
     "before_after_iCjxgh",
+    "image_crossfade_4kWtFc",
     "shop_the_look_zAA7z8",
     "multicolumn_TK4aff",
     "looks_carousel_CVGgrx",
