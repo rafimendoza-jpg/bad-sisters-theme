@@ -42,6 +42,27 @@
         "text_color": ""
       }
     },
+    "parallax_section_ic3zym": {
+      "type": "parallax-section",
+      "name": "Parallax",
+      "settings": {
+        "image": "shopify://shop_images/IMG_0880.jpg",
+        "video_url": "",
+        "focal_point": "center center",
+        "subheading": "",
+        "heading": "",
+        "text": "",
+        "text_align": "center",
+        "button_label": "",
+        "button_link": "",
+        "parallax_speed": 0.4,
+        "section_height": 80,
+        "overlay_style": "vignette",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.3,
+        "text_color": "#ffffff"
+      }
+    },
     "featured_product_PjjFwN": {
       "type": "featured-product",
       "blocks": {
@@ -717,6 +738,7 @@
   "order": [
     "hero",
     "product_carousel_37FEFD",
+    "parallax_section_ic3zym",
     "featured_product_PjjFwN",
     "parallax_section_gYcHGF",
     "gallery_NCRgwK",
