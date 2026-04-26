@@ -203,6 +203,160 @@
         "text_color": ""
       }
     },
+    "lookbook_BYqcJD": {
+      "type": "lookbook",
+      "blocks": {
+        "image_NAREM6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/beatle-peonia-rose-modelo.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "beatle-peonia-rose-bad-sisters",
+            "tag_x": 50,
+            "tag_y": 82,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_YmNtdH": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/beat-clavel-modelo.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "beat-clavel-bad-sisters",
+            "tag_x": 50,
+            "tag_y": 50,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_NAREM6",
+        "image_YmNtdH"
+      ],
+      "settings": {
+        "subheading": "",
+        "heading": "",
+        "layout": "2-col-right",
+        "gap": 16,
+        "border_radius": 0,
+        "full_width": true,
+        "background_color": "#ffffff",
+        "text_color": "#ffffff"
+      }
+    },
+    "gallery_slideshow_w6zFXM": {
+      "type": "gallery-slideshow",
+      "blocks": {
+        "slide_twcF8F": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/373781FA-A5E9-4F3A-82C3-62BECB861C18.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "slide_KGj8MM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/F15DD655-47BB-44BF-9A2A-72289367567D.jpg",
+            "heading": "",
+            "text": "",
+            "text_position": "center",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_twcF8F",
+        "slide_KGj8MM"
+      ],
+      "name": "Galería slideshow",
+      "settings": {
+        "height": "medium",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_counter": true
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "subheading": "bad sisters atelier",
+        "heading": "sleepwear",
+        "description": "",
+        "collection": "sleepwear",
+        "products_to_show": 4,
+        "columns": "4",
+        "show_vendor": false,
+        "show_view_all": true,
+        "view_all_text": "Ver todos"
+      }
+    },
+    "before_after_iCjxgh": {
+      "type": "before-after",
+      "name": "Before / After",
+      "settings": {
+        "subheading": "",
+        "heading": "Antifaces Reversibles",
+        "image_before": "shopify://shop_images/Photoroom_20251219_111621.jpg",
+        "image_after": "shopify://shop_images/Photoroom_20251219_111642.jpg",
+        "show_labels": true,
+        "label_before": "Front",
+        "label_after": "Back",
+        "initial_position": 50,
+        "max_width": 1000,
+        "border_radius": 0,
+        "full_width": false,
+        "background_color": "#ffffff",
+        "text_color": ""
+      }
+    },
+    "image_crossfade_4kWtFc": {
+      "type": "image-crossfade",
+      "name": "Image Crossfade",
+      "settings": {
+        "image_before": "shopify://shop_images/IMG-2232.png",
+        "image_after": "shopify://shop_images/IMG-2233.png",
+        "show_labels": true,
+        "label_before": "Antes",
+        "label_after": "Después",
+        "heading": "",
+        "subheading": "",
+        "text_position": "center",
+        "button_label": "",
+        "button_link": "",
+        "scroll_distance": 3,
+        "overlay_opacity": 0.2,
+        "show_progress": true,
+        "background_color": ""
+      }
+    },
     "shop_the_look_Gt3etK": {
       "type": "shop-the-look",
       "blocks": {
@@ -248,160 +402,6 @@
         "button_label": "Más de esta colección",
         "button_link": "shopify://collections/family-rose",
         "text_color": ""
-      }
-    },
-    "gallery_slideshow_w6zFXM": {
-      "type": "gallery-slideshow",
-      "blocks": {
-        "slide_twcF8F": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/373781FA-A5E9-4F3A-82C3-62BECB861C18.jpg",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        },
-        "slide_KGj8MM": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/F15DD655-47BB-44BF-9A2A-72289367567D.jpg",
-            "heading": "",
-            "text": "",
-            "text_position": "center",
-            "button_label": "",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_twcF8F",
-        "slide_KGj8MM"
-      ],
-      "name": "Galería slideshow",
-      "settings": {
-        "height": "medium",
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "show_counter": true
-      }
-    },
-    "lookbook_BYqcJD": {
-      "type": "lookbook",
-      "blocks": {
-        "image_NAREM6": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG-2213.png",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "sin-nombre-9mar_23-46",
-            "tag_x": 50,
-            "tag_y": 82,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_YmNtdH": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/48FE44D7-5DF4-4DE1-A058-2DADDC69F302.jpg",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "sin-nombre-9mar_23-46",
-            "tag_x": 50,
-            "tag_y": 50,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_NAREM6",
-        "image_YmNtdH"
-      ],
-      "settings": {
-        "subheading": "",
-        "heading": "",
-        "layout": "2-col-right",
-        "gap": 16,
-        "border_radius": 0,
-        "full_width": true,
-        "background_color": "#ffffff",
-        "text_color": "#ffffff"
-      }
-    },
-    "featured-collection": {
-      "type": "featured-collection",
-      "settings": {
-        "subheading": "venecia - bad sisters atelier",
-        "heading": "Accesorios de seda",
-        "description": "",
-        "collection": "accesorios-de-seda",
-        "products_to_show": 3,
-        "columns": "3",
-        "show_vendor": false,
-        "show_view_all": true,
-        "view_all_text": "Ver todos"
-      }
-    },
-    "before_after_iCjxgh": {
-      "type": "before-after",
-      "name": "Before / After",
-      "settings": {
-        "subheading": "",
-        "heading": "Antifaces Reversibles",
-        "image_before": "shopify://shop_images/Photoroom_20251219_111621.jpg",
-        "image_after": "shopify://shop_images/Photoroom_20251219_111642.jpg",
-        "show_labels": true,
-        "label_before": "Front",
-        "label_after": "Back",
-        "initial_position": 50,
-        "max_width": 1000,
-        "border_radius": 0,
-        "full_width": false,
-        "background_color": "#ffffff",
-        "text_color": ""
-      }
-    },
-    "image_crossfade_4kWtFc": {
-      "type": "image-crossfade",
-      "name": "Image Crossfade",
-      "settings": {
-        "image_before": "shopify://shop_images/IMG-2232.png",
-        "image_after": "shopify://shop_images/IMG-2233.png",
-        "show_labels": true,
-        "label_before": "Antes",
-        "label_after": "Después",
-        "heading": "",
-        "subheading": "",
-        "text_position": "center",
-        "button_label": "",
-        "button_link": "",
-        "scroll_distance": 3,
-        "overlay_opacity": 0.2,
-        "show_progress": true,
-        "background_color": ""
       }
     },
     "shop_the_look_zAA7z8": {
@@ -742,12 +742,12 @@
     "featured_product_PjjFwN",
     "parallax_section_gYcHGF",
     "gallery_NCRgwK",
-    "shop_the_look_Gt3etK",
-    "gallery_slideshow_w6zFXM",
     "lookbook_BYqcJD",
+    "gallery_slideshow_w6zFXM",
     "featured-collection",
     "before_after_iCjxgh",
     "image_crossfade_4kWtFc",
+    "shop_the_look_Gt3etK",
     "shop_the_look_zAA7z8",
     "multicolumn_TK4aff",
     "looks_carousel_CVGgrx",
