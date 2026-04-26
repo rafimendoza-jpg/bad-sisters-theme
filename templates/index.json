@@ -337,6 +337,139 @@
         "text_color": ""
       }
     },
+    "lookbook_WJJhHP": {
+      "type": "lookbook",
+      "blocks": {
+        "image_tT3ar8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/710B4C90-41D1-449C-9C8B-A21DA8BC5318.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "vestido-halter-colibri-burgundy-bad-sisters",
+            "tag_x": 38,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_BpYeeP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/A37027FD-1352-4D83-9EB2-1F4AF8F7EF30.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "vestido-silk-velvet-bad-sisters",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_pL6Bze": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/6B3F06B1-0BB8-4376-91B6-79AE3F53B9AE.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "sweet-velvet-burg-andy-bad-sisters",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_WDPe8y": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/79273A5D-62B1-4E47-B8FA-E859E5F7D992.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "vestido-tutu-seda-claveles-bad-sisters",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        },
+        "image_y3yiQc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/71D5C30A-7658-49FC-B916-99727AF5F125.jpg",
+            "aspect_ratio": "auto",
+            "focal_point": "center center",
+            "product": "vestido-pabilo-velvet-verde-bad-sisters",
+            "tag_x": 50,
+            "tag_y": 40,
+            "product_2": "",
+            "tag_x_2": 70,
+            "tag_y_2": 65,
+            "overlay_title": "",
+            "overlay_subtitle": "",
+            "title_size": 1.5,
+            "text_position": "bottom-left",
+            "overlay_opacity": 0.4,
+            "overlay_padding": 30,
+            "overlay_link_text": "",
+            "overlay_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_tT3ar8",
+        "image_BpYeeP",
+        "image_pL6Bze",
+        "image_WDPe8y",
+        "image_y3yiQc"
+      ],
+      "name": "Lookbook",
+      "settings": {
+        "subheading": "",
+        "heading": "Lookbook",
+        "layout": "masonry",
+        "gap": 4,
+        "border_radius": 0,
+        "full_width": true,
+        "background_color": "#ffffff",
+        "text_color": ""
+      }
+    },
     "image_crossfade_4kWtFc": {
       "type": "image-crossfade",
       "name": "Image Crossfade",
@@ -355,53 +488,6 @@
         "overlay_opacity": 0.2,
         "show_progress": true,
         "background_color": ""
-      }
-    },
-    "shop_the_look_Gt3etK": {
-      "type": "shop-the-look",
-      "blocks": {
-        "hotspot_4e98FQ": {
-          "type": "hotspot",
-          "settings": {
-            "product": "cintas-lazos-intercambiables-para-zapatos",
-            "pos_x": 50,
-            "pos_y": 85
-          }
-        },
-        "hotspot_8rmmni": {
-          "type": "hotspot",
-          "settings": {
-            "product": "kimono-reversible-con-cola-arte-pintado-a-mano",
-            "pos_x": 35,
-            "pos_y": 74
-          }
-        },
-        "hotspot_y4EdKw": {
-          "type": "hotspot",
-          "settings": {
-            "product": "vestido-de-malla-clavel-manga-larga-con-arte-pintado-a-mano",
-            "pos_x": 50,
-            "pos_y": 50
-          }
-        }
-      },
-      "block_order": [
-        "hotspot_4e98FQ",
-        "hotspot_8rmmni",
-        "hotspot_y4EdKw"
-      ],
-      "name": "Shop the Look",
-      "settings": {
-        "heading": "SHOP THE LOOK",
-        "subheading": "",
-        "image": "shopify://shop_images/90DC7195-59EC-4435-8D63-091CC05E6941.jpg",
-        "layout": "image-left",
-        "image_size": 45,
-        "full_width": true,
-        "text_content": "<h2><strong>It´s about to bloom</strong></h2><p></p><p>Un homenaje a lo eterno, a lo que florece sin miedo a romperse</p>",
-        "button_label": "Más de esta colección",
-        "button_link": "shopify://collections/family-rose",
-        "text_color": ""
       }
     },
     "shop_the_look_zAA7z8": {
@@ -520,40 +606,40 @@
         "look_yDU6k4": {
           "type": "look",
           "settings": {
-            "video": "shopify://files/videos/4DA694FF-F8D2-44F2-9637-AB5249F4DC5C.MP4",
+            "video": "shopify://files/videos/F8897540-2032-4805-8FCE-C53942190E97.MP4",
             "caption": "",
             "subtitle": "",
-            "link": "shopify://products/top-halter",
+            "link": "shopify://products/vestido-halter-colibri-burgundy-bad-sisters",
             "link_text": ""
           }
         },
         "look_Vkf7Up": {
           "type": "look",
           "settings": {
-            "video": "shopify://files/videos/39CE9C44-3F26-423A-B3D5-06FCE7EAEEB6.MOV",
+            "video": "shopify://files/videos/3898EC3B-B517-4356-B54C-146525C3577B.MP4",
             "caption": "",
             "subtitle": "",
-            "link": "",
+            "link": "shopify://products/pantalon-velvet-geisha-rosa-bad-sisters",
             "link_text": ""
           }
         },
         "look_RQYFML": {
           "type": "look",
           "settings": {
-            "video": "shopify://files/videos/copy-96EE41DA-B09B-447E-86B4-847558A65F05.mov",
+            "video": "shopify://files/videos/B6BCE895-D1FC-42F7-9403-80F89AAF5225.MP4",
             "caption": "",
             "subtitle": "",
-            "link": "",
+            "link": "shopify://products/vestido-tutu-seda-claveles-bad-sisters",
             "link_text": ""
           }
         },
         "look_fyfDYC": {
           "type": "look",
           "settings": {
-            "video": "shopify://files/videos/A83A791B-7AF7-47D7-830C-CACF2713D018.mp4",
+            "video": "shopify://files/videos/75990B0A-6ED8-4AB3-90C7-BB2D4B078A3F.MP4",
             "caption": "",
             "subtitle": "",
-            "link": "",
+            "link": "shopify://products/sweet-velvet-burg-andy-bad-sisters",
             "link_text": ""
           }
         },
@@ -563,7 +649,7 @@
             "video": "shopify://files/videos/copy-B1EE7525-FCA5-47A0-8DD1-6BC0EA165D5D.mov",
             "caption": "",
             "subtitle": "",
-            "link": "",
+            "link": "shopify://products/beatle-coi",
             "link_text": ""
           }
         }
@@ -586,139 +672,6 @@
         "border_radius": 4,
         "scroll_count": 3,
         "background_color": "",
-        "text_color": ""
-      }
-    },
-    "lookbook_WJJhHP": {
-      "type": "lookbook",
-      "blocks": {
-        "image_tT3ar8": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/0014BF1B-367A-4F9A-B0AC-649393C75AE9.jpg",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "",
-            "tag_x": 50,
-            "tag_y": 40,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_BpYeeP": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG-9835.png",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "",
-            "tag_x": 50,
-            "tag_y": 40,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_pL6Bze": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG-9635.png",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "",
-            "tag_x": 50,
-            "tag_y": 40,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_WDPe8y": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/155124D5-792F-4283-AD73-DD5F2FB7D436.jpg",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "",
-            "tag_x": 50,
-            "tag_y": 40,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_y3yiQc": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/IMG-9409.jpg",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "",
-            "tag_x": 50,
-            "tag_y": 40,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_tT3ar8",
-        "image_BpYeeP",
-        "image_pL6Bze",
-        "image_WDPe8y",
-        "image_y3yiQc"
-      ],
-      "name": "Lookbook",
-      "settings": {
-        "subheading": "",
-        "heading": "Lookbook",
-        "layout": "masonry",
-        "gap": 4,
-        "border_radius": 0,
-        "full_width": true,
-        "background_color": "#ffffff",
         "text_color": ""
       }
     },
@@ -746,12 +699,11 @@
     "gallery_slideshow_w6zFXM",
     "featured-collection",
     "before_after_iCjxgh",
+    "lookbook_WJJhHP",
     "image_crossfade_4kWtFc",
-    "shop_the_look_Gt3etK",
     "shop_the_look_zAA7z8",
     "multicolumn_TK4aff",
     "looks_carousel_CVGgrx",
-    "lookbook_WJJhHP",
     "newsletter"
   ]
 }
