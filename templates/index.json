@@ -432,6 +432,43 @@
         "text_color": ""
       }
     },
+    "featured_product_xerN73": {
+      "type": "featured-product",
+      "blocks": {
+        "feature_HxdGxe": {
+          "type": "feature",
+          "settings": {
+            "icon": "✦",
+            "text": "Diseño exclusivo"
+          }
+        },
+        "feature_kNwwWF": {
+          "type": "feature",
+          "settings": {
+            "icon": "♡",
+            "text": "Hecho a mano"
+          }
+        }
+      },
+      "block_order": [
+        "feature_HxdGxe",
+        "feature_kNwwWF"
+      ],
+      "name": "Producto Destacado",
+      "settings": {
+        "product": "vestido-halter-colibri-burgundy-bad-sisters",
+        "heading": "PRODUCTO DESTACADO",
+        "subheading": "",
+        "image_position": "left",
+        "full_width": false,
+        "show_vendor": true,
+        "show_description": true,
+        "description_words": 35,
+        "custom_text": "",
+        "button_label": "Ver producto",
+        "text_color": ""
+      }
+    },
     "image_crossfade_4kWtFc": {
       "type": "image-crossfade",
       "name": "Image Crossfade",
@@ -661,6 +698,7 @@
     "featured-collection",
     "before_after_iCjxgh",
     "lookbook_WJJhHP",
+    "featured_product_xerN73",
     "image_crossfade_4kWtFc",
     "shop_the_look_zAA7z8",
     "multicolumn_TK4aff",
