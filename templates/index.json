@@ -12,15 +12,15 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/C6B690B1-AA7F-49D6-90FD-DD20B54C23E8.png",
+        "image": "shopify://shop_images/AE981C8E-78B1-45B0-BFC7-9E4B06E13EBE.jpg",
         "height": "medium",
         "overlay_opacity": 30,
         "subheading": "",
-        "heading": "Summer Last Pieces",
+        "heading": "Recuerdo de algo que nunca pasó",
         "text": "PIEZAS ÚNICAS, MIL LOOKS",
         "text_alignment": "text-center",
-        "button_label_1": "shop verano",
-        "button_link_1": "shopify://collections/summer-basics",
+        "button_label_1": "shop now",
+        "button_link_1": "shopify://collections/recuerdo-de-algo-que-nunca-paso",
         "button_label_2": "family rose",
         "button_link_2": "shopify://collections/family-rose"
       }
@@ -29,10 +29,10 @@
       "type": "product-carousel",
       "name": "Carrusel de Productos",
       "settings": {
-        "heading": "Temporada de matrimonios",
-        "subheading": "No digas que no tienes que ponerte...",
+        "heading": "LA ESCENA EMPIEZA ACÁ",
+        "subheading": "Piezas que parecen venir de otra historia.",
         "products": [],
-        "collection": "matrimonio-evento",
+        "collection": "recuerdo-de-algo-que-nunca-paso",
         "products_to_show": 8,
         "scroll_count": 3,
         "show_vendor": true,
@@ -46,7 +46,7 @@
       "type": "parallax-section",
       "name": "Parallax",
       "settings": {
-        "image": "shopify://shop_images/IMG_0880.jpg",
+        "image": "shopify://shop_images/79273A5D-62B1-4E47-B8FA-E859E5F7D992.jpg",
         "video_url": "",
         "focal_point": "center center",
         "subheading": "",
@@ -87,7 +87,7 @@
       ],
       "name": "Producto Destacado",
       "settings": {
-        "product": "falda-rebeca-colibri-lila",
+        "product": "vestido-pabilo-velvet-verde-bad-sisters",
         "heading": "DESTACADO",
         "subheading": "",
         "image_position": "right",
@@ -104,7 +104,7 @@
       "type": "parallax-section",
       "name": "Parallax",
       "settings": {
-        "image": "shopify://shop_images/45FF4FC6-94C8-4CD4-9159-CAD3EA5EC0B8.jpg",
+        "image": "shopify://shop_images/3F9B695E-2B7E-4336-9858-DC1284FAFA47.jpg",
         "video_url": "",
         "focal_point": "center center",
         "subheading": "",
@@ -127,7 +127,7 @@
         "image_8KFnaB": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/BE3DBF68-9F7F-4E2D-A558-029FC0F65D8A.jpg",
+            "image": "shopify://shop_images/035CC344-4249-4D28-88A7-280DFD3779D6.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -146,7 +146,7 @@
         "image_jPpEp8": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/7E5D7443-45F1-4472-A6FA-1D6C9F932D21.jpg",
+            "image": "shopify://shop_images/IMG_4645_2.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -165,7 +165,7 @@
         "image_WgMNTd": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/9C4EA887-1E37-4C2E-ABD3-C76C2291C738.jpg",
+            "image": "shopify://shop_images/79273A5D-62B1-4E47-B8FA-E859E5F7D992.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
