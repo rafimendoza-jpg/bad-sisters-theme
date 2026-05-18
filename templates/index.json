@@ -203,6 +203,23 @@
         "text_color": ""
       }
     },
+    "product_recommendations_PA64bL": {
+      "type": "product-recommendations",
+      "name": "Recomendaciones de producto",
+      "settings": {
+        "heading": "Not Just pijamas",
+        "subheading": "",
+        "products": [
+          "conjunto-escoces-rosa-velvet",
+          "conjunto-geisha-rosa-bad-sisters",
+          "conjunto-not-pijama-escoces-oro-verde",
+          "conjunto-velvet-escoces",
+          "conjunto-velvet-coi"
+        ],
+        "max_products": 4,
+        "show_vendor": false
+      }
+    },
     "lookbook_BYqcJD": {
       "type": "lookbook",
       "blocks": {
@@ -270,7 +287,7 @@
       "type": "featured-collection",
       "settings": {
         "subheading": "bad sisters atelier",
-        "heading": "Not Just Pijamas",
+        "heading": "",
         "description": "",
         "collection": "sleepwear",
         "products_to_show": 4,
@@ -694,6 +711,7 @@
     "featured_product_PjjFwN",
     "parallax_section_gYcHGF",
     "gallery_NCRgwK",
+    "product_recommendations_PA64bL",
     "lookbook_BYqcJD",
     "featured-collection",
     "before_after_iCjxgh",
