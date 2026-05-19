@@ -25,21 +25,19 @@
         "button_link_2": "shopify://collections/new-in"
       }
     },
-    "product_carousel_37FEFD": {
-      "type": "product-carousel",
-      "name": "Carrusel de Productos",
+    "featured_collection_D63z8Q": {
+      "type": "featured-collection",
+      "name": "Colección destacada",
       "settings": {
-        "heading": "LA ESCENA EMPIEZA ACÁ",
-        "subheading": "Piezas que parecen venir de otra historia.",
-        "products": [],
-        "collection": "recuerdo-de-algo-que-nunca-paso",
-        "products_to_show": 8,
-        "scroll_count": 3,
-        "show_vendor": true,
-        "show_button": false,
-        "button_label": "Ver más",
-        "button_link": "",
-        "text_color": ""
+        "subheading": "Es un beatle con historia, arte y presencia.",
+        "heading": "not a basic, a beatle",
+        "description": "",
+        "collection": "not-a-basic-a-beatle",
+        "products_to_show": 4,
+        "columns": "4",
+        "show_vendor": false,
+        "show_view_all": true,
+        "view_all_text": "Ver toda la colección"
       }
     },
     "parallax_section_ic3zym": {
@@ -706,7 +704,7 @@
   },
   "order": [
     "hero",
-    "product_carousel_37FEFD",
+    "featured_collection_D63z8Q",
     "parallax_section_ic3zym",
     "featured_product_PjjFwN",
     "parallax_section_gYcHGF",
