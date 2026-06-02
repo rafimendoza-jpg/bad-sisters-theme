@@ -85,7 +85,7 @@
       ],
       "name": "Producto Destacado",
       "settings": {
-        "product": "vestido-pabilo-velvet-verde-bad-sisters",
+        "product": "parca-larga-colibri-burdeo-pre-orden-bad-sisters",
         "heading": "DESTACADO",
         "subheading": "",
         "image_position": "right",
@@ -314,6 +314,43 @@
         "text_color": ""
       }
     },
+    "featured_product_HPNLTe": {
+      "type": "featured-product",
+      "blocks": {
+        "feature_JNKcEL": {
+          "type": "feature",
+          "settings": {
+            "icon": "✦",
+            "text": "Diseño exclusivo"
+          }
+        },
+        "feature_bRChp3": {
+          "type": "feature",
+          "settings": {
+            "icon": "♡",
+            "text": "Hecho a mano"
+          }
+        }
+      },
+      "block_order": [
+        "feature_JNKcEL",
+        "feature_bRChp3"
+      ],
+      "name": "Producto Destacado",
+      "settings": {
+        "product": "poleron-im-not-for-everyone-bad-sisters",
+        "heading": "PRODUCTO DESTACADO",
+        "subheading": "",
+        "image_position": "left",
+        "full_width": false,
+        "show_vendor": true,
+        "show_description": true,
+        "description_words": 35,
+        "custom_text": "",
+        "button_label": "Ver producto",
+        "text_color": ""
+      }
+    },
     "lookbook_WJJhHP": {
       "type": "lookbook",
       "blocks": {
@@ -471,7 +508,7 @@
       ],
       "name": "Producto Destacado",
       "settings": {
-        "product": "vestido-halter-colibri-burgundy-bad-sisters",
+        "product": "vestido-pabilo-velvet-verde-bad-sisters",
         "heading": "PRODUCTO DESTACADO",
         "subheading": "",
         "image_position": "left",
@@ -713,6 +750,7 @@
     "lookbook_BYqcJD",
     "featured-collection",
     "before_after_iCjxgh",
+    "featured_product_HPNLTe",
     "lookbook_WJJhHP",
     "featured_product_xerN73",
     "image_crossfade_4kWtFc",
