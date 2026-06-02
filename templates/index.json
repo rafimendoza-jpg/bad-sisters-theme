@@ -354,28 +354,6 @@
     "lookbook_WJJhHP": {
       "type": "lookbook",
       "blocks": {
-        "image_tT3ar8": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/710B4C90-41D1-449C-9C8B-A21DA8BC5318.jpg",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "vestido-halter-colibri-burgundy-bad-sisters",
-            "tag_x": 38,
-            "tag_y": 40,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
         "image_BpYeeP": {
           "type": "image",
           "settings": {
@@ -383,28 +361,6 @@
             "aspect_ratio": "auto",
             "focal_point": "center center",
             "product": "vestido-silk-velvet-bad-sisters",
-            "tag_x": 50,
-            "tag_y": 40,
-            "product_2": "",
-            "tag_x_2": 70,
-            "tag_y_2": 65,
-            "overlay_title": "",
-            "overlay_subtitle": "",
-            "title_size": 1.5,
-            "text_position": "bottom-left",
-            "overlay_opacity": 0.4,
-            "overlay_padding": 30,
-            "overlay_link_text": "",
-            "overlay_link": ""
-          }
-        },
-        "image_pL6Bze": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/6B3F06B1-0BB8-4376-91B6-79AE3F53B9AE.jpg",
-            "aspect_ratio": "auto",
-            "focal_point": "center center",
-            "product": "sweet-velvet-burg-andy-bad-sisters",
             "tag_x": 50,
             "tag_y": 40,
             "product_2": "",
@@ -466,9 +422,7 @@
         }
       },
       "block_order": [
-        "image_tT3ar8",
         "image_BpYeeP",
-        "image_pL6Bze",
         "image_WDPe8y",
         "image_y3yiQc"
       ],
