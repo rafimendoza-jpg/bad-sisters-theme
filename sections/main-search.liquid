@@ -17,6 +17,7 @@
       <button type="submit" class="btn btn--primary">Buscar</button>
     </form>
 
+    {% paginate search.results by 24 %}
     {%- if search.performed -%}
       {%- if search.results_count > 0 -%}
         <p class="text-center mb-3" style="color: var(--color-text-light);">
@@ -52,7 +53,8 @@
           <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--color-text-light);">Intenta con otro término de búsqueda.</p>
         </div>
       {%- endif -%}
-    {%- endif -%}
+        {%- endif -%}
+{% endpaginate %}
   </div>
 </section>
 
