@@ -18,8 +18,23 @@
     </form>
 
     {% paginate search.results by 24 %}
+    {%- assign term_down = search.terms | downcase -%}
+    {%- assign use_sleepwear = false -%}
+    {%- if term_down contains 'pijama' -%}
+      {%- assign use_sleepwear = true -%}
+    {%- endif -%}
+    {%- assign sleepwear_results = collections['sleepwear'].products -%}
     {%- if search.performed -%}
-      {%- if search.results_count > 0 -%}
+      {%- if use_sleepwear -%}
+        <p class="text-center mb-3" style="color: var(--color-text-light);">
+          {{ sleepwear_results.size }} resultados para "{{ search.terms }}"
+        </p>
+        <div class="grid grid--4">
+          {%- for product in sleepwear_results -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        </div>
+      {%- elsif search.results_count > 0 -%}
         <p class="text-center mb-3" style="color: var(--color-text-light);">
           {{ search.results_count }} resultados para "{{ search.terms }}"
         </p>
