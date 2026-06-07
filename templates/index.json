@@ -102,7 +102,7 @@
       "type": "parallax-section",
       "name": "Parallax",
       "settings": {
-        "image": "shopify://shop_images/3F9B695E-2B7E-4336-9858-DC1284FAFA47.jpg",
+        "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D_e3fbd43b-b871-4ebe-a48e-cb5b7eedd35f.png",
         "video_url": "",
         "focal_point": "center center",
         "subheading": "",
@@ -125,7 +125,7 @@
         "image_8KFnaB": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/035CC344-4249-4D28-88A7-280DFD3779D6.jpg",
+            "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D_5b36b82f-3432-41c0-bfc3-6150714995ca.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
