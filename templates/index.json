@@ -12,8 +12,8 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/AE981C8E-78B1-45B0-BFC7-9E4B06E13EBE_dd47351f-2974-4272-82b2-b1692c48d39f.jpg",
-        "height": "medium",
+        "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D.png",
+        "height": "full",
         "overlay_opacity": 30,
         "subheading": "",
         "heading": "Recuerdo de algo que nunca pasó",
