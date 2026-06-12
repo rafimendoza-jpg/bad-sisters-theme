@@ -12,7 +12,7 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D.png",
+        "image": "shopify://shop_images/7CA57EFE-1B8F-4F34-818C-397E78B59625.jpg",
         "height": "full",
         "overlay_opacity": 30,
         "subheading": "",
@@ -29,10 +29,10 @@
       "type": "featured-collection",
       "name": "Colección destacada",
       "settings": {
-        "subheading": "Es un beatle con historia, arte y presencia.",
-        "heading": "not a basic, a beatle",
+        "subheading": "para todo pero no para todos.",
+        "heading": "Not just pijamas",
         "description": "",
-        "collection": "not-a-basic-a-beatle",
+        "collection": "sleepwear",
         "products_to_show": 4,
         "columns": "4",
         "show_vendor": false,
@@ -44,7 +44,7 @@
       "type": "parallax-section",
       "name": "Parallax",
       "settings": {
-        "image": "shopify://shop_images/79273A5D-62B1-4E47-B8FA-E859E5F7D992.jpg",
+        "image": "shopify://shop_images/9A5D6584-F872-4FD5-A206-51440F21E64C.png",
         "video_url": "",
         "focal_point": "center center",
         "subheading": "",
@@ -102,7 +102,7 @@
       "type": "parallax-section",
       "name": "Parallax",
       "settings": {
-        "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D_e3fbd43b-b871-4ebe-a48e-cb5b7eedd35f.png",
+        "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D.png",
         "video_url": "",
         "focal_point": "center center",
         "subheading": "",
@@ -125,7 +125,7 @@
         "image_8KFnaB": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D_5b36b82f-3432-41c0-bfc3-6150714995ca.png",
+            "image": "shopify://shop_images/56296EF3-172B-4969-BFA5-0CE9BC997662.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -144,7 +144,7 @@
         "image_jPpEp8": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/IMG_4645_2.jpg",
+            "image": "shopify://shop_images/DB308ADD-4E90-4199-9ADF-29DEEE3608EF.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -163,7 +163,7 @@
         "image_WgMNTd": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/79273A5D-62B1-4E47-B8FA-E859E5F7D992.jpg",
+            "image": "shopify://shop_images/1BC4763B-EEF6-4A99-A1F2-2CF384BF09AE.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -199,23 +199,6 @@
         "padding_bottom": 15,
         "background_color": "#690f17",
         "text_color": ""
-      }
-    },
-    "product_recommendations_PA64bL": {
-      "type": "product-recommendations",
-      "name": "Recomendaciones de producto",
-      "settings": {
-        "heading": "Not Just pijamas",
-        "subheading": "",
-        "products": [
-          "conjunto-escoces-rosa-velvet",
-          "conjunto-geisha-rosa-bad-sisters",
-          "conjunto-not-pijama-escoces-oro-verde",
-          "conjunto-velvet-escoces",
-          "conjunto-velvet-coi"
-        ],
-        "max_products": 4,
-        "show_vendor": false
       }
     },
     "lookbook_BYqcJD": {
@@ -287,7 +270,7 @@
         "subheading": "bad sisters atelier",
         "heading": "",
         "description": "",
-        "collection": "sleepwear",
+        "collection": "not-a-basic-a-beatle",
         "products_to_show": 4,
         "columns": "4",
         "show_vendor": false,
@@ -700,7 +683,6 @@
     "featured_product_PjjFwN",
     "parallax_section_gYcHGF",
     "gallery_NCRgwK",
-    "product_recommendations_PA64bL",
     "lookbook_BYqcJD",
     "featured-collection",
     "before_after_iCjxgh",
