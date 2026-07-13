@@ -12,12 +12,12 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/7CA57EFE-1B8F-4F34-818C-397E78B59625.jpg",
-        "height": "full",
+        "image": "shopify://shop_images/F2EE0C64-632B-488F-8B2A-0284B664396D.png",
+        "height": "large",
         "overlay_opacity": 30,
         "subheading": "",
-        "heading": "NOT JUST PIJAMAS",
-        "text": "Para salir. Para viajar. Para bailar. Para vivir afuera",
+        "heading": "recuerdo de algo que nunca pasó",
+        "text": "el arte del ahora.",
         "text_alignment": "text-center",
         "button_label_1": "shop now",
         "button_link_1": "shopify://collections/recuerdo-de-algo-que-nunca-paso",
@@ -29,10 +29,10 @@
       "type": "featured-collection",
       "name": "Colección destacada",
       "settings": {
-        "subheading": "para todo pero no para todos.",
-        "heading": "Not just pijamas",
+        "subheading": "que ni el frio te haga esconder los colores de tu closet",
+        "heading": "vístete con arte",
         "description": "",
-        "collection": "sleepwear",
+        "collection": "recuerdo-de-algo-que-nunca-paso",
         "products_to_show": 4,
         "columns": "4",
         "show_vendor": false,
@@ -44,7 +44,7 @@
       "type": "parallax-section",
       "name": "Parallax",
       "settings": {
-        "image": "shopify://shop_images/9A5D6584-F872-4FD5-A206-51440F21E64C.png",
+        "image": "shopify://shop_images/79273A5D-62B1-4E47-B8FA-E859E5F7D992.jpg",
         "video_url": "",
         "focal_point": "center center",
         "subheading": "",
@@ -264,6 +264,43 @@
         "text_color": "#ffffff"
       }
     },
+    "featured_product_teRQnz": {
+      "type": "featured-product",
+      "blocks": {
+        "feature_yjqt84": {
+          "type": "feature",
+          "settings": {
+            "icon": "✦",
+            "text": "Diseño exclusivo"
+          }
+        },
+        "feature_DrKCkd": {
+          "type": "feature",
+          "settings": {
+            "icon": "♡",
+            "text": "Hecho a mano"
+          }
+        }
+      },
+      "block_order": [
+        "feature_yjqt84",
+        "feature_DrKCkd"
+      ],
+      "name": "Producto Destacado",
+      "settings": {
+        "product": "poleron-oversize-velvet-colibri-burdeo",
+        "heading": "PRODUCTO DESTACADO",
+        "subheading": "",
+        "image_position": "left",
+        "full_width": false,
+        "show_vendor": true,
+        "show_description": true,
+        "description_words": 35,
+        "custom_text": "",
+        "button_label": "Ver producto",
+        "text_color": ""
+      }
+    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
@@ -462,8 +499,8 @@
       "type": "image-crossfade",
       "name": "Image Crossfade",
       "settings": {
-        "image_before": "shopify://shop_images/IMG-2232.png",
-        "image_after": "shopify://shop_images/IMG-2233.png",
+        "image_before": "shopify://shop_images/file_368---59b49a29-1ba7-40cd-8032-c7f99d20ffbb.jpg",
+        "image_after": "shopify://shop_images/file_369---1ef66bdc-e643-47dd-9a1a-6619a81072fa.jpg",
         "show_labels": true,
         "label_before": "Antes",
         "label_after": "Después",
@@ -484,7 +521,7 @@
         "hotspot_nXcEnF": {
           "type": "hotspot",
           "settings": {
-            "product": "vestido-largo-halter-rayado-amarillo-bad-sisters",
+            "product": "camisa-colibri-burdeo-simil-seda-pre-orden",
             "pos_x": 50,
             "pos_y": 50
           }
@@ -506,13 +543,13 @@
       "settings": {
         "heading": "",
         "subheading": "",
-        "image": "shopify://shop_images/IMG-2233.png",
+        "image": "shopify://shop_images/file_368---59b49a29-1ba7-40cd-8032-c7f99d20ffbb.jpg",
         "layout": "image-left",
         "image_size": 30,
         "full_width": false,
         "text_content": "<p></p><p></p><p></p>",
         "button_label": "Shop all",
-        "button_link": "shopify://collections/family-rose",
+        "button_link": "shopify://collections/recuerdo-de-algo-que-nunca-paso",
         "text_color": ""
       }
     },
@@ -684,6 +721,7 @@
     "parallax_section_gYcHGF",
     "gallery_NCRgwK",
     "lookbook_BYqcJD",
+    "featured_product_teRQnz",
     "featured-collection",
     "before_after_iCjxgh",
     "featured_product_HPNLTe",
