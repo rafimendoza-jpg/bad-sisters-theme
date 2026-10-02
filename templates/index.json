@@ -12,15 +12,15 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/IMG_0988.jpg",
+        "image": "shopify://shop_images/UniversalUpscaler_Pro_Precise_2_1f1be613-dc54-6680-abf0-08d8297a5ebd_Original.jpg",
         "height": "large",
         "overlay_opacity": 30,
         "subheading": "",
-        "heading": "the chilean way",
-        "text": "Chile, but make it Bad Sisters.",
+        "heading": "after midnight",
+        "text": "Stay strange after dark.",
         "text_alignment": "text-center",
         "button_label_1": "shop now",
-        "button_link_1": "shopify://collections/the-chilean-way",
+        "button_link_1": "shopify://collections/after-midnight",
         "button_label_2": "new in",
         "button_link_2": "shopify://collections/recuerdo-de-algo-que-nunca-paso"
       }
@@ -29,15 +29,15 @@
       "type": "image-with-text",
       "name": "Imagen con texto",
       "settings": {
-        "image": "shopify://shop_images/C0B7AA46-A241-409D-BF66-68D66BFACF3C.png",
+        "image": "shopify://shop_images/EF418217-08BE-44CF-ABD7-DD6A23006A26.jpg",
         "layout": "image_left",
-        "subheading": "There’s something special about being Chilean.",
-        "heading": "the chilean way",
-        "text": "<p>Queremos hacer que llevar Chile puesto se sienta cool.</p><p>Siempre estamos mirando hacia afuera: a ciudades, banderas, equipos, frases y símbolos que no son nuestros.</p><p>Pero quizás ya es momento de mirarnos a nosotros mismos.</p><p>The Chilean Way nace de esa idea: crear una imagen país deseable, moderna y propia. Una forma de mirar Chile no como folklore, no como souvenir, no como algo que aparece solo en septiembre, sino como un universo estético con identidad.</p><p>La cordillera, el campo, la feria, la bandera, el fútbol, el humor y las frases que solo nosotros entendemos.</p><p>Tomamos esos códigos, los sacamos de contexto, los exageramos, los mezclamos y los convertimos en moda, arte y diseño.</p><p>Mientras más propio, más reconocible.<br/>Mientras más nuestro, más imposible de copiar.</p><p>THE CHILEAN WAY<br/>by Bad Sisters</p>",
+        "subheading": "When the night turns wicked.",
+        "heading": "AFTER MIDNIGHT",
+        "text": "<p>Hay una hora en que todo cambia.</p><p>Las conversaciones se vuelven más honestas, las calles se ven distintas y lo normal empieza a sentirse sospechoso. Después de medianoche, las reglas se vuelven borrosas y cada decisión parece tener una historia detrás.</p><p>After Midnight es nuestro especial de octubre: una cápsula creada para esos momentos en que la noche deja de ser solo noche. Rayas imperfectas, rombos de arlequín, rojo y negro se encuentran en piezas que juegan con lo teatral, lo elegante y lo inesperado.</p><p>No es un disfraz. Es una invitación a inventar tu propio personaje.</p><p>Para usar cuando quieras llamar la atención. Para salir sin explicar demasiado. Para las que saben que nada bueno pasa después de medianoche… pero igual se quedan.</p>",
         "text_alignment": "left",
         "background_color": "#ffffff",
-        "button_label": "drop N°1",
-        "button_link": "shopify://collections/the-chilean-way",
+        "button_label": "Especial para ti",
+        "button_link": "shopify://collections/after-midnight",
         "button_style": "secondary"
       }
     },
@@ -45,10 +45,10 @@
       "type": "featured-collection",
       "name": "Colección destacada",
       "settings": {
-        "subheading": "lo nuestro también puede ser icónico",
-        "heading": "this is 🇨🇱",
+        "subheading": "",
+        "heading": "For the hours no one talks about.",
         "description": "",
-        "collection": "the-chilean-way",
+        "collection": "after-midnight",
         "products_to_show": 3,
         "columns": "3",
         "show_vendor": false,
@@ -60,7 +60,7 @@
       "type": "parallax-section",
       "name": "Parallax",
       "settings": {
-        "image": "shopify://shop_images/442329A4-3EDD-4C7D-A64E-C5E0B02D68FF.png",
+        "image": "shopify://shop_images/DED5E6E6-9537-4338-A8B9-568E54CD881D.jpg",
         "video_url": "",
         "focal_point": "center center",
         "subheading": "",
@@ -101,7 +101,7 @@
       ],
       "name": "Producto Destacado",
       "settings": {
-        "product": "poleron-terremotea-preorden",
+        "product": "poleron-sospecho",
         "heading": "DESTACADO",
         "subheading": "",
         "image_position": "right",
@@ -114,34 +114,13 @@
         "text_color": ""
       }
     },
-    "parallax_section_gYcHGF": {
-      "type": "parallax-section",
-      "name": "Parallax",
-      "settings": {
-        "image": "shopify://shop_images/CF331590-762B-4BC3-BE65-96FBB748CA60.png",
-        "video_url": "",
-        "focal_point": "center center",
-        "subheading": "",
-        "heading": "",
-        "text": "",
-        "text_align": "center",
-        "button_label": "",
-        "button_link": "",
-        "parallax_speed": 0.9,
-        "section_height": 80,
-        "overlay_style": "vignette",
-        "overlay_color": "#000000",
-        "overlay_opacity": 0.3,
-        "text_color": "#ffffff"
-      }
-    },
     "gallery_NCRgwK": {
       "type": "gallery",
       "blocks": {
         "image_8KFnaB": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/676DE38D-2DAC-4FC8-8DD9-D712E465C4B2.png",
+            "image": "shopify://shop_images/foto_16117.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -160,7 +139,7 @@
         "image_jPpEp8": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/IMG_0988.jpg",
+            "image": "shopify://shop_images/foto_16115.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -179,7 +158,7 @@
         "image_WgMNTd": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/4816F324-FCE7-4DB4-AA0E-C8C62E69A89A.png",
+            "image": "shopify://shop_images/IMG-7227.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -223,10 +202,10 @@
         "image_NAREM6": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/45A9730D-D9F4-463A-8AC7-E1B9D6CCB253.png",
+            "image": "shopify://shop_images/foto_16113.jpg",
             "aspect_ratio": "auto",
             "focal_point": "center center",
-            "product": "camiseta-futbol-los-primeros-bad-sisters",
+            "product": "after-dark-catsuit-preorden",
             "tag_x": 50,
             "tag_y": 34,
             "product_2": "",
@@ -245,10 +224,10 @@
         "image_YmNtdH": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/FE102405-EE05-43C2-8537-D0A027DA8109.png",
+            "image": "shopify://shop_images/IMG-7223.png",
             "aspect_ratio": "auto",
             "focal_point": "center center",
-            "product": "camiseta-futbol-los-primeros-bad-sisters",
+            "product": "top-black-white-preorden",
             "tag_x": 50,
             "tag_y": 37,
             "product_2": "",
@@ -304,7 +283,7 @@
       ],
       "name": "Producto Destacado",
       "settings": {
-        "product": "camiseta-futbol-no-estoy-ni-ahi-bad-sisters",
+        "product": "trucksuit-rombos-preorden",
         "heading": "PRODUCTO DESTACADO",
         "subheading": "",
         "image_position": "left",
@@ -320,23 +299,32 @@
     "shop_the_look_JQRXNB": {
       "type": "shop-the-look",
       "blocks": {
+        "hotspot_ym4xii": {
+          "type": "hotspot",
+          "settings": {
+            "product": "poleron-midnight",
+            "pos_x": 62,
+            "pos_y": 31
+          }
+        },
         "hotspot_bEW89A": {
           "type": "hotspot",
           "settings": {
-            "product": "camiseta-futbol-no-estoy-ni-ahi-bad-sisters",
+            "product": "trucksuit-rombos-preorden",
             "pos_x": 50,
             "pos_y": 50
           }
         }
       },
       "block_order": [
+        "hotspot_ym4xii",
         "hotspot_bEW89A"
       ],
       "name": "Shop the Look",
       "settings": {
         "heading": "SHOP THE LOOK",
         "subheading": "LA ROJA NEVER DIES.",
-        "image": "shopify://shop_images/C68E376B-7257-4703-8B3B-38DB24AE9C40.png",
+        "image": "shopify://shop_images/003FE4CC-D3D2-45BF-9EB9-97B0666FB97C.png",
         "layout": "image-right",
         "image_size": 45,
         "full_width": false,
@@ -350,8 +338,8 @@
       "type": "image-crossfade",
       "name": "Image Crossfade",
       "settings": {
-        "image_before": "shopify://shop_images/AD68AFC2-CC15-43A4-A389-4247646A74C3.png",
-        "image_after": "shopify://shop_images/737805CD-7F7A-498B-A7D3-1BF08319A85F.jpg",
+        "image_before": "shopify://shop_images/UniversalUpscaler_Pro_Precise_2_1f1be613-dc54-6680-abf0-08d8297a5ebd_Original.jpg",
+        "image_after": "shopify://shop_images/A3164BAC-9945-479B-98B9-3E889881FD29.jpg",
         "show_labels": true,
         "label_before": "Antes",
         "label_after": "Después",
@@ -532,7 +520,6 @@
     "featured_collection_D63z8Q",
     "parallax_section_ic3zym",
     "featured_product_PjjFwN",
-    "parallax_section_gYcHGF",
     "gallery_NCRgwK",
     "lookbook_BYqcJD",
     "featured_product_teRQnz",
