@@ -291,6 +291,7 @@
     },
     "before_after_TDqqt8": {
       "type": "before-after",
+      "disabled": true,
       "name": "Before / After",
       "settings": {
         "subheading": "",
