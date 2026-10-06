@@ -100,8 +100,9 @@
         "image_HxNLwL": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/foto_16365.jpg",
             "col_span": 2,
-            "row_span": 2,
+            "row_span": 3,
             "focal_point": "center center",
             "show_overlay": false,
             "overlay_always": false,
@@ -168,51 +169,13 @@
             "overlay_padding": 25,
             "link": ""
           }
-        },
-        "image_b76zKa": {
-          "type": "image",
-          "settings": {
-            "col_span": 1,
-            "row_span": 1,
-            "focal_point": "center center",
-            "show_overlay": false,
-            "overlay_always": false,
-            "caption": "",
-            "subtitle": "",
-            "button_text": "",
-            "text_position": "flex-end",
-            "text_size": 1.2,
-            "overlay_opacity": 0.4,
-            "overlay_padding": 25,
-            "link": ""
-          }
-        },
-        "image_QyGRhN": {
-          "type": "image",
-          "settings": {
-            "col_span": 2,
-            "row_span": 1,
-            "focal_point": "center center",
-            "show_overlay": false,
-            "overlay_always": false,
-            "caption": "",
-            "subtitle": "",
-            "button_text": "",
-            "text_position": "flex-end",
-            "text_size": 1.2,
-            "overlay_opacity": 0.4,
-            "overlay_padding": 25,
-            "link": ""
-          }
         }
       },
       "block_order": [
         "image_HxNLwL",
         "image_JCmian",
         "image_Cb3KwU",
-        "image_NgMqc9",
-        "image_b76zKa",
-        "image_QyGRhN"
+        "image_NgMqc9"
       ],
       "name": "Galería de fotos",
       "settings": {
@@ -238,12 +201,12 @@
         "subheading": "ve acá todo lo que está disponible",
         "heading": "READY TO WEAR",
         "description": "Si la pieza dice \"Pre-Orden\" - Se confecciona especialmente para ti.",
-        "collection": "",
-        "products_to_show": 4,
-        "columns": "4",
+        "collection": "vestidos-jumpsuits",
+        "products_to_show": 6,
+        "columns": "2",
         "show_vendor": false,
         "show_view_all": true,
-        "view_all_text": "Ver toda la colección"
+        "view_all_text": "Ver todos"
       }
     },
     "featured_product_mLedfz": {
@@ -302,22 +265,6 @@
     },
     "1791316147b70db152": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_f31bef3_YkHgJ3": {
-          "type": "ai_gen_block_f31bef3",
-          "settings": {
-            "gallery_entries": "https://cdn.shopify.com/s/files/1/0000/0000/files/foto.jpg | Título editorial | Escribe aquí una breve descripción.",
-            "desktop_width_percent": 100,
-            "card_width": 280,
-            "card_gap": 8,
-            "overlap": 15
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_f31bef3_YkHgJ3"
-      ],
       "settings": {}
     }
   },
