@@ -355,7 +355,7 @@
           "settings": {
             "image": "shopify://shop_images/IMG_8528.jpg",
             "col_span": 1,
-            "row_span": 2,
+            "row_span": 1,
             "focal_point": "center center",
             "show_overlay": false,
             "overlay_always": false,
