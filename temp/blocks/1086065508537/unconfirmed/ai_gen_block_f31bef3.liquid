@@ -1,0 +1,153 @@
+{% doc %}
+  @prompt
+    un diseño editorial estilo revista, que sea un carrusel, pero de fotos, no de productos ni colecciones sino que de imagenes con texto, puedes hacer que la imagen sea más pequeña y cuadradita, necesito que las imagenes tengan menos separación entre si, que se vea más editorial, dy necesito que no haya limite de cuantas imagenes se pueden poner
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-editorial-gallery-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    overflow: hidden;
+    color: #1a1a1a;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__track {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.card_gap }}px;
+    overflow-x: auto;
+    padding: 22px 7% 30px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #6b6b6b #e0e0e0;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__card {
+    flex: 0 0 {{ block.settings.card_width }}px;
+    scroll-snap-align: center;
+    position: relative;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__card:nth-child(even) {
+    transform: translateY(20px);
+    margin-left: -{{ block.settings.overlap }}px;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__image-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f5f0eb;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__copy {
+    padding: 12px 2px 0;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__title {
+    margin: 0 0 5px;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__description {
+    margin: 0;
+    color: #454545;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .ai-editorial-gallery-{{ ai_gen_id }}__empty {
+    margin: 0;
+    padding: 18px;
+    background: #f5f0eb;
+    color: #454545;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 749px) {
+    .ai-editorial-gallery-{{ ai_gen_id }} { width: 100%; }
+    .ai-editorial-gallery-{{ ai_gen_id }}__card { flex-basis: min({{ block.settings.card_width }}px, 72vw); }
+    .ai-editorial-gallery-{{ ai_gen_id }}__track { gap: 8px; padding-inline: 6%; }
+  }
+{% endstyle %}
+
+<ai-editorial-gallery-{{ ai_gen_id }} class="ai-editorial-gallery-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-editorial-gallery-{{ ai_gen_id }}__track" aria-label="Galería editorial" tabindex="0"></div>
+  <script type="application/json" data-gallery-items>{{ block.settings.gallery_entries | json }}</script>
+</ai-editorial-gallery-{{ ai_gen_id }}>
+
+<script>
+  (() => {
+    const tagName = 'ai-editorial-gallery-{{ ai_gen_id }}';
+    if (customElements.get(tagName)) return;
+    class EditorialGallery extends HTMLElement {
+      connectedCallback() {
+        const data = this.querySelector('[data-gallery-items]');
+        const track = this.querySelector('.ai-editorial-gallery-{{ ai_gen_id }}__track');
+        if (!data || !track) return;
+        let rows = [];
+        try { rows = JSON.parse(data.textContent || '""').split('\n'); } catch (error) { rows = []; }
+        rows.forEach((row) => {
+          const fields = row.split('|').map((field) => field.trim());
+          const url = fields[0] || '';
+          if (!/^https:\/\//i.test(url)) return;
+          const card = document.createElement('article');
+          card.className = 'ai-editorial-gallery-{{ ai_gen_id }}__card';
+          const imageWrap = document.createElement('div');
+          imageWrap.className = 'ai-editorial-gallery-{{ ai_gen_id }}__image-wrap';
+          const image = document.createElement('img');
+          image.className = 'ai-editorial-gallery-{{ ai_gen_id }}__image';
+          image.src = url;
+          image.alt = fields[1] || '';
+          image.loading = 'lazy';
+          imageWrap.appendChild(image);
+          card.appendChild(imageWrap);
+          if (fields[1] || fields[2]) {
+            const copy = document.createElement('div');
+            copy.className = 'ai-editorial-gallery-{{ ai_gen_id }}__copy';
+            if (fields[1]) {
+              const title = document.createElement('h3');
+              title.className = 'ai-editorial-gallery-{{ ai_gen_id }}__title';
+              title.textContent = fields[1];
+              copy.appendChild(title);
+            }
+            if (fields[2]) {
+              const description = document.createElement('p');
+              description.className = 'ai-editorial-gallery-{{ ai_gen_id }}__description';
+              description.textContent = fields[2];
+              copy.appendChild(description);
+            }
+            card.appendChild(copy);
+          }
+          track.appendChild(card);
+        });
+        if (!track.children.length) {
+          const empty = document.createElement('p');
+          empty.className = 'ai-editorial-gallery-{{ ai_gen_id }}__empty';
+          empty.textContent = 'Agrega imágenes y textos en la configuración del bloque.';
+          track.appendChild(empty);
+        }
+      }
+    }
+    customElements.define(tagName, EditorialGallery);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Galería editorial",
+  "settings": [
+    { "type": "header", "content": "Contenido" },
+    { "type": "textarea", "id": "gallery_entries", "label": "Imágenes y textos", "default": "https://cdn.shopify.com/s/files/1/0000/0000/files/foto.jpg | Título editorial | Escribe aquí una breve descripción.", "info": "Una historia por línea. Formato: URL HTTPS de imagen | título | texto. Copia la URL de una imagen subida a Archivos." },
+    { "type": "header", "content": "Diseño" },
+    { "type": "range", "id": "desktop_width_percent", "label": "Ancho en escritorio", "min": 50, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "card_width", "label": "Ancho de imagen", "min": 180, "max": 420, "step": 20, "unit": "px", "default": 280 },
+    { "type": "range", "id": "card_gap", "label": "Separación", "min": 0, "max": 32, "step": 4, "unit": "px", "default": 4 },
+    { "type": "range", "id": "overlap", "label": "Superposición", "min": 0, "max": 40, "step": 5, "unit": "px", "default": 15 }
+  ],
+  "presets": [{ "name": "Galería editorial" }],
+  "tag": null,
+  "class": "editorial-gallery-block"
+}
+{% endschema %}
