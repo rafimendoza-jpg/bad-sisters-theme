@@ -268,8 +268,8 @@
       "name": "Texto enriquecido",
       "settings": {
         "subheading": "",
-        "heading": "Nuestra historia",
-        "text": "<p>Comparte tu historia de marca con tus clientes. Describe un producto, haz un anuncio o da la bienvenida a los clientes a tu tienda.</p>",
+        "heading": "MADE FOR YOU",
+        "text": "<p><strong>No todos los vestidos deberían existir dos veces. &nbsp;</strong></p><p><strong>Elige uno de nuestros estampados, reinventa alguno de nuestros diseños o cuéntanos qué tienes en mente. Creamos vestidos a pedido y piezas especiales pensadas para ti. &nbsp;</strong></p><p><strong>Déjanos tu idea en el formulario y te contactaremos durante el día para darle forma juntas.</strong></p>",
         "text_alignment": "center",
         "max_width": 800,
         "background_color": "#ffffff",
@@ -277,6 +277,32 @@
         "button_link": "",
         "button_style": "primary"
       }
+    },
+    "1791320507af6d2205": {
+      "type": "apps",
+      "blocks": {
+        "forms_inline_PWW7xL": {
+          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "settings": {
+            "form_id": "1185961",
+            "text_color": "#202020",
+            "button_background_color": "#202020",
+            "button_label_color": "#FFFFFF",
+            "links_color": "#1878B9",
+            "errors_color": "#E02229",
+            "text_alignment": "center",
+            "form_alignment": "center",
+            "padding_top": 10,
+            "padding_bottom": 36,
+            "padding_right": 0,
+            "padding_left": 0
+          }
+        }
+      },
+      "block_order": [
+        "forms_inline_PWW7xL"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -287,6 +313,7 @@
     "featured_collection_AfBPKa",
     "featured_product_mLedfz",
     "before_after_TDqqt8",
-    "rich_text_a4mQJh"
+    "rich_text_a4mQJh",
+    "1791320507af6d2205"
   ]
 }
