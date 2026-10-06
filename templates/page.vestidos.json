@@ -353,6 +353,7 @@
         "image_rijQPN": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_8528.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -371,6 +372,7 @@
         "image_WwUYGH": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/patrickcox-1190041.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -389,6 +391,7 @@
         "image_YrLnbd": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/64A54F7D-F1B9-4891-82EC-CE9F3F9C8068.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -407,6 +410,7 @@
         "image_Lw3xPe": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/patrickcox-1190040.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -425,6 +429,7 @@
         "image_3NgLUy": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/E1C75762-6CF6-46D2-A818-F03DF87182BF.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -443,6 +448,7 @@
         "image_4MgHai": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/RSD_0273a.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -461,6 +467,7 @@
         "image_fTLKza": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_4835.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -479,6 +486,7 @@
         "image_DpxY94": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/6AE1B8E3-4741-4B64-AA57-5EDEC7B1F17A.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -497,6 +505,7 @@
         "image_WdwihW": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/PhotoRoom_003_20221012_000718.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -515,6 +524,7 @@
         "image_JQ68mi": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_4843_2.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -533,6 +543,7 @@
         "image_X3wkjW": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_4632.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -551,6 +562,7 @@
         "image_GjxTwt": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/patrickcox-1190051.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -569,6 +581,7 @@
         "image_7rDKyc": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_4836.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -587,6 +600,7 @@
         "image_YYD8BQ": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/PhotoRoom_002_20221012_000718.png",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -605,6 +619,7 @@
         "image_KmbMqg": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_4631.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -623,6 +638,7 @@
         "image_myWAwg": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/20210326_120711.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -641,6 +657,7 @@
         "image_99hW6z": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/HG1B3149.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -659,6 +676,7 @@
         "image_EpVnK6": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/DSC2585_74f8227a-59eb-486e-800d-4faf441d3ebb.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -677,6 +695,7 @@
         "image_WYCARn": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_4327.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -695,24 +714,7 @@
         "image_BJNENX": {
           "type": "image",
           "settings": {
-            "col_span": 1,
-            "row_span": 1,
-            "focal_point": "center center",
-            "show_overlay": false,
-            "overlay_always": false,
-            "caption": "",
-            "subtitle": "",
-            "button_text": "",
-            "text_position": "flex-end",
-            "text_size": 1.2,
-            "overlay_opacity": 0.4,
-            "overlay_padding": 25,
-            "link": ""
-          }
-        },
-        "image_KRxrX3": {
-          "type": "image",
-          "settings": {
+            "image": "shopify://shop_images/DSC2782.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -731,6 +733,7 @@
         "image_hGGQqh": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/IMG_4834.jpg",
             "col_span": 1,
             "row_span": 1,
             "focal_point": "center center",
@@ -1756,7 +1759,6 @@
         "image_EpVnK6",
         "image_WYCARn",
         "image_BJNENX",
-        "image_KRxrX3",
         "image_hGGQqh",
         "image_zGHHy8",
         "image_g87AJL",
