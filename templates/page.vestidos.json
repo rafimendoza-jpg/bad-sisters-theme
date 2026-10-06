@@ -263,9 +263,20 @@
         "text_color": ""
       }
     },
-    "1791316147b70db152": {
-      "type": "_blocks",
-      "settings": {}
+    "rich_text_a4mQJh": {
+      "type": "rich-text",
+      "name": "Texto enriquecido",
+      "settings": {
+        "subheading": "",
+        "heading": "Nuestra historia",
+        "text": "<p>Comparte tu historia de marca con tus clientes. Describe un producto, haz un anuncio o da la bienvenida a los clientes a tu tienda.</p>",
+        "text_alignment": "center",
+        "max_width": 800,
+        "background_color": "#ffffff",
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary"
+      }
     }
   },
   "order": [
@@ -276,6 +287,6 @@
     "featured_collection_AfBPKa",
     "featured_product_mLedfz",
     "before_after_TDqqt8",
-    "1791316147b70db152"
+    "rich_text_a4mQJh"
   ]
 }
