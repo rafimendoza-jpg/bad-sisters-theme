@@ -9,14 +9,95 @@
  */
 {
   "sections": {
+    "hero_banner_hTU9M9": {
+      "type": "hero-banner",
+      "name": "Banner principal",
+      "settings": {
+        "image": "shopify://shop_images/AC9239E9-3039-405C-8191-69BB39450C72.jpg",
+        "height": "large",
+        "overlay_opacity": 30,
+        "subheading": "bad sisters",
+        "heading": "Vestidos",
+        "text": "Encuentra nuestros diseños o crea uno especialmente para ti.",
+        "text_alignment": "text-center",
+        "button_label_1": "",
+        "button_link_1": "",
+        "button_label_2": "",
+        "button_link_2": ""
+      }
+    },
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
-        "show_title": true
+        "show_title": true,
+        "max_width": 800
+      }
+    },
+    "multicolumn_WA4eUK": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_BWnEAj": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/102C6C45-271E-482F-A50F-FBC859A0DDF4.png",
+            "icon": "",
+            "heading": "READY TO WEAR",
+            "text": "<p><strong>Compra los disponibles</strong></p><p>Compra directamente en nuestra web los vestidos disponibles para envío inmediato. Elige tu talla, agrega al carrito y listo.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_WJyDLX": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/E7C5A999-8662-4FDD-9ED4-43BE4C397C74.png",
+            "icon": "",
+            "heading": "PRE-ORDER",
+            "text": "<p><strong>Lo hacemos especialmente para ti</strong>&nbsp;</p><p>Si el vestido aparece como <strong>PRE-ORDEN</strong>, confeccionaremos uno especialmente para ti en la talla y diseño que elegiste.&nbsp;</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_xq8DMV": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/5C39FB58-61D9-4622-9065-C3FDF2053580.png",
+            "icon": "",
+            "heading": "MADE FOR YOU",
+            "text": "<p><strong>Crea algo único</strong></p><p>¿Quieres un vestido a medida, otro modelo, un estampado especial o tienes una idea distinta? Completa el formulario de esta página y te contactaremos para crear tu vestido juntas.</p><p></p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_BWnEAj",
+        "column_WJyDLX",
+        "column_xq8DMV"
+      ],
+      "name": "Multicolumna",
+      "settings": {
+        "subheading": "Disponible ahora, en pre-order o hecho especialmente para ti.",
+        "heading": "ELIGE CÓMO QUIERES TU VESTIDO",
+        "columns": 3,
+        "column_ratio": "equal",
+        "gap": 24,
+        "mobile_columns": "1",
+        "image_ratio": "auto",
+        "image_radius": 0,
+        "full_width": false,
+        "full_height": false,
+        "section_height": 70,
+        "text_alignment": "center",
+        "background_color": "",
+        "text_color": ""
       }
     }
   },
   "order": [
-    "main"
+    "hero_banner_hTU9M9",
+    "main",
+    "multicolumn_WA4eUK"
   ]
 }
